@@ -13,7 +13,11 @@ Tarea ex-aula de Herramientas de Productividad
 
 ### ¿Cómo crear entorno virtual para el proyecto ? (python 3.x)
 Despues de haber clonado el proyecto, se van a la ruta donde lo clonaron y alli habren un consola del sistema y crear un entorno virtual asi:
+#### Windows
 > virtualenv .simaiz
+
+#### Linux
+> python3 -m venv .simaiz
 
  Luego para activar el entorno se diriguen a la carpeta .simaiz\Scripts si estan en windows pero si estan en linuz .simaiz/bin/ y lo activan de la siguiente manera:
  #### Windows 
@@ -24,13 +28,13 @@ Despues de haber clonado el proyecto, se van a la ruta donde lo clonaron y alli 
 
 Ahora nos salimos de la carpeta a la altura de la carpeta simaiz
 
----> simaiz
------->.simaiz/
------->simaiz/
------->.git/
------->.gitignore
------->.README.md
------->.requirements.txt
+---> simaiz                                                               
+------>.simaiz/                                                  
+------>simaiz/                                                   
+------>.git/                                               
+------>.gitignore                                       
+------>.README.md                                              
+------>.requirements.txt                                       
 
 ### Instalando dependencias del proyecto
 Para instalar las dependencias del proyecto se necesita del archivo **requirements.txt** para hacer es con el siguiente comando:
