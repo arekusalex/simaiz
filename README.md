@@ -79,7 +79,7 @@ Colocan un nombre de usuario:
 miusuariodb
 
 Colocan una contraseña:
-miusuariodb
+usuariodb
 
 A las preguntas que salgan a continuación esta es la secuencia de respuestas:
 n
