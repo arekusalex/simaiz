@@ -1,3 +1,4 @@
 *.pyc
 .simaiz
 .idea
+.vscode
