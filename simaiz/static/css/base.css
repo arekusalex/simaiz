@@ -1,0 +1,19 @@
+body{
+    min-height: 25rem;
+    padding-top: 4.5rem;
+}
+.logo{
+    width: 35px;
+    height: 35px;
+}
+button{
+    color:black;
+    background: red;
+}
+#navbar{
+    background: #009544;
+}
+.text-white:hover{
+    font-size: 1.2em;
+    color:yellow !important;
+}
