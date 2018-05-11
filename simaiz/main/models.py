@@ -40,7 +40,7 @@ class Contenido(models.Model):
 
 class Simulacion(models.Model):
     usuario = models.ForeignKey(Usuario, null=True, blank=True, on_delete=models.CASCADE)
-    planta = models.OneToOneField(Planta, null=True, blank=True, on_delete=models.CASCADE)
+    planta = models.ForeignKey(Planta, null=True, blank=True, on_delete=models.CASCADE)
     nombre_sim = models.CharField(max_length=50)
     fecha_siembra = models.DateField()
     rendimiento = models.FloatField()
