@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block contenido %}
+	<h1 class="text-center">Pagina de Registro</h1>
+    <form method="post">
+        {% csrf_token %}
+
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label>Nombre</label>
+                    <input type="text" class="form-control" name="first_name" placeholder="Nombre">
+                </div>
+                <div class="form-group col-md-6">
+                    <label>Apellido</label>
+                    <input type="text" class="form-control" name="last_name" placeholder="Apellido">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label>Nombre de Usuario</label>
+                    <input type="text" class="form-control" name="username" placeholder="Nombre de Usuario" required>
+                    <small id="usernameHelpBlock" class="form-text text-muted">150 characters or fewer. Letters, digits and @/./+/-/_ only.</small>
+                    <div class="invalid-feedback">
+                        Please provide a valid username.
+                    </div>
+                </div>
+                <div class="form-group col-md-6">
+                    <label>Correo</label>
+                    <input type="text" class="form-control" name="email" placeholder="Correo" required>
+                    <div class="invalid-feedback">
+                        Please provide a valid email.
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label>Contraseña</label>
+                    <input type="password" class="form-control" name="password1" placeholder="Contraseña" required>
+                    <small id="passwordHelpBlock" class="form-text text-muted">Your password must contain at least 8 characters and can't be entirely numeric.</small>
+                    <div class="invalid-feedback">
+                        Please provide a password.
+                    </div>
+                </div>
+                <div class="form-group col-md-6">
+                    <label>Confirmar Contraseña</label>
+                    <input type="password" class="form-control" name="password2" placeholder="Confirmar Contraseña" required>
+                    <small id="passwordConfirmHelpBlock" class="form-text text-muted">Enter the same password as before, for verification.</small>
+                    <div class="invalid-feedback">
+                        Please confirm password.
+                    </div>
+                </div>
+            </div>
+
+        <button type="submit" class="btn btn-success">Guardar</button>
+    </form>
+{% endblock contenido %}

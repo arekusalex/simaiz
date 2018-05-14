@@ -76,8 +76,3 @@ class Humedad(models.Model):
     valor = models.FloatField()
     promedio = models.FloatField()
     porcentaje = models.FloatField()
-
-
-
-
-
