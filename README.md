@@ -46,8 +46,10 @@ Y ya con ese comando se empezaran a descargar las dependencias del proyecto y pr
 Windows y Linux
 >deactivate
 
-#################################################################################################################
-################################ CREANDO LA BASE DE DATOS CON POSTGRESQL##########################################
+#### ###################################################
+### CREANDO LA BASE DE DATOS CON POSTGRESQL 
+
+
 Necesitarán instalar la conexión PSYCOPG2, esto sirve para poder enlazar la conexión entre Django y Postgres
 
 > pip install psycopg2
