@@ -46,9 +46,8 @@ Y ya con ese comando se empezaran a descargar las dependencias del proyecto y pr
 Windows y Linux
 >deactivate
 
-#################################################################################################################################
-#################################################################################################################################
-################################ CREANDO LA BASE DE DATOS CON POSTGRESQL ########################################################
+#################################################################################################################
+################################ CREANDO LA BASE DE DATOS CON POSTGRESQL##########################################
 Necesitarán instalar la conexión PSYCOPG2, esto sirve para poder enlazar la conexión entre Django y Postgres
 
 > pip install psycopg2
@@ -58,66 +57,66 @@ Necesitarán instalar la conexión PSYCOPG2, esto sirve para poder enlazar la co
 En Linux utilizaremos la terminal para poder crear la base de datos
 
 ###### Instalación de Postgresql
-sudo apt-get install postgresql
+> sudo apt-get install postgresql
 
 ##### Abrir la ventana de comandos de Postgres
 Una vez instalado postgres es necesario configurarlo
 Para ingresar comandos de Postgres es de la siguiente manera
 
-sudo -i -u postgres
+> sudo -i -u postgres
 
 Ingresen la contraseña de superusuario y les aparecerá:
 
-postgres@user ~ $ 
+> postgres@user ~ $ 
 
 ##### Creando el usuario de Postgres
 Ejecutar los siguientes comandos:
 
-createuser --interactive --pwprompt
+> createuser --interactive --pwprompt
 
 Colocan un nombre de usuario:
-miusuariodb
+> miusuariodb
 
 Colocan una contraseña:
-usuariodb
+> usuariodb
 
 A las preguntas que salgan a continuación esta es la secuencia de respuestas:
-n
-y
-n
+> n
+> y
+> n
 
 ##### Creando la base de datos
 Le colocamos un nombre a la base de datos, en este caso para el proyecto:
 
-createdb simaiz_db
+> createdb simaiz_db
 
 Para dar acceso a la base de datos al usuario de Postgres ejecutamos:
-psql
+> psql
 
 La salida será:
-psql (9.5.11)
-Type "help" for help.
-
-postgres=#
+> psql (9.5.11)
+> Type "help" for help.
+> 
+> postgres=#
 
 Después del "#" ejecutamos (darle acceso al usuario a la db):
-grant all privileges on database simaiz_db to miusuariodb
+> grant all privileges on database simaiz_db to miusuariodb
 
 Despues colocamos:
-;
+> ;
 
 Le damos enter y aparecerá:
 
-postgres-# ;
-GRANT
-postgres=#
+> postgres-# ;
+> GRANT
+> postgres=#
 
 Salimos:
-\q
+> \q
 
 ##### Salir de Postgres
 Ejecutar:
-exit
+> exit
 
 Habremos vuelto al terminal de Linux
 
