@@ -71,7 +71,8 @@ class Region(models.Model):
     zona = models.CharField(max_length=20)
 
 class Humedad(models.Model):
-    region = models.ForeignKey(Region, null=True, blank=True, on_delete=models.CASCADE)
+    region = models.ForeignKey(
+    Region, null=True, blank=True, on_delete=models.CASCADE)
     mes = models.CharField(max_length=15)
     valor = models.FloatField()
     promedio = models.FloatField()
