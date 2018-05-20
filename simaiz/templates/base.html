@@ -22,6 +22,9 @@
                 <ul class="navbar-nav ml-auto">
                     {% if request.user.is_authenticated %}
                     <li class="nav-item"><a class="nav-link px-4 text-white font-weight-bold text-center" href="{% url 'direccionar' %}">{{user.username}}</a></li>
+                
+                {% if request.user.is_authenticated %}
+                    <li class="nav-item"><a class="nav-link px-4 text-white font-weight-bold text-center" href="#">{{user.username}}</a></li>
                     <li class="nav-item"><a class="nav-link px-4 text-white font-weight-bold text-center" href="{% url 'logout' %}">Logout</a></li>
                 {% else %}
                     <li class="nav-item"><a class="nav-link px-4 text-white font-weight-bold text-center" href="{% url 'registrar' %}">Registrarse</a></li>
