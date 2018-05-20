@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'main',
+    'usuarios',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -84,7 +85,6 @@ DATABASES = {
         'HOST': 'localhost',
         'PORT': '5432',
     }
-
 }
 
 
@@ -128,4 +128,5 @@ STATIC_URL = '/static/'
 # STATIC_ROOT = os.path.join(BASE_DIR,'static')
 STATICFILES_DIRS = (os.path.join(BASE_DIR,'static'),)
 
-LOGIN_REDIRECT_URL = reverse_lazy("inicio")
+LOGIN_REDIRECT_URL = reverse_lazy("direccionar")
+LOGIN_URL = reverse_lazy('main_inicio')
