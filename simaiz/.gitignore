@@ -1,0 +1,5 @@
+*.pyc
+.simaiz
+.idea
+.vscode
+.sqlite3

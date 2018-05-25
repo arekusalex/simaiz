@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block contenido %}
+	<h1 class="text-center">Pagina de Login</h1>
+    <form method="post">
+        {% csrf_token %}
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label>Nombre de Usuario</label>
+                    <input type="text" class="form-control" name="username" placeholder="Nombre de Usuario" required>
+                    <div class="invalid-feedback">
+                        Please provide a valid username.
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label>Contraseña</label>
+                    <input type="password" class="form-control" name="password" placeholder="Contraseña" required>
+                    <div class="invalid-feedback">
+                        Please provide a password.
+                    </div>
+                </div>
+            </div>
+        <button type="submit" class="btn btn-success">Iniciar Sesion</button>
+    </form>
+{% endblock contenido %}
