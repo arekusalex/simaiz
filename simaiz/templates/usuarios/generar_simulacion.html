@@ -1,8 +1,22 @@
 {% extends "base.html" %}
 {% block contenido %}
-	<h1 class="text-center">Pagina de Simulacion</h1>
+
+    <style type="text/css">input{
+        width: 20px;
+        left: 20px;
+        }</style>
+	<h2 class="text-left">Nombre de Simulacion   Nombre de Usuario</h2>
+    <h2 class="text-center">CULTIVO: Maiz:CENTA-Oro blanco</h2>
     <form method="post">
         {% csrf_token %}
-            
+         <h6 class="text-center">Extension del terreno:Tantas unidades cuadradas</h6>  
+         dia de siembra: <input type="date" name="fechaSiembra" step="1" min="1900-01-01" max="2018-12-31" value="2018-01-01"> <p>
+         Cantidad Optima primera aplicacion:<input type="Cantidad" name="Cantidad">kg de fertilizante1 <input type="date" name="fechaAbonada" step="1" min="1900-01-01" max="2018-12-31" value="2018-01-01"><p>
+         Cantidad Optima segunda aplicacion:<input type="Cantidad" name="Cantidad">kg de fertilizante2 <input type="date" name="fechaAbonada" step="1" min="1900-01-01" max="2018-12-31" value="2018-01-01"><p>
+         Cantidad Optima tercera aplicacion:<input type="Cantidad" name="Cantidad">kg de fertilizante3 <input type="date" name="fechaAbonada" step="1" min="1900-01-01" max="2018-12-31" value="2018-01-01"><p>
+         Recomendaciones:tienes que utilizar regadio en los meses<p>
+         Rendimiento del maiz: kg<p>
+         Ingreso bruto:$<p>
+         
     </form>
 {% endblock contenido %}
