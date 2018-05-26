@@ -14,15 +14,12 @@
 <header class="">
 	<nav class="navbar navbar-expand-md fixed-top navbar-dark" id="navbar">	
         <div class="container">
-            <a href="{% url 'main_inicio' %}" class="navbar-brand"><img class="logo" src="{% static 'img/icono_w.png' %}" alt=""></a>
+            <a href="{% url 'inicio' %}" class="navbar-brand"><img class="logo" src="{% static 'img/icono_w.png' %}" alt=""></a>
             <button class="navbar-toggler navbar-toggler-right collapsed" type="button" data-toggle="collapse" data-target="#menu" aria-controls="menu" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="fas fa-bars"></span>
             </button>
             <div class="navbar-collapse collapse" id="menu">
                 <ul class="navbar-nav ml-auto">
-                    {% if request.user.is_authenticated %}
-                    <li class="nav-item"><a class="nav-link px-4 text-white font-weight-bold text-center" href="{% url 'direccionar' %}">{{user.username}}</a></li>
-                
                 {% if request.user.is_authenticated %}
                     <li class="nav-item"><a class="nav-link px-4 text-white font-weight-bold text-center" href="#">{{user.username}}</a></li>
                     <li class="nav-item"><a class="nav-link px-4 text-white font-weight-bold text-center" href="{% url 'logout' %}">Logout</a></li>
