@@ -47,23 +47,24 @@ class Simulacion(models.Model):
     total = models.FloatField()
     compartir = models.BooleanField(default=False)
 
-class Aplicacion(models.Model):
-    planta = models.ForeignKey(Planta, null=True, blank=True, on_delete=models.CASCADE)
-    fertilizante = models.ForeignKey(Fertilizante, null=True, blank=True, on_delete=models.CASCADE)
-    cantidad_fertilizante = models.FloatField()
-    fecha = models.DateField()
-    nitrogeno_req = models.FloatField()
-    fosforo_req = models.FloatField()
-    potasio_req = models.FloatField()
+class Departamento(models.Model):
+    nombre_depto = models.CharField(max_length=20)
 
 class Terreno(models.Model):
+    depto = models.ForeignKey(Departamento, null=True, blank=True, on_delete=models.CASCADE)
     suelo = models.OneToOneField(Suelo, null=True, blank=True, on_delete=models.CASCADE)
     unidad = models.OneToOneField(UnidadMedida, null=True, blank=True, on_delete=models.CASCADE)
     area = models.FloatField()
 
-class Departamento(models.Model):
-    terreno = models.OneToOneField(Terreno, null=True, blank=True, on_delete=models.CASCADE)
-    nombre_depto = models.CharField(max_length=20)
+class Aplicacion(models.Model):
+    planta = models.ForeignKey(Planta, null=True, blank=True, on_delete=models.CASCADE)
+    fertilizante = models.ForeignKey(Fertilizante, null=True, blank=True, on_delete=models.CASCADE)
+    terreno = models.ForeignKey(Terreno, null=True, blank=True, on_delete=models.CASCADE)
+    cantidad_fertilizante = models.FloatField(null=True)
+    fecha = models.DateField()
+    nitrogeno_req = models.FloatField()
+    fosforo_req = models.FloatField()
+    potasio_req = models.FloatField()
 
 class Region(models.Model):
     depto = models.ForeignKey(Departamento, null=True, blank=True, on_delete=models.CASCADE)
@@ -71,8 +72,8 @@ class Region(models.Model):
     zona = models.CharField(max_length=20)
 
 class Humedad(models.Model):
-    region = models.ForeignKey(
-    Region, null=True, blank=True, on_delete=models.CASCADE)
+    depto = models.ForeignKey(Departamento, null=True, blank=True, on_delete=models.CASCADE)
+    region = models.ForeignKey(Region, null=True, blank=True, on_delete=models.CASCADE)
     mes = models.CharField(max_length=15)
     valor = models.FloatField()
     promedio = models.FloatField()
