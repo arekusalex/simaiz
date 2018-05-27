@@ -8,17 +8,17 @@ from django.shortcuts import redirect
 def inicio(request):
 	return render(request, "main/index.html", {})
 
-
+@login_required()
 def direccionar(request):
-	if request.user:
+	if request.user.is_authenticated:
 		return redirect('mi_espacio', username=request.user.username)
 	else:
-		return redirect('login') 
+		return redirect('main_inicio') 
 
-
+		
 @login_required()
 def mi_espacio(request, username):
-	if username==request.user.username:
+	if username == request.user.username:
 		contexto = {
 		'nombre': request.user.first_name+' '+request.user.last_name,
 		}
