@@ -14,7 +14,7 @@
 <header class="">
 	<nav class="navbar navbar-expand-md fixed-top navbar-dark" id="navbar">	
         <div class="container">
-            <a href="{% url 'main_inicio' %}" class="navbar-brand"><img class="logo" src="{% static 'img/icono_w.png' %}" alt=""></a>
+            <a href="{% url 'inicio' %}" class="navbar-brand"><img class="logo" src="{% static 'img/icono_w.png' %}" alt=""></a>
             <button class="navbar-toggler navbar-toggler-right collapsed" type="button" data-toggle="collapse" data-target="#menu" aria-controls="menu" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="fas fa-bars"></span>
             </button>
@@ -27,7 +27,7 @@
                     <li class="nav-item"><a class="nav-link px-4 text-white font-weight-bold text-center" href="{% url 'registrar' %}">Registrarse</a></li>
                     <li class="nav-item"><a class="nav-link px-4 text-white font-weight-bold text-center" href="{% url 'login' %}">Login</a></li>
                 {% endif %}
-                    <li class="nav-item"><a class="nav-link px-4 text-white font-weight-bold text-center" href="#">Ayuda</a></li>
+                    <li class="nav-item"><a class="nav-link px-4 text-white font-weight-bold text-center" href="{% url 'ayuda' %}">Ayuda</a></li>
                 </ul>
             </div>
         </div>
