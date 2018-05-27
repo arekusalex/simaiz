@@ -6,6 +6,7 @@ from django.views.generic import CreateView
 from django.urls import reverse_lazy
 from .forms_sim import SimulacionForm, TerrenoForm, HumedadForm
 from .multiforms import MultipleFormsView
+from .models import *
 
 # Create your views here.
 
@@ -25,8 +26,16 @@ def direccionar(request):
 @login_required()
 def mi_espacio(request, username):
 	if username == request.user.username:
+		simulaciones=None
+		if request.method=='POST':
+			pass
+		haySimu=Simulacion.objects.filter(usuario=request.user).exists()
+		if haySimu:
+			simulaciones=Simulacion.objects.filter(usuario=request.user)
 		contexto = {
-		'nombre': request.user.first_name+' '+request.user.last_name,
+			'nombre': request.user.first_name+' '+request.user.last_name,
+			'simu':haySimu,
+			'simulaciones':simulaciones,
 		}
 		return render(request, "main/mi_espacio.html", contexto)
 	else:
