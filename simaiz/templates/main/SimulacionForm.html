@@ -3,12 +3,12 @@
 {% block contenido %}
     <h2>CREAR SIMULACION</h2>
 
-    {% for form in forms %}
       <form method="post">
         {% csrf_token %}
-        {{ form }}
-        <input type="hidden" name="selected_form" value="{{ forloop.counter0 }}">
-        <button type="submit">Submit</button>
+          {{ sim_form.as_p }}
+          {{ terreno_form.as_p }}
+          {{ humedad_form.as_p }}
+        <button type="submit" class="btn btn-success">Submit</button>
       </form>
-    {% endfor %}
+
 {% endblock contenido %}

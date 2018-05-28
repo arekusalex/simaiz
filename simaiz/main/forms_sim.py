@@ -4,7 +4,7 @@ from .models import Simulacion, Planta, Suelo, UnidadMedida, Aplicacion, \
     Terreno, Departamento, Region, Humedad, Fertilizante
 
 
-class SimulacionForm(forms.Form):
+class SimulacionForm(ModelForm):
     class Meta:
         model = Simulacion
         fields = [
@@ -13,7 +13,7 @@ class SimulacionForm(forms.Form):
             'planta',
         ]
 
-class TerrenoForm(forms.Form):
+class TerrenoForm(ModelForm):
     class Meta:
         model = Terreno
         fields = [
@@ -23,7 +23,7 @@ class TerrenoForm(forms.Form):
             'depto',
         ]
 
-class HumedadForm(forms.Form):
+class HumedadForm(ModelForm):
     class Meta:
         model = Humedad
         fields = [
@@ -34,11 +34,9 @@ class HumedadForm(forms.Form):
         }
 
 
-class AplicacionForm(forms.Form):
+class AplicacionForm(ModelForm):
     class Meta:
         model = Aplicacion
         fields = [
-            'terreno',
-            'planta',
             'fertilizante',
         ]

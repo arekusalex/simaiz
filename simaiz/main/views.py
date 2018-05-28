@@ -1,50 +1,59 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
-from django.views.generic import CreateView
+from django.views.generic import FormView
 from django.urls import reverse_lazy
 from .forms_sim import SimulacionForm, TerrenoForm, HumedadForm
 from .multiforms import MultipleFormsView
 
+
 # Create your views here.
 
 def inicio(request):
-	return render(request, "main/index.html", {})
+    return render(request, "main/index.html", {})
 
 
 def direccionar(request):
-	if request.user:
-		return redirect('mi_espacio', username=request.user.username)
-	else:
-		return redirect('login') 
+    if request.user:
+        return redirect('mi_espacio', username=request.user.username)
+    else:
+        return redirect('login')
 
 
 @login_required()
 def mi_espacio(request, username):
-	if username==request.user.username:
-		contexto = {
-		'nombre': request.user.first_name+' '+request.user.last_name,
-		}
-		return render(request, "main/mi_espacio.html", contexto)
-	else:
-		return redirect('mi_espacio', username=request.user.username)
-	return render(request,"main/index.html",{})
+    if username == request.user.username:
+        contexto = {
+            'nombre': request.user.first_name + ' ' + request.user.last_name,
+        }
+        return render(request, "main/mi_espacio.html", contexto)
+    else:
+        return redirect('mi_espacio', username=request.user.username)
+    return render(request, "main/index.html", {})
 
 
-class MultipleFormsDemoView(MultipleFormsView):
-    template_name = "main/SimulacionForm.html"
-    success_url = reverse_lazy("sim_lista")
-    forms_classes = [
-        SimulacionForm,
-        TerrenoForm,
-        HumedadForm,
-    ]
+def simformview(request):
+    if request.method == 'POST':
+        sim_form = SimulacionForm(request.POST)
+        terreno_form = TerrenoForm(request.POST)
+        humedad_form = HumedadForm(request.POST)
+        if sim_form.is_valid() or terreno_form.is_valid() or humedad_form.is_valid():
+            sim_form.save()
+            terreno_form.save()
+            humedad_form.save()
+            return HttpResponseRedirect(redirect('sim_lista'))
+        else:
+            return HttpResponse('Error!')
+    else:
+        sim_form = SimulacionForm()
+        terreno_form = TerrenoForm()
+        humedad_form = HumedadForm()
 
-    def get_forms_classes(self):
-        ##forms_classes = super(MultipleFormsDemoView, self).get_forms_classes()
-        return super(MultipleFormsDemoView, self).get_forms_classes()
+    context = {
+        'sim_form': sim_form,
+        'terreno_form': terreno_form,
+        'humedad_form': humedad_form,
+    }
 
-    def form_valid(self, form):
-        print("yay it's valid!")
-        return super(MultipleFormsDemoView).form_valid(form)
+    return render(request, "main/SimulacionForm.html", context)
