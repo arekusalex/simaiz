@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
-
+{% block css %}
+    
+{% endblock css %}
 {% block contenido %}
     <p class="alert-info alert font-weight-bold text-center"><span class="">Bienvenido: </span><span class="text-success">{{nombre}}</span></p>
     <h1 class="text-center">Simulacion Maiz y Fertilizantes</h1>
@@ -31,5 +33,12 @@
             <a href="" class="nav-link" id="a3">Simulaciones Privadas</a>
         </li>
     </ul>
+    <div class="row">
+        {% for sim in simulaciones %}
+        <div class="">
+            <p>{{sim.nombre_sim}}</p>
+        </div>
+        {% endfor %}
+    </div>
 {% endblock contenido %}
 

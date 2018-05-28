@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
 
@@ -18,12 +19,8 @@ class Planta(models.Model):
 class UnidadMedida(models.Model):
     unidad_medida = models.CharField(max_length=20)
 
-class Usuario(models.Model):
-    nombre = models.CharField(max_length=20)
-    apellido = models.CharField(max_length=20)
-
 class Configuracion(models.Model):
-    usuario = models.ForeignKey(Usuario, null=True, blank=True, on_delete=models.CASCADE)
+    usuario = models.ForeignKey(User, null=True, blank=True, on_delete=models.CASCADE)
     precio_maiz = models.FloatField()
 
 class Fertilizante(models.Model):
@@ -39,7 +36,7 @@ class Contenido(models.Model):
     porcentaje = models.FloatField()
 
 class Simulacion(models.Model):
-    usuario = models.ForeignKey(Usuario, null=True, blank=True, on_delete=models.CASCADE)
+    usuario = models.ForeignKey(User, null=True, blank=True, on_delete=models.CASCADE)
     planta = models.ForeignKey(Planta, null=True, blank=True, on_delete=models.CASCADE)
     nombre_sim = models.CharField(max_length=50)
     fecha_siembra = models.DateField()
