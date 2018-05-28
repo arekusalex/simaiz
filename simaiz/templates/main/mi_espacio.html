@@ -20,28 +20,46 @@
     </div>
     <hr>
     <div class="row">
-        <div class="col-2">
-            <form class="form-inline m-0">
-                <label><input type="text" name="buscar" value="" placeholder="buscar" class=""></label>
+        <div class="col-12">
+            <form method="post" class="form-inline float-right">
+                {% csrf_token %}
+                <input type="text" name="buscar" class="m-0 buscar" required="" {% if simu %}
+                    disabled="" 
+                {% endif %}>
+                <button type="submit" class="btn btn-primary m-0" name="f_buscar" {% if simu %}
+                    disabled="" 
+                {% endif %}><span class="fas fa-search"></span></button>
             </form>
         </div>
     </div>
+    <div class="row">
+    <div class="col-12">
+        {% if busqueda %}
+            <h3 class="text-success">{{busqueda}}</h3>
+        {% endif %}
+    </div>
+</div>
     <ul class="nav nav-tabs row mt-3">
         <li class="nav-item col-4 text-center">
-            <a href="" class="nav-link active" id="a1">Todas las simulaciones</a>
+            <a href="{% url 'mi_espacio' request.user %}" class="nav-link {{activo.0}}" id="a1">Todas las simulaciones</a>
         </li>
         <li class="nav-item col-4 text-center">
-            <a href="" class="nav-link" id="a2">Simulaciones Compartidad</a>
+            <a href="{% url 'mi_espacio_op' request.user 'shared'%}" class="nav-link {{activo.1}}" id="a1">Simulaciones Compartidas</a>
         </li>
         <li class="nav-item col-4 text-center">
-            <a href="" class="nav-link" id="a3">Simulaciones Privadas</a>
+            <a href="{% url 'mi_espacio_op' request.user 'private'%}" class="nav-link {{activo.2}}" id="a1">Simulaciones Privadas</a>
         </li>
     </ul>
     <div class="container_sim">
+    {% if simu %}
+        <h2 class="bg-warning text-success mt-3 text-center p-2">{{simu}}</h2>
+    {% endif %}
     {% for sim in simulaciones %}
     <div class="row simulacion my-3 mx-0">
-        <div class="col-12 ">
-            <h3>{{sim.0.nombre_sim}}</h3>
+        <div class="col-12">
+            <div class="row titulo">
+                 <h3 class="text-center col-12 ">{{sim.0.nombre_sim}}</h3>
+            </div>
             <div class="row">
                 <div class="col-lg-3 col-md-4 col-sm-6"><p>CULTIVO:</p><p>{{sim.0.planta}}</p></div>
                 <div class="col-lg-3 col-md-4 col-sm-6"><p>EPOCA DE SIEMBRA:</p><p>{{sim.0.fecha_siembra}}</p></div>
@@ -51,23 +69,24 @@
                 {% endfor %}
                 </div>
                 <div class="col-lg-3 col-md-12 col-sm-12">
-                    <div class="row">
+                    <div class="row mt-2">
                         <div class="col-lg-12 col-md-4 my-1">
                             <form method="post">
                                 {% csrf_token %}
-                                <input class="btn btn-block btn-outline-info" type="Submit" name="" value="Modificar">
+                                <input class="btn btn-block btn-primary" type="Submit" name="" value="Modificar">
                             </form>
                         </div>
                         <div class="col-lg-12 col-md-4 my-1">
                             <form method="post">
                                 {% csrf_token %}
-                                <input class="btn btn-block btn-outline-danger" type="Submit" name="" value="Eliminar">
+                                <input type="hidden" name="id_sim" value="{{sim.0.id}}">
+                                <input class="btn btn-block btn-danger" type="Submit" name="f_delete" value="Eliminar">
                             </form>
                         </div>
                         <div class="col-lg-12 col-md-4 my-1">
                             <form method="post">
                                 {% csrf_token %}
-                                <input class="btn btn-block btn-outline-success" type="Submit" name="" value="Visualizar">
+                                <input class="btn btn-block btn-success" type="Submit" name="" value="Visualizar">
                             </form>
                         </div>
                     </div>

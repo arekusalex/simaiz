@@ -1,0 +1,22 @@
+.simulacion{
+    background: lightblue;
+    font-weight: bold;
+    /* color:white; */
+    border-radius: 20px;
+    position: relative;
+    top: 1em;
+    bottom: 1em;
+}
+.titulo{
+	background: #9277AC;
+	color:white;
+}
+.btn-outline-custom{
+	color:#FF7600;
+	background: transparent;
+	border:1px solid #FF7600;
+}
+.btn-outline-custom:hover{
+	background:#FF7600;
+	color:white;
+}
