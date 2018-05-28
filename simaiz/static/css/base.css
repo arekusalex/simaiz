@@ -23,6 +23,7 @@ button{
 hr{
     border:3px solid purple;
 }
+
 input{
     with:30px;
     height: 35px
@@ -42,3 +43,14 @@ input{
         width: 450px;
         height: 450px;
     }
+
+.buscar{
+    line-height: 2em;
+}
+
+footer{
+    background: #226666;
+    color: yellow;
+    font-weight: bold;
+}
+

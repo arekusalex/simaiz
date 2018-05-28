@@ -11,7 +11,7 @@ class RegistrarUsuario(CreateView):
     model = User
     template_name = "usuarios/registrar.html"
     form_class = RegistrarForm
-    success_url = reverse_lazy("main_inicio")
+    success_url = reverse_lazy("inicio")
 
 class GenerarSimulacion(CreateView):
 	model=User
@@ -71,3 +71,4 @@ line_chart1 = TemplateView.as_view(template_name='line_chart.html')
 line_chart_json1 = LineChartJSONView2.as_view()
 line_chart3 = TemplateView.as_view(template_name='line_chart.html')
 line_chart_json3 = LineChartJSONView3.as_view()
+
