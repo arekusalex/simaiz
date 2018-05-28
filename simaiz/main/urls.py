@@ -1,9 +1,10 @@
 from django.urls import path
-from .views import inicio, direccionar
-from .views import simformview
+from .views import *
 
 urlpatterns = [
     path('', inicio, name="inicio"),
-    path('', direccionar, name="sim_lista"),
+    path('ayuda/', ayuda, name="ayuda"),
+    path('direccionar/', direccionar, name='direccionar'),
+    path('<username>/', mi_espacio, name='mi_espacio'),
     path('nuevo/', simformview, name="nuevo_sim"),
 ]

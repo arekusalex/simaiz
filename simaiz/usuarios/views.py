@@ -8,4 +8,4 @@ class RegistrarUsuario(CreateView):
     model = User
     template_name = "usuarios/registrar.html"
     form_class = RegistrarForm
-    success_url = reverse_lazy("main_inicio")
+    success_url = reverse_lazy("inicio")

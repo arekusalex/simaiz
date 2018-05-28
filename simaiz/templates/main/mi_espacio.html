@@ -1,5 +1,11 @@
 {% extends 'base.html' %}
-
+{% load static %}
+{% block titulo %}
+    Administrar Simulaciones
+{% endblock titulo %}
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/main/mi_espacio.css' %}">
+{% endblock css %}
 {% block contenido %}
     <p class="alert-info alert font-weight-bold text-center"><span class="">Bienvenido: </span><span class="text-success">{{nombre}}</span></p>
     <h1 class="text-center">Simulacion Maiz y Fertilizantes</h1>
@@ -31,5 +37,46 @@
             <a href="" class="nav-link" id="a3">Simulaciones Privadas</a>
         </li>
     </ul>
+    <div class="container_sim">
+    {% for sim in simulaciones %}
+    <div class="row simulacion my-3 mx-0">
+        <div class="col-12 ">
+            <h3>{{sim.0.nombre_sim}}</h3>
+            <div class="row">
+                <div class="col-lg-3 col-md-4 col-sm-6"><p>CULTIVO:</p><p>{{sim.0.planta}}</p></div>
+                <div class="col-lg-3 col-md-4 col-sm-6"><p>EPOCA DE SIEMBRA:</p><p>{{sim.0.fecha_siembra}}</p></div>
+                <div class="col-lg-3 col-md-4 col-sm-12"><p>FERTILIZANTES:</p>
+                {% for fer in sim.1 %}
+                    <p>{{fer}}</p>
+                {% endfor %}
+                </div>
+                <div class="col-lg-3 col-md-12 col-sm-12">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-4 my-1">
+                            <form method="post">
+                                {% csrf_token %}
+                                <input class="btn btn-block btn-outline-info" type="Submit" name="" value="Modificar">
+                            </form>
+                        </div>
+                        <div class="col-lg-12 col-md-4 my-1">
+                            <form method="post">
+                                {% csrf_token %}
+                                <input class="btn btn-block btn-outline-danger" type="Submit" name="" value="Eliminar">
+                            </form>
+                        </div>
+                        <div class="col-lg-12 col-md-4 my-1">
+                            <form method="post">
+                                {% csrf_token %}
+                                <input class="btn btn-block btn-outline-success" type="Submit" name="" value="Visualizar">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    </div>
+    <br>
 {% endblock contenido %}
 
