@@ -1,0 +1,15 @@
+.simulacion{
+	background: #D3D7DA;
+	font-weight: bold;
+	/* color:white; */
+	border-radius: 20px;
+	position: relative;
+	top: 1em;
+	bottom: 1em;
+}
+input[type=submit]{
+	font-weight: bold;
+}
+.container_sim{
+	/* background: #AED284; */
+}
