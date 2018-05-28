@@ -1,7 +1,7 @@
 from django.urls import path
 from .views import RegistrarUsuario
 from django.contrib.auth.views import login, logout_then_login
-from .views import GenerarSimulacion
+from .views import *    
 from pkg_resources import parse_version
 import django
 from django.conf.urls import url
@@ -12,7 +12,7 @@ urlpatterns = [
     path('registrar/', RegistrarUsuario.as_view(), name="registrar"),
     path('login/', login, {'template_name': 'usuarios/login.html'}, name="login"),
     path('logout/', logout_then_login, name='logout'),
-    path('generar_simulacion/', GenerarSimulacion.as_view(),name="simulacion"),
+    path('generar_simulacion/<id_sim>', generarSimulacion,name="simulacion"),
     url(r'^line_chart/$', views.line_chart,
         name='line_chart'),
     url(r'^line_chart/json/$', views.line_chart_json,

@@ -5,19 +5,28 @@ from django.urls import reverse_lazy
 from .forms import RegistrarForm
 from .forms import SimularForm
 from random import randint
+from main.models import *
 from django.views.generic import TemplateView
 from chartjs.views.lines import BaseLineChartView
+from django.shortcuts import render
+
 class RegistrarUsuario(CreateView):
     model = User
     template_name = "usuarios/registrar.html"
     form_class = RegistrarForm
     success_url = reverse_lazy("inicio")
 
-class GenerarSimulacion(CreateView):
-	model=User
-	template_name="usuarios/generar_simulacion.html"
-	form_class=SimularForm
-	success_url=reverse_lazy("main_inicio")
+def generarSimulacion(request,id_sim):
+    simulacion=Simulacion.objects.get(id=id_sim)
+    aplicacion=Aplicacion.objects.filter(simulacion=simulacion)[0]
+    area=aplicacion.terreno.area
+
+    context={
+        'simulacion':simulacion,
+        'area':area,
+    }
+    return render(request,'usuarios/generar_simulacion.html',context)
+
 
 class LineChartJSONView(BaseLineChartView):
     def get_labels(self):
