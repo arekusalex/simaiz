@@ -26,3 +26,9 @@ hr{
 .buscar{
     line-height: 2em;
 }
+
+footer{
+    background: #226666;
+    color: yellow;
+    font-weight: bold;
+}
