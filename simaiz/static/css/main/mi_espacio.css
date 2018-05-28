@@ -1,5 +1,5 @@
 .simulacion{
-	background: #D3D7DA;
+	background: #9AE8DB; 
 	font-weight: bold;
 	/* color:white; */
 	border-radius: 20px;
@@ -12,4 +12,16 @@ input[type=submit]{
 }
 .container_sim{
 	/* background: #AED284; */
+}
+.titulo{
+	background: #FFC59E;
+}
+.nav-item{
+	color:blue;
+	font-weight: bold;
+}
+.active{
+	box-shadow:1px -1px lightgreen,2px -2px lightgreen,3px -3px lightgreen,
+			   4px -4px lightgreen,5px -5px lightgreen,6px -6px lightgreen,
+			   7px -7px lightgreen,8px -8px lightgreen,9px -9px lightgreen;
 }

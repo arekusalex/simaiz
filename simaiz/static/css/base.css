@@ -23,3 +23,6 @@ button{
 hr{
     border:3px solid purple;
 }
+.buscar{
+    line-height: 2em;
+}
