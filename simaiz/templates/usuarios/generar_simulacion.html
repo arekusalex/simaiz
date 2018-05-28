@@ -1,22 +1,74 @@
 {% extends "base.html" %}
+{% load staticfiles %}
 {% block contenido %}
-
-    <style type="text/css">input{
-        width: 20px;
-        left: 20px;
-        }</style>
-	<h2 class="text-left">Nombre de Simulacion   Nombre de Usuario</h2>
+<link rel="stylesheet" href="{% static 'js/Chart.min.js' %}">
+ <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    {% block css %}{% endblock css %}
+    {% block js %}{% endblock js %}
+   
+        <div class="three-columns">
+	<h2 class="text-left">Nombre de Simulacion</h2>
+    
+    <h2 class="text-right">Nombre de Usuario</h2>
+    </div>
     <h2 class="text-center">CULTIVO: Maiz:CENTA-Oro blanco</h2>
     <form method="post">
         {% csrf_token %}
          <h6 class="text-center">Extension del terreno:Tantas unidades cuadradas</h6>  
          dia de siembra: <input type="date" name="fechaSiembra" step="1" min="1900-01-01" max="2018-12-31" value="2018-01-01"> <p>
-         Cantidad Optima primera aplicacion:<input type="Cantidad" name="Cantidad">kg de fertilizante1 <input type="date" name="fechaAbonada" step="1" min="1900-01-01" max="2018-12-31" value="2018-01-01"><p>
-         Cantidad Optima segunda aplicacion:<input type="Cantidad" name="Cantidad">kg de fertilizante2 <input type="date" name="fechaAbonada" step="1" min="1900-01-01" max="2018-12-31" value="2018-01-01"><p>
-         Cantidad Optima tercera aplicacion:<input type="Cantidad" name="Cantidad">kg de fertilizante3 <input type="date" name="fechaAbonada" step="1" min="1900-01-01" max="2018-12-31" value="2018-01-01"><p>
+         Cantidad Optima primera aplicacion:<input style="width: 20px; left: 20px;" type="Cantidad" name="Cantidad">kg de fertilizante1 <input type="date" name="fechaAbonada" step="1" min="1900-01-01" max="2018-12-31" value="2018-01-01"><p>
+         Cantidad Optima segunda aplicacion:<input style="width: 20px; left: 20px;" type="Cantidad" name="Cantidad">kg de fertilizante2 <input type="date" name="fechaAbonada" step="1" min="1900-01-01" max="2018-12-31" value="2018-01-01"><p>
+         Cantidad Optima tercera aplicacion:<input style="width: 20px; left: 20px;" type="Cantidad" name="Cantidad">kg de fertilizante3 <input type="date" name="fechaAbonada" step="1" min="1900-01-01" max="2018-12-31" value="2018-01-01"><p>
          Recomendaciones:tienes que utilizar regadio en los meses<p>
-         Rendimiento del maiz: kg<p>
-         Ingreso bruto:$<p>
-         
+         Rendimiento del maiz:<input style="width: 20px; left: 20px;" type="Cantidad" name="Cantidad"> kg<p>
+         Ingreso bruto:$ <input style="width: 20px; left: 20px;" type="Cantidad" name="Cantidad"><p>
+        <div class="three-columns">
+        <p>
+         Grafico de cantidad de nutrientes de cada Aplicacion
+        <canvas id="myChart" width="200" height="100"></canvas>
+
+        <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.0.min.js"></script>
+        <script type="text/javascript" src="{% static 'js/Chart.min.js' %}"></script>
+        <script type="text/javascript">
+            $.get('{% url "line_chart_json" %}', function(data) {
+                var ctx = $("#myChart").get(0).getContext("2d");
+                new Chart(ctx, {
+                    type: 'bar', data: data
+                });
+            });
+        </script>
+        </p>
+        
+     <p>
+         Grafico total de nutrientes aplicados
+        <canvas id="myChart2" width="200" height="100"></canvas>
+
+        <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.0.min.js"></script>
+        <script type="text/javascript" src="{% static 'js/Chart.min.js' %}"></script>
+        <script type="text/javascript">
+            $.get('{% url "line_chart_json1" %}', function(data) {
+                var ctx2 = $("#myChart2").get(0).getContext("2d");
+                new Chart(ctx2, {
+                    type: 'bar', data: data
+                });
+            });
+        </script>
+        </p>
+    </div>
+    <div class="one-columns">
+         <p>  Grafico informativo de humedad de El Salvador<canvas id="myChart3" width="200" height="100"></canvas>
+
+        <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.0.min.js"></script>
+        <script type="text/javascript" src="{% static 'js/Chart.min.js' %}"></script>
+        <script type="text/javascript">
+            $.get('{% url "line_chart_json3" %}', function(data) {
+                var ctx3 = $("#myChart3").get(0).getContext("2d");
+                new Chart(ctx3, {
+                    type: 'bar', data: data
+                });
+            });
+        </script>  
+        </p>
+    </div>
     </form>
 {% endblock contenido %}

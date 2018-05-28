@@ -27,3 +27,18 @@ input{
     with:30px;
     height: 35px
 }
+   
+    .three-columns {
+        
+        -webkit-column-count: 2; /* Chrome, Safari, Opera */
+        -moz-column-count: 2; /* Firefox */
+        column-count: 2;
+    }
+    .one-columns {
+        
+        -webkit-column-count: 1; /* Chrome, Safari, Opera */
+        -moz-column-count: 1; /* Firefox */
+        column-count: 1;
+        width: 450px;
+        height: 450px;
+    }
