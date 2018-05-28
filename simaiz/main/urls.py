@@ -7,5 +7,6 @@ urlpatterns = [
     path('ayuda/', ayuda, name="ayuda"),
     path('direccionar/', direccionar, name='direccionar'),
     path('<username>/', mi_espacio, name='mi_espacio'),
+    path('<username>/<op>/', mi_espacio, name='mi_espacio_op'),
     path('nuevo/', MultipleFormsDemoView.as_view(), name="nuevo_sim"),
 ]
