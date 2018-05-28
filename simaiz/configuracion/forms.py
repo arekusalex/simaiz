@@ -1,8 +1,9 @@
 from django import forms 
+
 from main.models import Configuracion
 
 
-class ConfiguracionForm(form.ModelForm):
+class ConfiguracionForm(forms.ModelForm):
 	class Meta:
 		model = Configuracion
 
@@ -10,9 +11,11 @@ class ConfiguracionForm(form.ModelForm):
 			'precio_maiz',
 		]
 
-		labels = [
-			'precio_maiz' : 'Precio de Venta',
-		]
-		widgets = [
+		labels = {
+			'precio_maiz' : 'Precio de Venta (qq)',
+		}
+		
+		widgets = {
 			'precio_maiz': forms.TextInput(attrs= {'class' : 'form-control'}),
-		]
+		}
+		

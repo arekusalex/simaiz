@@ -2,8 +2,8 @@ from django.urls import path
 from django.urls import include
 
 #importamos la view
-from .views import inicioConfig
+from .views import configuracion_precio
 
 urlpatterns = [
-    path('',inicioConfig, name= "configuracion"),
+    path('',configuracion_precio, name= "configuracion"),
 ]

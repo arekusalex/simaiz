@@ -2,5 +2,15 @@
 
 {% block contenido %}
     <h2 class="text-center">Configurar Parametros de Simulacion</h1>
-    <hr style= "border: 1px solid #f00">   
+    <hr style= "border: 1px solid #f00">  
+    
+    <form method = "post">
+    	<fieldset>
+    	{% csrf_token %}
+    	{{ form.as_p }}
+    	<button type="button" class="btn btn-success">Guardar</button>
+    	</fieldset> 
+    </form>
+
+    <hr style= "border: 1px solid #f00">
 {% endblock contenido %}
