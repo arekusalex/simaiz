@@ -6,5 +6,5 @@ urlpatterns = [
     path('ayuda/', ayuda, name="ayuda"),
     path('direccionar/', direccionar, name='direccionar'),
     path('<username>/', mi_espacio, name='mi_espacio'),
-    path('nuevo/', simformview, name="nuevo_sim"),
+    path('new/', simformview, name="nuevo_sim"),
 ]

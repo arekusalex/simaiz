@@ -5,7 +5,6 @@ from django.shortcuts import redirect
 from django.views.generic import FormView
 from django.urls import reverse_lazy
 from .forms_sim import SimulacionForm, TerrenoForm, HumedadForm
-from .multiforms import MultipleFormsView
 from .models import *
 
 
@@ -70,6 +69,7 @@ def mi_espacio(request, username):
 # 		config.precio_maiz=precio #setiar el valor que metio el user
 # 		config.save()  #guardar todo los cambios
 
+@login_required()
 def simformview(request):
     if request.method == 'POST':
         sim_form = SimulacionForm(request.POST)
