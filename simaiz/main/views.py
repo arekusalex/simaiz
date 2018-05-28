@@ -26,12 +26,24 @@ def direccionar(request):
 @login_required()
 def mi_espacio(request, username):
 	if username == request.user.username:
-		simulaciones=None
+		simulaciones=list()
 		if request.method=='POST':
 			pass
 		haySimu=Simulacion.objects.filter(usuario=request.user).exists()
 		if haySimu:
-			simulaciones=Simulacion.objects.filter(usuario=request.user)
+			sims=Simulacion.objects.filter(usuario=request.user)
+			nomFer=list()
+			sList=list()
+			for sim in sims:
+				applies=Aplicacion.objects.filter(simulacion=sim)
+				for ap in applies:
+					nomFer.append(ap.fertilizante)
+				sList.append(sim)
+				sList.append(nomFer)
+				simulaciones.append(sList)
+				sList=[] #vaciando lista
+				nomFer=[] #vaciando los nombre de los fertilizantes	
+
 		contexto = {
 			'nombre': request.user.first_name+' '+request.user.last_name,
 			'simu':haySimu,
@@ -58,3 +70,14 @@ class MultipleFormsDemoView(MultipleFormsView):
     def form_valid(self, form):
         print("yay it's valid!")
         return super(MultipleFormsDemoView).form_valid(form)
+
+
+
+
+# def config(request):
+
+# 	if request.method='POST': #solo se metera cuando envien un formulario
+# 		precio=request.POST.get('input_precio_maiz') #obtener el valor que ingreso el user en el form
+# 		config=Configuracion.objects.filter(usuario=request.user) #extraer solo la config del user
+# 		config.precio_maiz=precio #setiar el valor que metio el user
+# 		config.save()  #guardar todo los cambios
