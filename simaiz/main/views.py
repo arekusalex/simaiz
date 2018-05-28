@@ -57,7 +57,7 @@ def ayuda(request):
 @login_required()
 def direccionar(request):
     if request.user.is_authenticated:
-        return redirect('mi_espacio', username=request.user.username)
+        return redirect('mi_espacio_op', username=request.user.username)
     else:
         return redirect('inicio')
 
@@ -94,7 +94,7 @@ def mi_espacio(request, username, op='all'):
                         id_sim = request.POST.get('id_sim')
                         simulacion = Simulacion.objects.get(id=id_sim)
                         simulacion.delete()
-                        return redirect('mi_espacio', username=request.user.username)
+                        return redirect('mi_espacio_op', username=request.user.username)
 
             elif op == 'shared':
                 activo = ['', 'active', '']
@@ -173,7 +173,7 @@ def mi_espacio(request, username, op='all'):
         }
         return render(request, "main/mi_espacio.html", contexto)
     else:
-        return redirect('mi_espacio_op', username=request.user.username)
+        return redirect('mi_espacio', username=request.user.username)
 
 
 # def config(request):
@@ -206,8 +206,6 @@ def mi_espacio(request, username, op='all'):
 # 			config=Configuracion(usuario=request.user, precio_maiz=precio)#creando una nueva config
 # 			config.save() #guardando los cambios
 
-
-@login_required()
 def simformview(request):
     if request.method == 'POST':
         sim_form = SimulacionForm(request.POST)
