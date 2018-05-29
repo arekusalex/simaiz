@@ -174,26 +174,3 @@ def mi_espacio(request, username,op='all'):
 	else:
 		return redirect('mi_espacio_op', username=request.user.username)
 
-
-class MultipleFormsDemoView(MultipleFormsView):
-    template_name = "main/SimulacionForm.html"
-    success_url = reverse_lazy("sim_lista")
-    forms_classes = [
-        SimulacionForm,
-        TerrenoForm,
-        HumedadForm,
-    ]
-
-    def get_forms_classes(self):
-        ##forms_classes = super(MultipleFormsDemoView, self).get_forms_classes()
-        return super(MultipleFormsDemoView, self).get_forms_classes()
-
-    def form_valid(self, form):
-        print("yay it's valid!")
-        return super(MultipleFormsDemoView).form_valid(form)
-
-
-
-
-
-		
