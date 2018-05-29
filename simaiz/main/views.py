@@ -173,7 +173,7 @@ def mi_espacio(request, username,op='all'):
 		}
 		return render(request, "main/mi_espacio.html", contexto)
 	else:
-		return redirect('mi_espacio_op', username=request.user.username)
+		return redirect('mi_espacio', username=request.user.username)
 
 def simformview(request):
     if request.method == 'POST':
