@@ -57,11 +57,10 @@ def ayuda(request):
 
 @login_required()
 def direccionar(request):
-    if request.user.is_authenticated:
-        return redirect('mi_espacio', username=request.user.username)
-    else:
-        return redirect('inicio')
-
+	if request.user.is_authenticated:
+		return redirect('mi_espacio', username=request.user.username)
+	else:
+		return redirect('inicio') 
 
 @login_required()
 def mi_espacio(request, username, op='all'):
@@ -175,7 +174,6 @@ def mi_espacio(request, username, op='all'):
         return render(request, "main/mi_espacio.html", contexto)
     else:
         return redirect('mi_espacio_op', username=request.user.username)
-
 
 # def config(request):
 
