@@ -175,37 +175,6 @@ def mi_espacio(request, username, op='all'):
     else:
         return redirect('mi_espacio_op', username=request.user.username)
 
-# def config(request):
-
-# 	if request.method == 'POST':
-# 		hayConfig=Configuracion.objects.filter(usuario=request.user).exists() #verificando que exista
-# 		if hayConfig: #si ya hay config solo modificar
-# 			config=Configuracion.objects.filter(usuario=request.user) #extraer solo la config del user
-# 			form=ConfigForm(request.POST,instance=config)
-# 			if form.is_valid():
-# 				config= form.save()
-# 				config.save()
-# 		else: #si no hay config crearla
-# 			form = ConfigForm(request.POST)
-# 			if form.is_valid():
-# 				config= form.save()
-# 				config.save()
-# 	else:
-# 		form = ConfigForm()
-
-
-# 	if request.method=='POST': #solo se metera cuando envien un formulario
-# 		hayConfig=Configuracion.objects.filter(usuario=request.user).exists() #verificando que exista
-# 		precio=request.POST.get('input_precio_maiz') #obtener el valor que ingreso el user en el form
-# 		if hayConfig: #si ya hay config solo modificar
-# 			config=Configuracion.objects.filter(usuario=request.user) #extraer solo la config del user
-# 			config.precio_maiz=precio #setiar el valor que metio el user
-# 			config.save()  #guardar todo los cambios
-# 		else: #si no hay config crearla
-# 			config=Configuracion(usuario=request.user, precio_maiz=precio)#creando una nueva config
-# 			config.save() #guardando los cambios
-
-
 def simformview(request):
     if request.method == 'POST':
         sim_form = SimulacionForm(request.POST)
