@@ -1,17 +1,21 @@
 from django import forms
 from django.forms import ModelForm
-from .models import Simulacion, Planta, Suelo, UnidadMedida, Aplicacion, \
-    Terreno, Departamento, Region, Humedad, Fertilizante
+from .models import *
 
 
 class SimulacionForm(ModelForm):
     class Meta:
         model = Simulacion
         fields = [
+            'usuario',
             'nombre_sim',
             'fecha_siembra',
             'planta',
+            'compartir',
         ]
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['planta'].queryset = Planta.objects.all()
 
 class TerrenoForm(ModelForm):
     class Meta:
@@ -19,24 +23,39 @@ class TerrenoForm(ModelForm):
         fields = [
             'area',
             'unidad',
-            'suelo',
-            'depto',
         ]
 
-class HumedadForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['unidad'].queryset = UnidadMedida.objects.all()
+
+class CondicionesForm(ModelForm):
     class Meta:
-        model = Humedad
+        model = Condiciones
         fields = [
+            'depto',
             'region',
         ]
-        widgets = {
-            'region': forms.Select(attrs={'class':'form_control'}),
-        }
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['depto'].queryset = Departamento.objects.all()
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['region'].queryset = Region.objects.all()
 
 
-class AplicacionForm(ModelForm):
+class EstSueloForm(ModelForm):
     class Meta:
-        model = Aplicacion
+        model = EstSuelo
         fields = [
-            'fertilizante',
+            'suelo',
+            'contsuelo',
         ]
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['suelo'].queryset = Suelo.objects.all()
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['contsuelo'].queryset = ContSuelo.objects.all()

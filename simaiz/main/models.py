@@ -7,7 +7,7 @@ class Suelo(models.Model):
     nombre_suelo = models.CharField(max_length=50)
 
     def __str__(self):
-        return '{}'.format(self.nombre_suelo), self.nombre_suelo
+        return self.nombre_suelo
 
 class Elemento(models.Model):
     nombre_elemento = models.CharField(max_length=20)
@@ -23,14 +23,7 @@ class Planta(models.Model):
     agua_req = models.FloatField()
 
     def __str__(self):
-        return '{}'.format(self.nombre_planta), self.nombre_planta
-
-class UnidadMedida(models.Model):
-    unidad_medida = models.CharField(max_length=20)
-    prefijo=models.CharField(max_length=5)
-
-    def __str__(self):
-        return '{}'.format(self.unidad_medida), self.prefijo
+        return '{}'.format(self.nombre_planta)
 
 class Configuracion(models.Model):
     usuario = models.ForeignKey(User, null=True, blank=True, on_delete=models.CASCADE)
@@ -45,25 +38,29 @@ class Fertilizante(models.Model):
     tipo_fertilizante = models.CharField(max_length=50)
 
     def __str__(self):
-        return '{}'.format(self.nombre_fertilizante), self.nombre_fertilizante
+        return self.nombre_fertilizante
 
 class Contenido(models.Model):
     fertilizante = models.ForeignKey(Fertilizante, null=True, blank=True, on_delete=models.CASCADE)
     elemento = models.OneToOneField(Elemento, null=True, blank=True, on_delete=models.CASCADE)
-    suelo = models.ForeignKey(Suelo, null=True, blank=True, on_delete=models.CASCADE)
     cantidad = models.CharField(max_length=20)
-    porcentaje = models.FloatField()
+    porcentaje = models.FloatField(null=True, blank=True)
 
     def __str__(self):
-        return 'contenido: %s -> %s' %self.fertilizante %self.elemento
+        return self.cantidad
+
+class ContSuelo(models.Model):
+    elemento = models.OneToOneField(Elemento, null=True, blank= True, on_delete=models.CASCADE)
+    suelo = models.ForeignKey(Suelo, null=True , blank=True, on_delete=models.CASCADE)
+    cantidad = models.CharField(max_length=20)
 
 class Simulacion(models.Model):
     usuario = models.ForeignKey(User, null=True, blank=True, on_delete=models.CASCADE)
     planta = models.ForeignKey(Planta, null=True, blank=True, on_delete=models.CASCADE)
     nombre_sim = models.CharField(max_length=50)
     fecha_siembra = models.DateField()
-    rendimiento = models.FloatField()
-    total = models.FloatField()
+    rendimiento = models.FloatField(null=True, blank=True)
+    total = models.FloatField(null=True, blank=True)
     compartir = models.BooleanField(default=False)
 
     def __str__(self):
@@ -73,16 +70,18 @@ class Departamento(models.Model):
     nombre_depto = models.CharField(max_length=20)
 
     def __str__(self):
-        return '{}'.format(self.nombre_depto), self.nombre_depto
+        return self.nombre_depto
 
-class Terreno(models.Model):
-    depto = models.ForeignKey(Departamento, null=True, blank=True, on_delete=models.CASCADE)
-    suelo = models.OneToOneField(Suelo, null=True, blank=True, on_delete=models.CASCADE)
-    unidad = models.OneToOneField(UnidadMedida, null=True, blank=True, on_delete=models.CASCADE)
-    area = models.FloatField()
+class UnidadMedida(models.Model):
+    unidad_medida = models.CharField(max_length=20)
+    prefijo = models.CharField(max_length=5)
 
     def __str__(self):
-        return 'suelo %s' %self.depto
+        return self.prefijo
+
+class Terreno(models.Model):
+    unidad = models.ForeignKey(UnidadMedida, null=True, blank=True, on_delete=models.CASCADE)
+    area = models.FloatField()
 
 class Aplicacion(models.Model):
     simulacion= models.ForeignKey(Simulacion,null=True, blank=True, on_delete=models.CASCADE)
@@ -104,10 +103,9 @@ class Region(models.Model):
     zona = models.CharField(max_length=20)
 
     def __str__(self):
-        return '{}'.format(self.zona), 'Region: %s' %self.depto
+        return 'Region: %s' %self.zona
 
 class Humedad(models.Model):
-    depto = models.ForeignKey(Departamento, null=True, blank=True, on_delete=models.CASCADE)
     region = models.ForeignKey(Region, null=True, blank=True, on_delete=models.CASCADE)
     mes = models.CharField(max_length=15)
     valor = models.FloatField()
@@ -116,3 +114,14 @@ class Humedad(models.Model):
 
     def __str__(self):
         return 'humedad: %s' %self.depto
+
+class Condiciones(models.Model):
+    depto = models.ForeignKey(Departamento, null=True, blank=True, on_delete=models.CASCADE)
+    region = models.ForeignKey(Region, null=True, blank=True, on_delete=models.CASCADE)
+    humedad = models.ForeignKey(Humedad, null=True, blank=True, on_delete=models.CASCADE)
+    meses = models.DateField(null=True, blank=True)
+
+class EstSuelo(models.Model):
+    suelo = models.ForeignKey(Suelo, null=True, blank=True, on_delete=models.CASCADE)
+    contsuelo = models.ForeignKey(ContSuelo, null=True, blank=True, on_delete=models.CASCADE)
+    condicion = models.CharField(max_length=50, null=True, blank=True)

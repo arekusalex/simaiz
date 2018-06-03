@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block contenido %}
+<form method="post">{% csrf_token %}
+    <h3>Crear Simulación: </h3>
+    {{ sim_form.as_p }}
+    {{ terreno_form.as_p }}
+    {{ cond_form.as_p }}
+    {{ estsuelo_form.as_p }}
+    <input type="submit" value="Guardar" />
+</form>
+
+{% endblock %}

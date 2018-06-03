@@ -1,13 +1,119 @@
 {% extends 'base.html' %}
 {% block contenido %}
-    <h2>CREAR SIMULACION</h2>
+<h2>CREAR SIMULACION</h2>
+<form method="post">
+    {% csrf_token %}
+    <div class="form-group row">
+        <div class="col-sm-3">
+            <input name="usuario" id="id_usuario" type="hidden" value="{{ request.user }}" disabled >
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="nombre_sim" class="col-sm-3 col-form-label">Nombre de Simulación</label>
+        <div class="col-sm-9">
+          <input type="text" class="form-control" name="nombre_sim" id="nombre_sim" placeholder="Nombre">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="fecha_siembra" class="col-sm-3 col-form-label">Fecha de Siembra</label>
+        <div class="col-sm-3">
+          <input type="date" class="form-control" name="fecha_siembra" id="fecha_siembra">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="id_planta" class="col-sm-3 col-form-label">Semilla</label>
+        <div class="col-sm-3">
+          <select name="planta" id="id_planta" class="custom-select">
+                <option selected>Seleccionar...</option>
+                {% for p in plantas %}
+                <option value="{{ p.id_planta }}">{{ p.nombre_planta }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="id_unidad" class="col-sm-3 col-form-label">Area</label>
+        <div class="col-sm-3">
+          <input type="number" class="form-control" name="area" id="area">
+        </div>
+        <div class="col-sm-3">
+          <select name="unidad" id="id_unidad" class="custom-select">
+                <option selected>Seleccionar...</option>
+                {% for uni in unidades %}
+                <option value="{{ uni.id_unidad }}">{{ uni.prefijo }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" type="radio" name="radios" id="radios1" value="option1" >
+      <label class="form-check-label" for="radios1">
+        Tengo un Estudio de Suelo
+      </label>
+        <!--<div class="form-group row">
+        <label for="id_contsuelo" class="col-sm-4 col-form-label">Niveles de Nutrientes (PK):</label>
+        <label for="id_contsuelo" class="col-sm-2 col-form-label">Fosforo (P)</label>
+        <div class="col-sm-2">
+          <select name="contsuelo" id="id_contsuelo" class="custom-select">
+                <option selected>Seleccionar...</option>
+                {% for p in plantas %}
+                <option value="{{ p.id_planta }}">{{ p.nombre_planta }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <label for="id_contsuelo2" class="col-sm-2 col-form-label">Potasio (K)</label>
+        <div class="col-sm-2">
+          <select name="contsuelo" id="id_contsuelo2" class="custom-select">
+                <option selected>Seleccionar...</option>
+                {% for p in plantas %}
+                <option value="{{ p.id_planta }}">{{ p.nombre_planta }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        </div>-->
+    </div>
 
-      <form method="post">
-        {% csrf_token %}
-          {{ sim_form.as_p }}
-          {{ terreno_form.as_p }}
-          {{ humedad_form.as_p }}
-        <button type="submit" class="btn btn-success">Submit</button>
-      </form>
+    <div class="form-check">
+      <input class="form-check-input" type="radio" name="radios" id="radios2" value="option2" checked>
+      <label class="form-check-label" for="radios2">
+        No tengo un estudio de Suelo
+      </label>
+        <div class="form-group row">
+        <label for="id_suelo" class="col-sm-3 col-form-label">Tipo de Suelo</label>
+        <div class="col-sm-3">
+          <select name="suelo" id="id_suelo" class="custom-select">
+                <option selected>Seleccionar...</option>
+                {% for s in suelos %}
+                <option value="{{ s.id_suelo }}">{{ s.nombre_suelo }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+    </div>
+    <div class="form-group row">
+        <label for="id_departamento" class="col-sm-3 col-form-label">Departamento</label>
+        <div class="col-sm-3">
+          <select name="depto" id="id_departamento" class="custom-select">
+                <option selected>Seleccionar...</option>
+                {% for d in departamentos %}
+                <option value="{{ d.id_departamento }}">{{ d.nombre_depto }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="id_region" class="col-sm-3 col-form-label">Zona</label>
+        <div class="col-sm-3">
+          <select name="zona" id="id_region" class="custom-select">
+                <option selected>Seleccionar...</option>
+                {% for z in regiones %}
+                <option value="{{ z.id_region }}">{{ z.zona }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+
+    <input type="submit" value="Guardar" class="btn btn-success"/>
+</form>
 
 {% endblock contenido %}
