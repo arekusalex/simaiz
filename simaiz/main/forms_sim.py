@@ -2,7 +2,7 @@ from django import forms
 from django.forms import ModelForm
 from .models import *
 
-
+''' 
 class SimulacionForm(ModelForm):
     class Meta:
         model = Simulacion
@@ -58,4 +58,4 @@ class EstSueloForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['contsuelo'].queryset = ContSuelo.objects.all()
+        self.fields['contsuelo'].queryset = ContSuelo.objects.all() '''

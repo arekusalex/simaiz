@@ -175,6 +175,7 @@ def mi_espacio(request, username,op='all'):
     else:
         return redirect('mi_espacio', username=request.user.username)
 
+'''
 def simformview(request):
     if request.method == 'POST':
         sim_form = SimulacionForm(request.POST)
@@ -211,4 +212,4 @@ def simformview(request):
     }
 
     return render(request, "main/SimulacionForm.html", context)
-
+'''
