@@ -5,11 +5,11 @@
     <hr style= "border: 1px solid #f00">  
     
     <form method = "post">
-    	<fieldset>
+    	
     	{% csrf_token %}
     	{{ form.as_p }}
-    	<button type="button" class="btn btn-success">Guardar</button>
-    	</fieldset> 
+    	<button type="submit" class="btn btn-success">Guardar</button>
+    	
     </form>
 
     <hr style= "border: 1px solid #f00">

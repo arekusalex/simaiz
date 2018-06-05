@@ -23,7 +23,8 @@ def configuracion_precio(request):
 		if request.method == 'POST':
 			precio = request.POST.get('precio_maiz')
 			form = Configuracion(usuario=request.user, precio_maiz=precio)
-			form.save()
+			if form.is_valid:
+				form.save()
 			return redirect('configuracion')
 		else:
 			form= ConfiguracionForm
