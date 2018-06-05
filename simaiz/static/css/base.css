@@ -23,3 +23,12 @@ button{
 hr{
     border:3px solid purple;
 }
+.buscar{
+    line-height: 2em;
+}
+
+footer{
+    background: #226666;
+    color: yellow;
+    font-weight: bold;
+}
