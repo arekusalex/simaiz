@@ -1,16 +1,21 @@
 {% extends "base.html" %}
 
 {% block contenido %}
-    <h2 class="text-center">Configurar Parametros de Simulacion</h1>
+    <h2 class="text-center">Configurar Parametros de Simulacion</h2>
     <hr style= "border: 1px solid #f00">  
-    
     <form method = "post">
-    	
     	{% csrf_token %}
     	{{ form.as_p }}
     	<button type="submit" class="btn btn-success">Guardar</button>
-    	
     </form>
-
+    
     <hr style= "border: 1px solid #f00">
+
+    <form method = "post">
+    	{% csrf_token %}
+    	{{ fertilizantes.as_p }}
+    	<button type="submit" class="btn btn-success">Guardar</button>
+    </form>
+			
+  
 {% endblock contenido %}
