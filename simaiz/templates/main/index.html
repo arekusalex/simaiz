@@ -38,14 +38,15 @@
         		<h3 class="text-center col-12">{{sim.0.nombre_sim}}</h3>
         	</div>
             <div class="row">
-                <div class="col-lg-3 col-md-4 col-sm-6"><p>CULTIVO:</p><p>{{sim.0.planta}}</p></div>
-                <div class="col-lg-3 col-md-4 col-sm-6"><p>EPOCA DE SIEMBRA:</p><p>{{sim.0.fecha_siembra}}</p></div>
-                <div class="col-lg-3 col-md-4 col-sm-12"><p>FERTILIZANTES:</p>
+                <div class="col-lg-2 col-md-6 col-sm-6"><p class="m-0">USUARIO:</p><p>{{sim.0.usuario.username}}</p></div>
+                <div class="col-lg-2 col-md-6 col-sm-6"><p class="m-0">CULTIVO:</p><p>{{sim.0.planta}}</p></div>
+                <div class="col-lg-3 col-md-6 col-sm-6"><p class="m-0">EPOCA DE SIEMBRA:</p><p>{{sim.0.fecha_siembra}}</p></div>
+                <div class="col-lg-3 col-md-6 col-sm-12"><p class="m-0">FERTILIZANTES:</p>
                 {% for fer in sim.1 %}
-                    <p>{{fer}}</p>
+                    <p class="m-0">{{fer}}</p>
                 {% endfor %}
                 </div>
-                <div class="col-lg-3 col-md-12 col-sm-12 d-flex flex-column justify-content-center">
+                <div class="col-lg-2 col-md-12 col-sm-12 d-flex flex-column justify-content-center">
                     <div class="row d-flex justify-content-center">
                         <div class="col-lg-12 col-md-6  col-sm-12 my-1">
                             <form method="post" action="{% url 'simulacion' sim.0.id%}">
