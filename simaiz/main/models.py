@@ -1,14 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
+from .choices import *
 
 # Create your models here.
-
-class Suelo(models.Model):
-    estudio = models.BooleanField(default=False)
-    tipo_suelo = models.CharField(max_length=50)
-    nivel_p = models.CharField(max_length=20)
-    nivel_k = models.CharField(max_length=20)
-
 
 class Planta(models.Model):
     nombre_planta = models.CharField(max_length=50)
@@ -44,12 +38,18 @@ class Fertilizante(models.Model):
 
 class Simulacion(models.Model):
     usuario = models.ForeignKey(User, null=True, blank=True, on_delete=models.PROTECT)
-    semilla = models.CharField(max_length=50)
     nombre_sim = models.CharField(max_length=50)
+    semilla = models.CharField(max_length=50)
     fecha_siembra = models.DateField()
     area = models.FloatField()
-    unidad_long = models.CharField(max_length=20)
+    unidad_long = models.CharField(max_length=20, choices=UNIDAD_LONG)
+    depto = models.CharField(max_length=20, default="")
+    zona = models.CharField(max_length=20, default="")
+    tipo_suelo = models.CharField(max_length=50, choices=TIPO_SUELO, null=True, blank=True)
+    nivel_p = models.CharField(max_length=20, choices=NIVEL, null=True, blank=True)
+    nivel_k = models.CharField(max_length=20, choices=NIVEL, null=True, blank=True)
     compartir = models.BooleanField(default=False)
+
 
     def __str__(self):
         return self.nombre_sim
@@ -67,13 +67,6 @@ class Aplicacion(models.Model):
     def __str__(self):
         return 'aplicacion: %s' %self.planta
 
-
-class Condiciones(models.Model):
-    sim = models.OneToOneField(Simulacion, null=True, blank=True, on_delete=models.CASCADE)
-    suelo = models.OneToOneField(Suelo, null=True, blank=True, on_delete=models.CASCADE)
-    depto = models.CharField(max_length=20)
-    zona = models.CharField(max_length=20)
-    acumulado = models.FloatField()
 
 class Departamento(models.Model):
     nombre_depto = models.CharField(max_length=20)

@@ -1,13 +1,14 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render_to_response
 from django.views.generic import FormView
 from django.urls import reverse_lazy
 from .forms_sim import *
 from .models import *
 from .utilidades import *
 from django.views.generic.edit import CreateView
+from django.contrib.auth.models import User
 
 
 # Create your views here.
@@ -175,41 +176,45 @@ def mi_espacio(request, username,op='all'):
     else:
         return redirect('mi_espacio', username=request.user.username)
 
-'''
-def simformview(request):
-    if request.method == 'POST':
-        sim_form = SimulacionForm(request.POST)
-        terreno_form = TerrenoForm(request.POST)
-        cond_form = CondicionesForm(request.POST)
-        estsuelo_form = EstSueloForm(request.POST)
+class SimFormView(CreateView):
+    model = Simulacion
+    template_name = "main/simform.html"
+    form_class = SimForm
+    success_url = reverse_lazy("crear_app")
 
-        if sim_form.is_valid() or terreno_form.is_valid() or cond_form.is_valid() or estsuelo_form.is_valid():
-            sim_form.save()
-            terreno_form.save()
-            cond_form.save()
-            estsuelo_form.save()
-            return redirect('direccionar')
+    def get_context_data(self, **kwargs):
+        context = super(SimFormView, self).get_context_data(**kwargs)
+        context['plantas'] = Planta.objects.all()
+        context['deptos'] = Departamento.objects.all()
+        context['regions'] = Region.objects.all()
+
+        if 'form' not in context:
+            context['form'] = self.form_class(self.request.GET)
+
+        return context
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object
+        form = self.form_class(request.POST)
+
+        if form.is_valid():
+            form.save()
+
+            return HttpResponseRedirect(self.get_success_url())
         else:
             return HttpResponse('Error!')
 
-    else:
-        sim_form = SimulacionForm()
-        terreno_form = TerrenoForm()
-        cond_form = CondicionesForm()
-        estsuelo_form = EstSueloForm()
+def load_regions(request):
+    region_id = request.GET.get('zona')
+    regions = Region.objects.filter(region_id=region_id).order_by('zona')
+    return render(request, 'main/regions_options.html', {'regions': regions})
 
-    context = {
-        # 'usuario': Simulacion.objects.filter(usuario=request.user),
-        'plantas': Planta.objects.all(),
-        'unidades': UnidadMedida.objects.all(),
-        'suelos': Suelo.objects.all(),
-        'departamentos': Departamento.objects.all(),
-        'regiones': Region.objects.all(),
-        'sim_form': sim_form,
-        'terreno_form': terreno_form,
-        'cond_form': cond_form,
-        'estsuelo_form': estsuelo_form,
-    }
 
-    return render(request, "main/SimulacionForm.html", context)
-'''
+class AplicacionView(CreateView):
+    model = Aplicacion
+    template_name = "main/simform3.html"
+    form_class = AplicacionForm
+    success_url = reverse_lazy("direccionar")
+
+
+
