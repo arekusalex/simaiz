@@ -5,9 +5,13 @@
 
     {% csrf_token %}
 
-    {{ form.as_p }}
+    {{ aplicacion_form_set.management_form }}
+    {% for aplicacion_form in aplicacion_form_set %}
 
+        {{ aplicacion_form.as_p }}
 
+    {% endfor %}
+    
     <input type="submit" value="Guardar" class="btn btn-success"/>
 </form>
 
