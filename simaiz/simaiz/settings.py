@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'main',
     'usuarios',
     'chartjs',
+    'configuracion',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -85,9 +86,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'simaiz_db',
-
-        # 'USER': 'postgres',
-        # 'PASSWORD': 'postgres',
+        'USER': 'postgres',
+        'PASSWORD': 'postgres',
         'USER': 'miusuariodb',
         'PASSWORD': 'usuariodb',
         'HOST': 'localhost',

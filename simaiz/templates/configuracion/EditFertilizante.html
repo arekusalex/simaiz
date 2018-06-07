@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block contenido %}
+
+	<form method="POST">
+		{% csrf_token %}
+		{{contexto.as_p }}
+		<div class="container">
+            <div class= "row">
+                <div class="col-sm-12">
+                   <button type="submit" class="btn btn-success btn-block" name="btnFormEditar">Guardar Cambios</button>
+                </div>
+            </div>     
+        </div>
+	</form>
+
+{% endblock contenido %}

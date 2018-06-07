@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block contenido %}
+<form method="post">
+    {% csrf_token %}
+
+    <h3>Crear Simulación: </h3>
+
+    {{ form.as_p }}
+
+
+    <script>
+    $("#id_departamento").change(function () {
+      var url = $("#CondicionesForm").attr("data-regions-url");  // get the url of the `load_cities` view
+      var DepartamentoId = $(this).val();  // get the selected country ID from the HTML input
+
+      $.ajax({                       // initialize an AJAX request
+        url: url,                    // set the url of the request (= localhost:8000/hr/ajax/load-cities/)
+        data: {
+          'depto': DepartamentoId       // add the country id to the GET parameters
+        },
+        success: function (data) {   // `data` is the return of the `load_cities` view function
+          $("#id_region").html(data);  // replace the contents of the city input with the data that came from the server
+        }
+      });
+
+    });
+  </script>
+
+    <input type="submit" value="Guardar" />
+</form>
+
+{% endblock %}
