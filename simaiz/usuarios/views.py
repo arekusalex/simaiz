@@ -19,25 +19,26 @@ class RegistrarUsuario(CreateView):
 def generarSimulacion(request,id_sim):
     simulacion=Simulacion.objects.get(id=id_sim)
     aplicacion=Aplicacion.objects.filter(simulacion=simulacion)[0]
-    area=aplicacion.terreno.area
-    cantidad=aplicacion.cantidad_fertilizante
-    fecha=aplicacion.fecha
+    #area=aplicacion.terreno.area
+    #cantidad=aplicacion.cantidad_fertilizante
+    fecha=aplicacion.fecha_app
     fertilizante=aplicacion.fertilizante
     Fosforo=aplicacion.fosforo_req
     Potasio=aplicacion.potasio_req
-    Nitrogeno=aplicacion.nitrogeno_req
     context={
         'simulacion':simulacion,
-        'area':area,
-        'cantidad':cantidad,
+        #'area':area,
+        #'cantidad':cantidad,
         'fecha':fecha,
         'fertilizante':fertilizante,
-        'nitrogeno':Nitrogeno,
+        #'nitrogeno':Nitrogeno,
         'potasio':Potasio,
         'fosforo':Fosforo,
     }
     return render(request,'usuarios/generar_simulacion.html',context)
 
+
+    
 
 class LineChartJSONView(BaseLineChartView):
     def get_labels(self):
