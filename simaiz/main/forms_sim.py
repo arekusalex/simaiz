@@ -54,4 +54,4 @@ class AplicacionForm(ModelForm):
             'potasio_req',
         ]
 
-# AplicacionFormSet = modelformset_factory(Aplicacion, form=AplicacionForm, extra=2)
+AplicacionFormSet = modelformset_factory(Aplicacion, form=AplicacionForm, extra=1)
