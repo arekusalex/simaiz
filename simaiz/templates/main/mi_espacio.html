@@ -84,7 +84,7 @@
                             </form>
                         </div>
                         <div class="col-lg-12 col-md-4 my-1">
-                            <form method="post">
+                            <form method="post" action="{% url 'simulacion' sim.0.id%}">
                                 {% csrf_token %}
                                 <input class="btn btn-block btn-success" type="Submit" name="" value="Visualizar">
                             </form>

@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+    {% block css %}
+<link rel="stylesheet" href="{% static 'js/Chart.min.js' %}">
+ <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    {% endblock css %}
+    {% block js %}{% endblock js %}
+{% block contenido %}
+
+<div class="row">
+    <div class="col-6"><h2 class="text-center">{{simulacion.nombre_sim}}</h2></div>
+    <div class="col-6"><h2 class="text-center">{{simulacion.usuario}}</h2></div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <h3 class="text-center">{{simulacion.planta}}</h3>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12"><h4 class="text-center">Extension terreno: {{area}}</h4></div>
+</div>
+<div class="row">
+    <div class="col-12"><h8 class="text-left">Dia de siembra: {{simulacion.fecha_siembra}}</h8></div>
+</div>
+<div class="row">
+    <div class="col-12"><h8 class="text-left">Calidad Optima primera aplicacion: {{cantidad}} Kg. de Fertilizante: {{fertilizante}}  {{fecha}}</h8></div>
+</div> 
+<div class="row">
+    <div class="col-12"><h8 class="text-left">Calidad Optima segunda aplicacion: {{cantidad}} Kg. de Fertilizante: {{fertilizante}}  {{fecha}}</h8></div>
+</div>
+<div class="row">
+    <div class="col-12"><h8 class="text-left">Calidad Optima tercera aplicacion: {{cantidad}} Kg. de Fertilizante: {{fertilizante}}  {{fecha}}</h8></div>
+</div>
+<div class="row">
+    <div class="col-12"><h7 class="text-left">Recomendaciones:</h7>en los meses</div>
+</div>
+<div class="row">
+    <div class="col-12"><h7 class="text-left">Rendimiento de maiz: {{simulacion.rendimiento}}</h7> KG</div>
+</div>
+<div class="row">
+    <div class="col-12"><h7 class="text-left">Ingreso Bruto:$ </h7></div>
+</div>
+
+    <script src="{% static 'Chart.js' %}"></script>
+  <div class="three-columns">
+        <p>
+         Grafico de cantidad de nutrientes de cada aplicacion
+        <canvas id="myChart" width="200" height="100"></canvas>
+
+        <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.0.min.js"></script>
+        <script type="text/javascript" src="{% static 'js/Chart.min.js' %}"></script>
+        <script type="text/javascript">
+            $.get('{% url "line_chart_json" %}', function(data) {
+                var ctx = $("#myChart").get(0).getContext("2d");
+                new Chart(ctx, {
+                    type: 'bar', data: data
+                });
+            });
+        </script>
+        </p>
+        
+     <p>
+         Grafico total de nutrientes aplicados durante el proceso
+        <canvas id="myChart2" width="200" height="100"></canvas>
+
+        <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.0.min.js"></script>
+        <script type="text/javascript" src="{% static 'js/Chart.min.js' %}"></script>
+        <script type="text/javascript">
+            $.get('{% url "line_chart_json2" %}', function(data) {
+                var ctx2 = $("#myChart2").get(0).getContext("2d");
+                new Chart(ctx2, {
+                    type: 'bar', data: data
+                });
+            });
+        </script>
+        </p>
+    </div>
+    <div class="one-columns">
+         <p>  Grafico informativo de humedad de El Salvador<canvas id="myChart3" width="200" height="100"></canvas>
+
+        <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.0.min.js"></script>
+        <script type="text/javascript" src="{% static 'js/Chart.min.js' %}"></script>
+        <script type="text/javascript">
+            $.get('{% url "line_chart_json3" %}', function(data) {
+                var ctx3 = $("#myChart3").get(0).getContext("2d");
+                new Chart(ctx3, {
+                    type: 'bar', data: data
+                });
+            });
+        </script>  
+        </p>
+    </div>
+    </form>
+{% endblock contenido %}
