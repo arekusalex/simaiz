@@ -245,5 +245,21 @@ class AplicacionView(CreateView):
     form_class = AplicacionForm
     success_url = reverse_lazy("direccionar")
 
+    def get(self, request, *args, **kwargs):
+        self.object = None
+        aplicacion_form_set = AplicacionFormSet()
+        return self.render_to_response(self.get_context_data(aplicacion_form_set=aplicacion_form_set))
 
+    def post(self, request, *args, **kwargs):
+        aplicacion_form_set = AplicacionFormSet(request.POST)
+        if aplicacion_form_set.is_valid():
+            return self.form_valid(aplicacion_form_set)
+        else:
+            return self.form_invalid(aplicacion_form_set)
 
+    def form_valid(self, aplicacion_form_set):
+        aplicacion_form_set.save()
+        return HttpResponseRedirect(self.success_url)
+
+    def form_invalid(self, aplicacion_form_set):
+        return self.render_to_response(self.get_context_data(aplicacion_form_set=aplicacion_form_set))
