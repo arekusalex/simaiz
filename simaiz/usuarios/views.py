@@ -19,9 +19,9 @@ class RegistrarUsuario(CreateView):
 def generarSimulacion(request,id_sim):
     simulacion=Simulacion.objects.get(id=id_sim)
     aplicacion=Aplicacion.objects.filter(simulacion=simulacion)[0]
-    area=aplicacion.terreno.area
-    cantidad=aplicacion.cantidad_fertilizante
-    fecha=aplicacion.fecha
+    area=simulacion.area
+    cantidad='Proximamente.... '
+    fecha=aplicacion.fecha_app
     fertilizante=aplicacion.fertilizante
     Fosforo=aplicacion.fosforo_req
     Potasio=aplicacion.potasio_req
