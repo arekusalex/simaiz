@@ -83,8 +83,69 @@
                 </div>
             </div>     
         </div>
-    	
     </form>
-			
-  
+    
+
+
+    {% if contexto.fertUsuarios %}
+        {% for fer in contexto.fertUsuarios %}
+            <br>
+            <form method = "post">
+                {% csrf_token %}
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <label for="{{fer.nombre_fertilizante.name}}">
+                                {{fer.nombre_fertilizante.label}}
+                            </label>
+                            {{fer.nombre_fertilizante}}
+                        </div>
+                        <div class="col-sm-2">
+                            <label for="{{fer.porc_nitrogeno.name}}">
+                                {{fer.porc_nitrogeno.label}}
+                            </label>
+                            {{fer.porc_nitrogeno}}
+                        </div>
+                        <div class="col-sm-2">
+                            <label for="{{fer.porc_fosforo.name}}">
+                                {{fer.porc_fosforo.label}}
+                            </label>
+                            {{fer.porc_fosforo}}
+                        </div>
+                         <div class="col-sm-2">
+                            <label for="{{fer.porc_potasio.name}}">
+                                {{fer.porc_potasio.label}}
+                            </label>
+                            {{fer.porc_potasio}}
+                        </div>
+                         <div class="col-sm-1">
+                            <label for="{{fer.peso.name}}">
+                                {{fer.peso.label}}
+                            </label>
+                            {{fer.peso}}
+                        </div>
+                        <div class="col-sm-1.5">
+                            <label for="{{fer.unidadMedidaFert.name}}">
+                                 {{fer.unidadMedidaFert.label}}
+                            </label>
+                            {{fer.unidadMedidaFert}}
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div class="container">
+                    <div class= "row">
+                        <div class="col-sm-3">
+                           <button type="submit" class="btn btn-success btn-block" name="btnForm3">Modificar</button>
+                        </div>
+                        <div class="col-sm-3">
+                           <button type="submit" class="btn btn-success btn-block" name="btnForm4">Eliminar</button>
+                        </div>
+                    </div>     
+                </div>
+            </form>
+            {% endfor%}
+	{% else %}
+        <h1>No existen fertilizantes</h1>		
+    {% endif %}
 {% endblock contenido %}
