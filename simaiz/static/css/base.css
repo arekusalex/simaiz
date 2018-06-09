@@ -23,6 +23,27 @@ button{
 hr{
     border:3px solid purple;
 }
+
+input{
+    with:30px;
+    height: 35px
+}
+   
+    .three-columns {
+        
+        -webkit-column-count: 2; /* Chrome, Safari, Opera */
+        -moz-column-count: 2; /* Firefox */
+        column-count: 2;
+    }
+    .one-columns {
+        
+        -webkit-column-count: 1; /* Chrome, Safari, Opera */
+        -moz-column-count: 1; /* Firefox */
+        column-count: 1;
+        width: 450px;
+        height: 450px;
+    }
+
 .buscar{
     line-height: 2em;
 }
@@ -32,3 +53,4 @@ footer{
     color: yellow;
     font-weight: bold;
 }
+
