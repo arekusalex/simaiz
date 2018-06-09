@@ -4,8 +4,6 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render_to_response
 from django.views.generic import FormView
 from django.urls import reverse_lazy
-#from .forms_sim import SimulacionForm, TerrenoForm, HumedadForm
-#from .multiforms import MultipleFormsView
 from random import randint
 from django.views.generic import TemplateView
 from chartjs.views.lines import BaseLineChartView
@@ -209,7 +207,7 @@ class SimFormView(CreateView):
     model = Simulacion
     template_name = "main/simform.html"
     form_class = SimForm
-    success_url = reverse_lazy("crear_app")
+    success_url = reverse_lazy('crear_app')
 
     def get_context_data(self, **kwargs):
         context = super(SimFormView, self).get_context_data(**kwargs)
@@ -243,7 +241,12 @@ class AplicacionView(CreateView):
     model = Aplicacion
     template_name = "main/simform3.html"
     form_class = AplicacionForm
+    pk_url_kwarg = 'pk'
     success_url = reverse_lazy("direccionar")
+
+    def get_context_data(self, **kwargs):
+        context = super(AplicacionView, self).get_context_data(**kwargs)
+        return context
 
     def get(self, request, *args, **kwargs):
         self.object = None
