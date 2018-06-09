@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'main',
     'usuarios',
     'chartjs',
+    'configuracion',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -87,8 +88,8 @@ DATABASES = {
         'NAME': 'simaiz_db',
         'USER': 'postgres',
         'PASSWORD': 'postgres',
-        # 'USER': 'miusuariodb',
-        # 'PASSWORD': 'usuariodb',
+        'USER': 'miusuariodb',
+        'PASSWORD': 'usuariodb',
         'HOST': 'localhost',
         'PORT': '5432',
     }

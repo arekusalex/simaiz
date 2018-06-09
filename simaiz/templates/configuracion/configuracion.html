@@ -1,0 +1,204 @@
+{% extends "base.html" %}
+
+{% block contenido %}
+    <h2 class="text-center">Configurar Parametros de Simulacion</h2>
+    <hr style= "border: 1px solid #f00">  
+
+    <!-- Formulario para modificar precio-->
+    <form method = "post">
+    	{% csrf_token %}
+        <div class="container">
+        	<div class="row">
+                <div class="col-sm-6">
+                    <label for="{{contexto.configuraciones.precio_maiz.name}}">
+                        {{contexto.configuraciones.precio_maiz.label}}
+                    </label>
+                    {{contexto.configuraciones.precio_maiz}}
+                </div>
+                <div class="col-sm-6">
+                    <label for="{{contexto.configuraciones.unidadMedidaMaiz.name}}">
+                         {{contexto.configuraciones.unidadMedidaMaiz.label}}
+                    </label>
+                    {{contexto.configuraciones.unidadMedidaMaiz}}
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="container">
+            <div class= "row">
+                <div class="col-sm-12" >
+                   <button type="submit" class="btn btn-success btn-block" name="btnForm1">Guardar Cambios</button> 
+                </div>
+            </div>     
+        </div>
+    </form>
+    
+    <hr style= "border: 1px solid #f00">
+    
+    <!-- Formulario para Crear Fertilizante-->
+    <form method = "post">
+    	{% csrf_token %}
+    	<div class="container">
+            <div class="row">
+                <div class="col-sm-4">
+                    <label for="{{contexto.fertilizantes.nombre_fertilizante.name}}">
+                        {{contexto.fertilizantes.nombre_fertilizante.label}}
+                    </label>
+                    {{contexto.fertilizantes.nombre_fertilizante}}
+                </div>
+                <div class="col-sm-2">
+                    <label for="{{contexto.fertilizantes.porc_nitrogeno.name}}">
+                        {{contexto.fertilizantes.porc_nitrogeno.label}}
+                    </label>
+                    {{contexto.fertilizantes.porc_nitrogeno}}
+                </div>
+                <div class="col-sm-2">
+                    <label for="{{contexto.fertilizantes.porc_fosforo.name}}">
+                        {{contexto.fertilizantes.porc_fosforo.label}}
+                    </label>
+                    {{contexto.fertilizantes.porc_fosforo}}
+                </div>
+                 <div class="col-sm-2">
+                    <label for="{{contexto.fertilizantes.porc_potasio.name}}">
+                        {{contexto.fertilizantes.porc_potasio.label}}
+                    </label>
+                    {{contexto.fertilizantes.porc_potasio}}
+                </div>
+                 <div class="col-sm-1">
+                    <label for="{{contexto.fertilizantes.peso.name}}">
+                        {{contexto.fertilizantes.peso.label}}
+                    </label>
+                    {{contexto.fertilizantes.peso}}
+                </div>
+                <div class="col-sm-1.5">
+                    <label for="{{contexto.fertilizantes.unidadMedidaFert.name}}">
+                         {{contexto.fertilizantes.unidadMedidaFert.label}}
+                    </label>
+                    {{contexto.fertilizantes.unidadMedidaFert}}
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="container">
+            <div class= "row">
+                <div class="col-sm-12">
+                   <button type="submit" class="btn btn-success btn-block" name="btnForm2">Guardar Nuevo Fertilizante</button>
+                </div>
+            </div>     
+        </div>
+    </form>
+    
+    <hr style= "border: 1px solid #f00">
+
+    <!-- Se muestran fertilizantes y se ofrece las opciones editar y eliminar-->
+    {% if contexto.fertUsuarios %}
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <td>Nombre Fertilizante</td>
+                    <td>Nitrogeno (%)</td>
+                    <td>Fosoforo (%)</td>
+                    <td>Potasio (%)</td>
+                    <td>Peso</td>
+                    <td>Unidad de Medida</td>
+                    <td>Acciones</td>
+                </tr>
+            </thead>
+            <tbody>
+                {% for fer in contexto.fertUsuarios %}
+                    <tr>
+                    <td>{{fer.nombre_fertilizante}}</td>
+                    <td>{{fer.porc_nitrogeno}}</td>
+                    <td>{{fer.porc_fosforo}}</td>
+                    <td>{{fer.porc_potasio}}</td>
+                    <td>{{fer.peso}}</td>
+                    <td>{{fer.unidadMedidaFert}}</td>
+                    <td>
+                        <a class="btn btn-primary" href="{% url 'editarFertilizante' fer.id %}" > Editar</a>
+                        <a class="btn btn-danger" href="{% url 'eliminarFertilizante' fer.id %}" > Eliminar</a>
+                    </td>
+                    </tr>
+                {% endfor%}
+            </tbody>
+        </table>
+    {% else %}
+        <h3 class="text-center">No ha agregado fertilizantes</h3>
+    {% endif %}
+	{% if contexto.fertUsuarios == '' %}
+        <h3 class="text-center">No ha agregado fertilizantes</h3>		
+    {% endif %}
+{% endblock contenido %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--
+    <br>
+    <form method = "post">
+        {% csrf_token %}
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-4">
+                    <label for="{{fer.nombre_fertilizante.name}}">
+                        {{fer.nombre_fertilizante.label}}
+                    </label>
+                    {{fer.nombre_fertilizante}}
+                </div>
+                <div class="col-sm-2">
+                    <label for="{{fer.porc_nitrogeno.name}}">
+                        {{fer.porc_nitrogeno.label}}
+                    </label>
+                    {{fer.porc_nitrogeno}}
+                </div>
+                <div class="col-sm-2">
+                    <label for="{{fer.porc_fosforo.name}}">
+                        {{fer.porc_fosforo.label}}
+                    </label>
+                    {{fer.porc_fosforo}}
+                </div>
+                 <div class="col-sm-2">
+                    <label for="{{fer.porc_potasio.name}}">
+                        {{fer.porc_potasio.label}}
+                    </label>
+                    {{fer.porc_potasio}}
+                </div>
+                 <div class="col-sm-1">
+                    <label for="{{fer.peso.name}}">
+                        {{fer.peso.label}}
+                    </label>
+                    {{fer.peso}}
+                </div>
+                <div class="col-sm-1.5">
+                    <label for="{{fer.unidadMedidaFert.name}}">
+                         {{fer.unidadMedidaFert.label}}
+                    </label>
+                    {{fer.unidadMedidaFert}}
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="container">
+            <div class= "row">
+                <div class="col-sm-3">
+                   <button type="submit" class="btn btn-success btn-block" name="btnForm3">Modificar</button>
+                </div>
+                <div class="col-sm-3">
+                   <button type="submit" class="btn btn-success btn-block" name="btnForm4">Eliminar</button>
+                </div>
+            </div>     
+        </div>
+     </form>
+        -->
