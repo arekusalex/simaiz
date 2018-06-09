@@ -84,10 +84,10 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'simaiz_db',
-        # 'USER': 'postgres',
-        # 'PASSWORD': 'postgres',
-        'USER': 'miusuariodb',
-        'PASSWORD': 'usuariodb',
+        'USER': 'postgres',
+        'PASSWORD': 'postgres',
+        # 'USER': 'miusuariodb',
+        # 'PASSWORD': 'usuariodb',
         'HOST': 'localhost',
         'PORT': '5432',
     }
