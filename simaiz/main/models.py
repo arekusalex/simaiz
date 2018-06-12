@@ -92,6 +92,7 @@ class Humedad(models.Model):
 
 
 class Requerimiento(models.Model):
+    clasificacion = models.CharField(max_length=25, null=True, blank=True)
     nitrogeno = models.FloatField()
     fosforo = models.FloatField()
     potasio = models.FloatField()

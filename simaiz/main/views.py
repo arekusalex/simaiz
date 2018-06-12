@@ -6,7 +6,7 @@ from django.views.generic import FormView
 from django.urls import reverse_lazy
 from random import randint
 from django.views.generic import TemplateView
-from chartjs.views.lines import BaseLineChartView
+from simaiz.chartjs.views.lines import BaseLineChartView
 from .forms_sim import *
 from .models import *
 from .utilidades import *
@@ -312,6 +312,7 @@ def mod_simulacion(request, username,id):
     else:
         return redirect('mod_simu', username=request.user.username, id=id)
 
+
 class LineChartJSONView(BaseLineChartView):
     def get_labels(self):
         """Return 7 labels for the x-axis."""
@@ -396,3 +397,26 @@ class AplicacionView(CreateView):
 
     def form_invalid(self, aplicacion_form_set):
         return self.render_to_response(self.get_context_data(aplicacion_form_set=aplicacion_form_set))
+
+
+def conversion_distancia(id):
+    sim_data = Simulacion.objects.filter(id=id)
+    unidad = sim_data.unidad_long
+    valor = sim_data.area
+    if unidad == "Metros cuadrados":
+        conversion = valor * 0.0001
+    if unidad == "Manzanas":
+        conversion = valor * 0.7050
+    return conversion
+
+def conversion_peso(id):
+    sim_data = Simulacion.objects.filter(id=id)
+    unidad = sim_data.unidad_long
+    valor = sim_data.area
+    if unidad == "Metros cuadrados":
+        conversion = valor * 0.0001
+    if unidad == "Manzanas":
+        conversion = valor * 0.7050
+    return conversion
+
+
