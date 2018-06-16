@@ -4,6 +4,11 @@ NIVEL = {
     ("deficiente", "Deficiente"),
 }
 
+ZONA ={
+	('costa', 'Costa'),
+	('valle','Valle'),
+	('montania','Montaña'),
+}
 
 TIPO_SUELO = [
     ("aluvial", "Aluvial"),
@@ -12,9 +17,9 @@ TIPO_SUELO = [
 ]
 
 UNIDAD_LONG = [
-    (("m²"), ("metros cuadrados")),
-    (("mz"), ("manzanas")),
-    (("ha"), ("hectareas")),
+    ("m²", "Metros cuadrados"),
+    ("mz", "Manzanas"),
+    ("ha", "Hectareas"),
 ]
 
 

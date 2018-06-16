@@ -12,7 +12,7 @@
     <br>
     <div class="row">
         <div class="col-lg-6 col-md-6 col-sm-12">
-            <a href="" class="btn btn-block btn-outline-primary p-3"><span class="font-weight-bold">Crear Simulacion</span></a>
+            <a href="{% url 'crear_simu' request.user%}" class="btn btn-block btn-outline-primary p-3"><span class="font-weight-bold">Crear Simulacion</span></a>
         </div>
         <div class="col-lg-6 col-md-6 col-sm-12">
             <a href="{% url 'configuracion' %}" class="btn btn-block btn-outline-success p-3"><span class="font-weight-bold">Configurar Simulaciones</span></a>
@@ -71,10 +71,7 @@
                 <div class="col-lg-3 col-md-12 col-sm-12">
                     <div class="row my-1">
                         <div class="col-lg-12 col-md-4 my-1">
-                            <form method="post">
-                                {% csrf_token %}
-                                <input class="btn btn-block btn-primary" type="Submit" name="" value="Modificar">
-                            </form>
+                            <a href="{% url 'mod_simu' request.user sim.0.id%}" title="" class="btn btn-block btn-primary font-weight-bold">Modificar</a>
                         </div>
                         <div class="col-lg-12 col-md-4 my-1">
                             <form method="post">

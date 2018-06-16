@@ -49,9 +49,6 @@ class AplicacionForm(ModelForm):
             'planta',
             'fertilizante',
             'fecha_app',
-            'nitrogeno_req',
-            'fosforo_req',
-            'potasio_req',
         ]
 
 AplicacionFormSet = modelformset_factory(Aplicacion, form=AplicacionForm, extra=1)

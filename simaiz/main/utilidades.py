@@ -1,3 +1,4 @@
+from .models import Departamento
 
 def buscar(listaSim, busqueda):
 	sim_busqueda=list()
@@ -15,3 +16,13 @@ def buscar(listaSim, busqueda):
 					break
 			continue
 	return sim_busqueda
+
+def agregarDeptosDB():
+	departamentos=['Ahuachapan','Santa Ana','Sonsonate','Chalatenango','La Libertad','San Salvador','La Paz',
+		'San Vicente','Cuscatlan',"Cabañas", 'Usulutan', 'San Miguel','Morazan','La Union']
+	deptos=Departamento.objects.all()
+	if len(deptos)!=14:
+		for depto in departamentos:
+			d=Departamento(nombre_depto=depto)
+			d.save()
+	return

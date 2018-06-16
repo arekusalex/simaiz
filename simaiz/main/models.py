@@ -60,9 +60,6 @@ class Aplicacion(models.Model):
     planta = models.ForeignKey(Planta, null=True, blank=True, on_delete=models.CASCADE)
     fertilizante = models.ForeignKey(Fertilizante, null=True, blank=True, on_delete=models.CASCADE)
     fecha_app = models.DateField()
-    nitrogeno_req = models.FloatField()
-    fosforo_req = models.FloatField()
-    potasio_req = models.FloatField()
 
     def __str__(self):
         return 'aplicacion: %s' %self.planta
@@ -95,6 +92,7 @@ class Humedad(models.Model):
 
 
 class Requerimiento(models.Model):
+    clasificacion = models.CharField(max_length=25, null=True, blank=True)
     nitrogeno = models.FloatField()
     fosforo = models.FloatField()
     potasio = models.FloatField()

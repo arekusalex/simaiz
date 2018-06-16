@@ -23,21 +23,18 @@ def generarSimulacion(request,id_sim):
     cantidad='Proximamente.... '
     fecha=aplicacion.fecha_app
     fertilizante=aplicacion.fertilizante
-    Fosforo=aplicacion.fosforo_req
-    Potasio=aplicacion.potasio_req
-    Nitrogeno=aplicacion.nitrogeno_req
     context={
         'simulacion':simulacion,
-        'area':area,
-        'cantidad':cantidad,
+        #'area':area,
+        #'cantidad':cantidad,
         'fecha':fecha,
         'fertilizante':fertilizante,
-        'nitrogeno':Nitrogeno,
-        'potasio':Potasio,
-        'fosforo':Fosforo,
+        #'nitrogeno':Nitrogeno,
     }
     return render(request,'usuarios/generar_simulacion.html',context)
 
+
+    
 
 class LineChartJSONView(BaseLineChartView):
     def get_labels(self):
