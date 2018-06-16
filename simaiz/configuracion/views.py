@@ -95,23 +95,7 @@ def configuracionSim(request):
 	}
 	return render (request, 'configuracion/configuracion.html', {'contexto':contexto})
 
-def fertilizanteEdit(request, id_fertilizante):
-	fertilizante = Fertilizante.objects.get(id =id_fertilizante)
-	if request.method == 'GET':
-		formFertEdit =FertilizanteForm(instance=fertilizante)
-	else:
-		formFertEdit = FertilizanteForm(request.POST, instance= fertilizante)
-		if formFertEdit.is_valid():
-			formFertEdit.save()
-		return redirect('configuracion')
-	return render(request,'configuracion/EditFertilizante.html', {'contexto': formFertEdit})
 
-def  fertilizanteDelete(request, id_fertilizante):
-	fertilizante = Fertilizante.objects.get(id =id_fertilizante)
-	if request.method == 'POST':
-		fertilizante.delete()
-		return redirect('configuracion')
-	return render(request,'configuracion/deleteFertilizante.html',{'fertilizante':fertilizante})
 
 
 	
