@@ -35,61 +35,67 @@
     
     <hr style= "border: 1px solid #f00">
     
-    <!-- Formulario para Crear Fertilizante-->
-    <form method = "post">
-    	{% csrf_token %}
-    	<div class="container">
-            <div class="row">
-                <div class="col-sm-4">
-                    <label for="{{contexto.fertilizantes.nombre_fertilizante.name}}">
-                        {{contexto.fertilizantes.nombre_fertilizante.label}}
-                    </label>
-                    {{contexto.fertilizantes.nombre_fertilizante}}
-                </div>
-                <div class="col-sm-2">
-                    <label for="{{contexto.fertilizantes.porc_nitrogeno.name}}">
-                        {{contexto.fertilizantes.porc_nitrogeno.label}}
-                    </label>
-                    {{contexto.fertilizantes.porc_nitrogeno}}
-                </div>
-                <div class="col-sm-2">
-                    <label for="{{contexto.fertilizantes.porc_fosforo.name}}">
-                        {{contexto.fertilizantes.porc_fosforo.label}}
-                    </label>
-                    {{contexto.fertilizantes.porc_fosforo}}
-                </div>
-                 <div class="col-sm-2">
-                    <label for="{{contexto.fertilizantes.porc_potasio.name}}">
-                        {{contexto.fertilizantes.porc_potasio.label}}
-                    </label>
-                    {{contexto.fertilizantes.porc_potasio}}
-                </div>
-                 <div class="col-sm-1">
-                    <label for="{{contexto.fertilizantes.peso.name}}">
-                        {{contexto.fertilizantes.peso.label}}
-                    </label>
-                    {{contexto.fertilizantes.peso}}
-                </div>
-                <div class="col-sm-1.5">
-                    <label for="{{contexto.fertilizantes.unidadMedidaFert.name}}">
-                         {{contexto.fertilizantes.unidadMedidaFert.label}}
-                    </label>
-                    {{contexto.fertilizantes.unidadMedidaFert}}
+
+        <!-- Formulario para Crear Fertilizante-->
+        <form method = "post">
+        	{% csrf_token %}
+        	<div class="container">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <label for="{{contexto.fertilizantes.nombre_fertilizante.name}}">
+                            {{contexto.fertilizantes.nombre_fertilizante.label}}
+                        </label>
+                        {{contexto.fertilizantes.nombre_fertilizante}}
+                    </div>
+                    <div class="col-sm-2">
+                        <label for="{{contexto.fertilizantes.porc_nitrogeno.name}}">
+                            {{contexto.fertilizantes.porc_nitrogeno.label}}
+                        </label>
+                        {{contexto.fertilizantes.porc_nitrogeno}}
+                    </div>
+                    <div class="col-sm-2">
+                        <label for="{{contexto.fertilizantes.porc_fosforo.name}}">
+                            {{contexto.fertilizantes.porc_fosforo.label}}
+                        </label>
+                        {{contexto.fertilizantes.porc_fosforo}}
+                    </div>
+                     <div class="col-sm-2">
+                        <label for="{{contexto.fertilizantes.porc_potasio.name}}">
+                            {{contexto.fertilizantes.porc_potasio.label}}
+                        </label>
+                        {{contexto.fertilizantes.porc_potasio}}
+                    </div>
+                     <div class="col-sm-1">
+                        <label for="{{contexto.fertilizantes.peso.name}}">
+                            {{contexto.fertilizantes.peso.label}}
+                        </label>
+                        {{contexto.fertilizantes.peso}}
+                    </div>
+                    <div class="col-sm-1.5">
+                        <label for="{{contexto.fertilizantes.unidadMedidaFert.name}}">
+                             {{contexto.fertilizantes.unidadMedidaFert.label}}
+                        </label>
+                        {{contexto.fertilizantes.unidadMedidaFert}}
+                    </div>
                 </div>
             </div>
-        </div>
-        <br>
-        <div class="container">
-            <div class= "row">
-                <div class="col-sm-12">
-                   <button type="submit" class="btn btn-success btn-block" name="btnForm2">Guardar Nuevo Fertilizante</button>
-                </div>
-            </div>     
-        </div>
+            <br>
+            <div class="container">
+                <div class= "row">
+                    <div class="col-sm-12">
+                        {%if contexto.hayConfi  %}
+                       <button type="submit" class="btn btn-success btn-block" name="btnForm2" > Guardar Nuevo Fertilizante</button>
+                       {% else %}
+                       <button type="submit" class="btn btn-success btn-block" name="btnForm2" disabled=""> Guardar Nuevo Fertilizante</button>
+                        {%endif%}
+                    </div>
+                </div>     
+            </div>
     </form>
+
     
     <hr style= "border: 1px solid #f00">
-
+    <h2>{{contexto.prueba}}</h2>
     <!-- Se muestran fertilizantes y se ofrece las opciones editar y eliminar-->
     {% if contexto.fertUsuarios %}
         <table class="table table-bordered">
@@ -97,7 +103,7 @@
                 <tr>
                     <td>Nombre Fertilizante</td>
                     <td>Nitrogeno (%)</td>
-                    <td>Fosoforo (%)</td>
+                    <td>Fosforo (%)</td>
                     <td>Potasio (%)</td>
                     <td>Peso</td>
                     <td>Unidad de Medida</td>
@@ -105,18 +111,62 @@
                 </tr>
             </thead>
             <tbody>
-                {% for fer in contexto.fertUsuarios %}
+                {% for fer in contexto.listaFert %}
                     <tr>
-                    <td>{{fer.nombre_fertilizante}}</td>
-                    <td>{{fer.porc_nitrogeno}}</td>
-                    <td>{{fer.porc_fosforo}}</td>
-                    <td>{{fer.porc_potasio}}</td>
-                    <td>{{fer.peso}}</td>
-                    <td>{{fer.unidadMedidaFert}}</td>
+                    <td>{{fer.0.nombre_fertilizante}}</td>
+                    <td>{{fer.0.porc_nitrogeno}}</td>
+                    <td>{{fer.0.porc_fosforo}}</td>
+                    <td>{{fer.0.porc_potasio}}</td>
+                    <td>{{fer.0.peso}}</td>
+                    <td>{{fer.0.unidadMedidaFert}}</td>
                     <td>
-                        <a class="btn btn-primary" href="{% url 'editarFertilizante' fer.id %}" > Editar</a>
-                        <a class="btn btn-danger" href="{% url 'eliminarFertilizante' fer.id %}" > Eliminar</a>
+                        
+                        <a class="btn btn-primary" data-toggle = "modal"  href="#f{{forloop.counter}}" > Editar</a>
+                        <a class="btn btn-danger" data-toggle = "modal"  href="#{{fer.0.id}}" > Eliminar</a>
                     </td>
+                    <div class="modal fade" id="{{fer.0.id}}">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <!-- Header de ventana-->
+                                <div class="modal-header">
+                                    <h2 class="modal-title">Eliminar Fertilizante</h2>
+                                    <button tyle="button" class="close" data-dismiss="modal" aria-hidden = "true">&times;</button>
+                                </div>
+                                <!-- Contenido de la ventana -->
+                                <div class="modal-body">
+                                    <form method="POST">
+                                        {% csrf_token %}
+                                        <h3>¿Desea eliminar el registro?</h3>                                       
+                                        <input type="hidden" name="inputEliminar" value= "{{fer.0.id}}">
+                                        <button type="submit" class="btn btn-danger " name="btnForm4">Eliminar</button>
+                                        <button type="button" class="btn btn-primary" data-dismiss= "modal" name="btnForm4">Cancelar</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal fade" id="f{{forloop.counter}}">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <!-- Header de ventana-->
+                                <div class="modal-header">
+                                    <h2 class="modal-title">Modificar Fertilizante</h2>
+                                    <button tyle="button" class="close" data-dismiss="modal" aria-hidden = "true">&times;</button>
+                                </div>
+                                <!-- Contenido de la ventana -->
+                                <div class="modal-body">
+                                    <form method="POST">
+                                        {% csrf_token %}
+                                        {{fer.1.as_p}}
+                                        <input type="hidden" name="inputEditar" value= "{{fer.0.id}}">
+                                        <button type="submit" class="btn btn-success btn-block" name="btnEditarFert">Guardar Cambios</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     </tr>
                 {% endfor%}
             </tbody>
@@ -124,9 +174,11 @@
     {% else %}
         <h3 class="text-center">No ha agregado fertilizantes</h3>
     {% endif %}
-	{% if contexto.fertUsuarios == '' %}
-        <h3 class="text-center">No ha agregado fertilizantes</h3>		
-    {% endif %}
+
+    <!-- Ventanas emergentes -->
+    
+
+
 {% endblock contenido %}
 
 
@@ -145,60 +197,3 @@
 
 
 
-<!--
-    <br>
-    <form method = "post">
-        {% csrf_token %}
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-4">
-                    <label for="{{fer.nombre_fertilizante.name}}">
-                        {{fer.nombre_fertilizante.label}}
-                    </label>
-                    {{fer.nombre_fertilizante}}
-                </div>
-                <div class="col-sm-2">
-                    <label for="{{fer.porc_nitrogeno.name}}">
-                        {{fer.porc_nitrogeno.label}}
-                    </label>
-                    {{fer.porc_nitrogeno}}
-                </div>
-                <div class="col-sm-2">
-                    <label for="{{fer.porc_fosforo.name}}">
-                        {{fer.porc_fosforo.label}}
-                    </label>
-                    {{fer.porc_fosforo}}
-                </div>
-                 <div class="col-sm-2">
-                    <label for="{{fer.porc_potasio.name}}">
-                        {{fer.porc_potasio.label}}
-                    </label>
-                    {{fer.porc_potasio}}
-                </div>
-                 <div class="col-sm-1">
-                    <label for="{{fer.peso.name}}">
-                        {{fer.peso.label}}
-                    </label>
-                    {{fer.peso}}
-                </div>
-                <div class="col-sm-1.5">
-                    <label for="{{fer.unidadMedidaFert.name}}">
-                         {{fer.unidadMedidaFert.label}}
-                    </label>
-                    {{fer.unidadMedidaFert}}
-                </div>
-            </div>
-        </div>
-        <br>
-        <div class="container">
-            <div class= "row">
-                <div class="col-sm-3">
-                   <button type="submit" class="btn btn-success btn-block" name="btnForm3">Modificar</button>
-                </div>
-                <div class="col-sm-3">
-                   <button type="submit" class="btn btn-success btn-block" name="btnForm4">Eliminar</button>
-                </div>
-            </div>     
-        </div>
-     </form>
-        -->
