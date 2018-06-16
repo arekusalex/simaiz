@@ -23,6 +23,19 @@
                 </div>
             </div>
         </div>
+        {% if contexto.precioNeg %}
+            <div class="container-fluid">
+                <br>
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="Alert alert-warning">
+                            No puede ingresar un precio con valor negativo. Por favor ingrese un valor valido
+                        </div>
+                    </div>
+                    
+                </div>  
+            </div> 
+        {% endif %}
         <br>
         <div class="container">
             <div class= "row">
@@ -32,7 +45,8 @@
             </div>     
         </div>
     </form>
-    
+   
+
     <hr style= "border: 1px solid #f00">
     
 
@@ -79,6 +93,19 @@
                     </div>
                 </div>
             </div>
+             {% if contexto.fertInval %}
+                <div class="container-fluid">
+                    <br>
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="Alert alert-warning">
+                                No se permite valores negativos. Por favor ingrese un valor valido
+                            </div>
+                        </div>
+                        
+                    </div>  
+                </div> 
+            {% endif %}
             <br>
             <div class="container">
                 <div class= "row">
@@ -170,6 +197,18 @@
                     </tr>
                 {% endfor%}
             </tbody>
+            {% if contexto.fertInvalVentana %}
+                    <div class="container-fluid">
+                        <br>
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="Alert alert-warning">
+                                No se pudo guardar cambios. Por favor ingrese un valor valido
+                                </div>
+                            </div>
+                        </div>  
+                    </div> 
+                {% endif %}
         </table>
     {% else %}
         <h3 class="text-center">No ha agregado fertilizantes</h3>

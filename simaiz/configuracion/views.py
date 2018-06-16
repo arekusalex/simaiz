@@ -13,34 +13,47 @@ from configuracion.forms import FertilizanteForm
 def configuracionSim(request):
 	listaFert = list()
 	hayConfi = False
+	precioNeg = False
+	fertInval = False
+	fertInvalVentana = False
 	if request.method == 'POST': #ya estan cargados los formularios
 		if 'btnForm1' in request.POST: #si se selecciona el boton de agregar precio
 			configuracion = Configuracion.objects.filter(usuario= request.user).exists()
 			if configuracion:
 				hayConfi = True
-				configuracion = Configuracion.objects.get(usuario= request.user)
-				form1 = ConfiguracionForm(request.POST, instance = configuracion)
-				form1.save()
-				return redirect('configuracion')
+				precio = float(request.POST.get('precio_maiz'))
+				if precio <= 0:
+					precioNeg = True
+				else:
+					configuracion = Configuracion.objects.get(usuario= request.user)
+					form1 = ConfiguracionForm(request.POST, instance = configuracion)
+					form1.save()
+					return redirect('configuracion')
 			else:
-				precio = request.POST.get('precio_maiz')
-				form1 = Configuracion(usuario=request.user, precio_maiz=precio, unidadMedidaMaiz = 10)
-				form1.save()
-				hayConfi = True
-				return redirect('configuracion')
+				precio = float(request.POST.get('precio_maiz'))
+				if precio <= 0:
+					precioNeg = True
+				else:
+					form1 = Configuracion(usuario=request.user, precio_maiz=precio, unidadMedidaMaiz = 10)
+					form1.save()
+					hayConfi = True
+					return redirect('configuracion')
 			
 
 		if 'btnForm2' in request.POST:	
 			configuracion = Configuracion.objects.get(usuario= request.user)
 			nombreFer = request.POST.get('nombre_fertilizante')
-			porcN = request.POST.get('porc_nitrogeno')
-			porcK = request.POST.get('porc_potasio')
-			porcP = request.POST.get('porc_fosforo')
-			peso = request.POST.get('peso')
+			porcN = float(request.POST.get('porc_nitrogeno'))
+			porcK = float(request.POST.get('porc_potasio'))
+			porcP = float(request.POST.get('porc_fosforo'))
+			peso = float(request.POST.get('peso'))
 			uMed = request.POST.get('unidadMedidaFert')
-			form2 = Fertilizante(configuracion= configuracion, nombre_fertilizante= nombreFer, porc_nitrogeno= porcN, porc_potasio= porcK,porc_fosforo= porcP,peso = 20,unidadMedidaFert="Kg")
-			form2.save()
-			return redirect('configuracion')
+			form2 = Fertilizante(configuracion= configuracion, nombre_fertilizante= nombreFer, porc_nitrogeno= porcN, porc_potasio= porcK,porc_fosforo= porcP,peso = peso,unidadMedidaFert=uMed)
+			if (porcN < 0 or porcK <0 or porcP < 0 or peso <= 0):
+				fertInval = True
+			else:
+				form2.save()
+				return redirect('configuracion')
 
 		if 'inputEliminar' in request.POST:
 			idEliminar = request.POST.get('inputEliminar')
@@ -50,11 +63,48 @@ def configuracionSim(request):
 
 		if 'btnEditarFert' in request.POST:
 			idEditar= request.POST.get('inputEditar')
-			fertilizante = Fertilizante.objects.get(id =idEditar)
-			formFertEdit = FertilizanteForm(request.POST, instance= fertilizante)
-			if formFertEdit.is_valid():
-				formFertEdit.save()
-			return redirect('configuracion')
+
+			porcN = float(request.POST.get('porc_nitrogeno'))
+			porcK = float(request.POST.get('porc_potasio'))
+			porcP = float(request.POST.get('porc_fosforo'))
+			peso = float(request.POST.get('peso'))
+			uMed = request.POST.get('unidadMedidaFert')
+
+			if (porcN < 0 or porcK <0 or porcP < 0 or peso <= 0):
+				fertInvalVentana = True
+			else:
+				fertilizante = Fertilizante.objects.get(id =idEditar)
+				formFertEdit = FertilizanteForm(request.POST, instance= fertilizante)
+				if formFertEdit.is_valid():
+					formFertEdit.save()
+				return redirect('configuracion')
+
+		configuracion = Configuracion.objects.filter(usuario= request.user).exists()
+		if configuracion:
+			hayConfi = True
+			configuracion = Configuracion.objects.get(usuario= request.user)
+			form1 = ConfiguracionForm(instance = configuracion)
+			form2 = FertilizanteForm
+			
+		else: #si no tiene una configuracion hecha, le carga solamente el formulario
+			form1 = ConfiguracionForm
+			form2 = FertilizanteForm
+
+		form2 = FertilizanteForm
+		configuracion = Configuracion.objects.filter(usuario= request.user).exists()	
+		if configuracion:
+			hayConfi = True
+			configuracion = Configuracion.objects.get(usuario= request.user)
+			fertUsuarios = Fertilizante.objects.filter(configuracion=configuracion)
+			fForm = list()
+			for fer in fertUsuarios:
+				fertilizantesForm = FertilizanteForm(instance= fer)
+				fForm.append(fer)
+				fForm.append(fertilizantesForm)
+				listaFert.append(fForm)
+				fForm= []
+		else:
+			fertUsuarios = ''
 
 	else:#al cargar la pagina
 		configuracion = Configuracion.objects.filter(usuario= request.user).exists()
@@ -84,14 +134,16 @@ def configuracionSim(request):
 			#Para recuperar form de cada objeto
 		else:
 			fertUsuarios = ''
-	print(hayConfi)
+		
 	contexto = {
 	'configuraciones':form1,
 	'fertilizantes':form2,
 	'fertUsuarios':fertUsuarios,
 	'listaFert': listaFert,
 	'hayConfi': hayConfi,
-	
+	'precioNeg':precioNeg,
+	'fertInval' : fertInval,
+	'fertInvalVentana' : fertInvalVentana,
 	}
 	return render (request, 'configuracion/configuracion.html', {'contexto':contexto})
 
