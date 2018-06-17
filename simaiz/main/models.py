@@ -32,6 +32,7 @@ class Fertilizante(models.Model):
     peso = models.FloatField()
     unidadMedidaFert = models.CharField(max_length=20)
 
+
     def __str__(self):
         return self.nombre_fertilizante
 
@@ -96,3 +97,4 @@ class Requerimiento(models.Model):
     nitrogeno = models.FloatField()
     fosforo = models.FloatField()
     potasio = models.FloatField()
+    

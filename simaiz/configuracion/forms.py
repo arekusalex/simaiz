@@ -26,7 +26,7 @@ class ConfiguracionForm(forms.ModelForm):
 		}
 		
 		widgets = {
-			'precio_maiz': forms.TextInput(attrs= {'class' : 'form-control'}),
+			'precio_maiz': forms.NumberInput(attrs= {'class' : 'form-control'}),
 			'unidadMedidaMaiz' : forms.Select(attrs= {'class' : 'form-control'},choices=unidadesDeMedida),
 		}
 
@@ -54,12 +54,11 @@ class FertilizanteForm(forms.ModelForm):
 		
 		widgets = {
 			'nombre_fertilizante': forms.TextInput(attrs= {'class' : 'form-control'}),
-			'porc_nitrogeno': forms.TextInput(attrs= {'class' : 'form-control'}),
-			'porc_fosforo': forms.TextInput(attrs= {'class' : 'form-control'}),
-			'porc_potasio': forms.TextInput(attrs= {'class' : 'form-control'}),
-			'peso' : forms.TextInput(attrs= {'class' : 'form-control'}),
+			'porc_nitrogeno': forms.NumberInput(attrs= {'class' : 'form-control'}),
+			'porc_fosforo': forms.NumberInput(attrs= {'class' : 'form-control'}),
+			'porc_potasio': forms.NumberInput(attrs= {'class' : 'form-control'}),
+			'peso' : forms.NumberInput(attrs= {'class' : 'form-control'}),
 			'unidadMedidaFert' : forms.Select(attrs= {'class' : 'form-control'},choices=unidadesDeMedida),
-			#'unidadMedidaFert' : forms.Select(choices=unidadesDeMedida)
 		}
 	
 	
