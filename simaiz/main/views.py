@@ -58,7 +58,7 @@ def inicio(request):
     return render(request, "main/index.html", contexto)
 
 def ayuda(request):
-    return render(request, 'ayuda.html', {})
+    return render(request, 'index.html', {})
 
 
 @login_required()
