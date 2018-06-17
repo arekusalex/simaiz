@@ -314,73 +314,6 @@ def mod_simulacion(request, username,id):
 
 
 
-
-
-class SimFormView(CreateView):
-    model = Simulacion
-    template_name = "main/simform.html"
-    form_class = SimForm
-    success_url = reverse_lazy('crear_app')
-
-    def get_context_data(self, **kwargs):
-        context = super(SimFormView, self).get_context_data(**kwargs)
-        context['plantas'] = Planta.objects.all()
-        context['deptos'] = Departamento.objects.all()
-        context['regions'] = Region.objects.all()
-
-        if 'form' not in context:
-            context['form'] = self.form_class(self.request.GET)
-
-        return context
-
-    def post(self, request, *args, **kwargs):
-        self.object = self.get_object
-        form = self.form_class(request.POST)
-
-        if form.is_valid():
-            form.save()
-
-            return HttpResponseRedirect(self.get_success_url())
-        else:
-            return HttpResponse('Error!')
-
-def load_regions(request):
-    region_id = request.GET.get('zona')
-    regions = Region.objects.filter(region_id=region_id).order_by('zona')
-    return render(request, 'main/regions_options.html', {'regions': regions})
-
-
-class AplicacionView(CreateView):
-    model = Aplicacion
-    template_name = "main/simform3.html"
-    form_class = AplicacionForm()
-    pk_url_kwarg = 'pk'
-    success_url = reverse_lazy("direccionar")
-
-    def get_context_data(self, **kwargs):
-        context = super(AplicacionView, self).get_context_data(**kwargs)
-        return context
-
-    def get(self, request, *args, **kwargs):
-        self.object = None
-        aplicacion_form_set = AplicacionFormSet()
-        return self.render_to_response(self.get_context_data(aplicacion_form_set=aplicacion_form_set))
-
-    def post(self, request, *args, **kwargs):
-        aplicacion_form_set = AplicacionFormSet(request.POST)
-        if aplicacion_form_set.is_valid():
-            return self.form_valid(aplicacion_form_set)
-        else:
-            return self.form_invalid(aplicacion_form_set)
-
-    def form_valid(self, aplicacion_form_set):
-        aplicacion_form_set.save()
-        return HttpResponseRedirect(self.success_url)
-
-    def form_invalid(self, aplicacion_form_set):
-        return self.render_to_response(self.get_context_data(aplicacion_form_set=aplicacion_form_set))
-
-
 def conversion_distancia(id):
     sim_data = Simulacion.objects.filter(id=id)
     unidad = sim_data.unidad_long
@@ -401,15 +334,8 @@ def conversion_peso(id):
         conversionpeso = valor / 35.274
     return conversionpeso
 
-def cantidad_optima_nitro(self,id_sim):
-     simulacion=Simulacion.objects.filter(id=id_sim)
-     aplicacion=Aplicacion.objects.filter(simulacion=simulacion)[0]
-     fertilizante=aplicacion.fertilizante
-     peso=conversion_peso(id=id_sim)
-     area=conversion_distancia(id)
-     porc_n=fertilizante.porc_nitrogeno
-     nitrogeno=Requerimiento.objects.filter(id=id_sim)
+def cantidad_optima_nitro(nitrogeno,porc_nitrogeno,peso,area):
      bolsa=nitrogeno/(0.5*porc_nitrogeno)
      cantidadoptiman=(bolsa*peso)/area
-     return cantidadoptiman
+     return ' %.2f' %cantidadoptiman
 

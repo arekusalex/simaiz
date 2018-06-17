@@ -21,19 +21,21 @@ def generarSimulacion(request,id_sim):
     simulacion=Simulacion.objects.get(id=id_sim)
     aplicacion=Aplicacion.objects.filter(simulacion=simulacion)[0]
     area=simulacion.area
-    #cantidad=cantidad_optima_nitro(id_sim)
     fecha=aplicacion.fecha_app
     fertilizante=aplicacion.fertilizante
+    porc_nitrogeno=aplicacion.fertilizante.porc_nitrogeno
+    peso=aplicacion.fertilizante.peso
+    nitrogeno=property(_get_nitrogeno)
+    cantidadon=cantidad_optima_nitro(60, porc_nitrogeno,peso,area)
     context={
+        'cantidad':cantidadon,
         'simulacion':simulacion,
-        #'area':area,
-       # 'cantidad':cantidad,
         'fecha':fecha,
         'fertilizante':fertilizante,
-        #'nitrogeno':Nitrogeno,
+        'nitrogeno':nitrogeno,
+        
     }
     return render(request,'usuarios/generar_simulacion.html',context)
-
     
     
 
@@ -49,8 +51,8 @@ class LineChartJSONView(BaseLineChartView):
     def get_data(self):
         """Return 3 datasets to plot."""
 
-        return [[75, 44, 92, 11, 44, 95, 35],
-                [41, 92, 18, 3, 73, 87, 92],
+        return [[75, 44, 92],
+                [41, 92, 18],
                 ]
 class LineChartJSONView2(BaseLineChartView):
     def get_labels(self):
