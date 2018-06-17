@@ -25,14 +25,15 @@ def generarSimulacion(request,id_sim):
     fertilizante=aplicacion.fertilizante
     porc_nitrogeno=aplicacion.fertilizante.porc_nitrogeno
     peso=aplicacion.fertilizante.peso
-    nitrogeno=property(_get_nitrogeno)
-    cantidadon=cantidad_optima_nitro(60, porc_nitrogeno,peso,area)
+    requerimiento=Requerimiento.objects.all()[0]
+    nitrogeno=requerimiento.nitrogeno
+    cantidadon=cantidad_optima_nitro(nitrogeno, porc_nitrogeno,peso,area)
     context={
         'cantidad':cantidadon,
         'simulacion':simulacion,
         'fecha':fecha,
         'fertilizante':fertilizante,
-        'nitrogeno':nitrogeno,
+        
         
     }
     return render(request,'usuarios/generar_simulacion.html',context)
