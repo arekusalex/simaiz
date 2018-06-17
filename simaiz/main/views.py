@@ -313,25 +313,7 @@ def mod_simulacion(request, username,id):
         return redirect('mod_simu', username=request.user.username, id=id)
 
 
-class LineChartJSONView(BaseLineChartView):
-    def get_labels(self):
-        """Return 7 labels for the x-axis."""
-        return ["January", "February", "March", "April", "May", "June", "July"]
 
-    def get_providers(self):
-        """Return names of datasets."""
-        return ["Central", "Eastside", "Westside"]
-
-    def get_data(self):
-        """Return 3 datasets to plot."""
-
-        return [[75, 44, 92, 11, 44, 95, 35],
-                [41, 92, 18, 3, 73, 87, 92],
-                [87, 21, 94, 3, 90, 13, 65]]
-
-
-line_chart = TemplateView.as_view(template_name='generar_simulacion.html')
-line_chart_json = LineChartJSONView.as_view()
 
 
 class SimFormView(CreateView):
@@ -410,13 +392,23 @@ def conversion_distancia(id):
     return conversion
 
 def conversion_peso(id):
-    sim_data = Simulacion.objects.filter(id=id)
-    unidad = sim_data.unidad_long
-    valor = sim_data.area
-    if unidad == "Metros cuadrados":
-        conversion = valor * 0.0001
-    if unidad == "Manzanas":
-        conversion = valor * 0.7050
-    return conversion
+    fer_data = Fertilizante.objects.filter(id=id)
+    unidadFert = fer_data.unidadMedidaFert
+    valor = fer_data.peso
+    if unidadFert == "lb":
+        conversionpeso = valor / 2.20
+    if unidad == "onz":
+        conversionpeso = valor / 35.274
+    return conversionpeso
 
-
+def cantidad_optima_nitro(self,id_sim):
+     simulacion=Simulacion.objects.filter(id=id_sim)
+     aplicacion=Aplicacion.objects.filter(simulacion=simulacion)[0]
+     fertilizante=aplicacion.fertilizante
+     peso=conversion_peso(id=id_sim)
+     area=conversion_distancia(id)
+     porc_n=fertilizante.porc_nitrogeno
+     nitrogeno=Requerimiento.objects.filter(id=id_sim)
+     bolsa=nitrogeno/(0.5*porc_nitrogeno)
+     cantidadoptiman=(bolsa*peso)/area
+     return cantidadoptiman

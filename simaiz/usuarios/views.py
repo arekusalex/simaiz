@@ -6,6 +6,7 @@ from .forms import RegistrarForm
 from .forms import SimularForm
 from random import randint
 from main.models import *
+from main.views import *
 from django.views.generic import TemplateView
 from chartjs.views.lines import BaseLineChartView
 from django.shortcuts import render
@@ -20,20 +21,20 @@ def generarSimulacion(request,id_sim):
     simulacion=Simulacion.objects.get(id=id_sim)
     aplicacion=Aplicacion.objects.filter(simulacion=simulacion)[0]
     area=simulacion.area
-    cantidad='Proximamente.... '
+    #cantidad=cantidad_optima_nitro(id_sim)
     fecha=aplicacion.fecha_app
     fertilizante=aplicacion.fertilizante
     context={
         'simulacion':simulacion,
         #'area':area,
-        #'cantidad':cantidad,
+       # 'cantidad':cantidad,
         'fecha':fecha,
         'fertilizante':fertilizante,
         #'nitrogeno':Nitrogeno,
     }
     return render(request,'usuarios/generar_simulacion.html',context)
 
-
+    
     
 
 class LineChartJSONView(BaseLineChartView):
