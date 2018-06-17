@@ -401,14 +401,7 @@ def conversion_peso(id):
         conversionpeso = valor / 35.274
     return conversionpeso
 
-def cantidad_optima_nitro(self,id_sim):
-     simulacion=Simulacion.objects.filter(id=id_sim)
-     aplicacion=Aplicacion.objects.filter(simulacion=simulacion)[0]
-     fertilizante=aplicacion.fertilizante
-     peso=conversion_peso(id=id_sim)
-     area=conversion_distancia(id)
-     porc_n=fertilizante.porc_nitrogeno
-     nitrogeno=Requerimiento.objects.filter(id=id_sim)
+def cantidad_optima_nitro(nitrogeno,porc_nitrogeno,peso,area):
      bolsa=nitrogeno/(0.5*porc_nitrogeno)
      cantidadoptiman=(bolsa*peso)/area
-     return cantidadoptiman
+     return ' %.2f' %cantidadoptiman
