@@ -6,6 +6,7 @@ from .forms import RegistrarForm
 from .forms import SimularForm
 from random import randint
 from main.models import *
+from main.views import *
 from django.views.generic import TemplateView
 from chartjs.views.lines import BaseLineChartView
 from django.shortcuts import render
@@ -20,20 +21,23 @@ def generarSimulacion(request,id_sim):
     simulacion=Simulacion.objects.get(id=id_sim)
     aplicacion=Aplicacion.objects.filter(simulacion=simulacion)[0]
     area=simulacion.area
-    cantidad='Proximamente.... '
     fecha=aplicacion.fecha_app
     fertilizante=aplicacion.fertilizante
+    porc_nitrogeno=aplicacion.fertilizante.porc_nitrogeno
+    peso=aplicacion.fertilizante.peso
+    requerimiento=Requerimiento.objects.all()[0]
+    nitrogeno=requerimiento.nitrogeno
+    cantidadon=cantidad_optima_nitro(nitrogeno, porc_nitrogeno,peso,area)
     context={
+        'cantidad':cantidadon,
         'simulacion':simulacion,
-        #'area':area,
-        #'cantidad':cantidad,
         'fecha':fecha,
         'fertilizante':fertilizante,
-        #'nitrogeno':Nitrogeno,
+        
+        
     }
     return render(request,'usuarios/generar_simulacion.html',context)
-
-
+    
     
 
 class LineChartJSONView(BaseLineChartView):
@@ -48,8 +52,8 @@ class LineChartJSONView(BaseLineChartView):
     def get_data(self):
         """Return 3 datasets to plot."""
 
-        return [[75, 44, 92, 11, 44, 95, 35],
-                [41, 92, 18, 3, 73, 87, 92],
+        return [[75, 44, 92],
+                [41, 92, 18],
                 ]
 class LineChartJSONView2(BaseLineChartView):
     def get_labels(self):
