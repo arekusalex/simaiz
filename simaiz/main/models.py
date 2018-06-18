@@ -97,10 +97,5 @@ class Requerimiento(models.Model):
     nitrogeno = models.FloatField()
     fosforo = models.FloatField()
     potasio = models.FloatField()
-    def _get_nitrogeno(self):
-        return '%.2f' %self.nitrogeno
-    def _get_fosforo(self):
-        return '%.2f' %self.fosforo
-    def _get_potasio(self):
-        return '%.2f' %self.potasio
+    
     

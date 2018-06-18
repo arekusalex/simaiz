@@ -10,6 +10,7 @@ from main.views import *
 from django.views.generic import TemplateView
 from chartjs.views.lines import BaseLineChartView
 from django.shortcuts import render
+from datetime import datetime,timedelta
 
 class RegistrarUsuario(CreateView):
     model = User
@@ -21,20 +22,46 @@ def generarSimulacion(request,id_sim):
     simulacion=Simulacion.objects.get(id=id_sim)
     aplicacion=Aplicacion.objects.filter(simulacion=simulacion)[0]
     area=simulacion.area
+    unidad_long=simulacion.unidad_long
     fecha=aplicacion.fecha_app
+    dia1=timedelta(days=10)
+    dia2=timedelta(days=25)
+    dia3=timedelta(days=40)
+    fecha1=fecha+dia1
+    fecha2=fecha+dia2
+    fecha3=fecha+dia3
     fertilizante=aplicacion.fertilizante
+    conf=Configuracion.objects.all()[0]
+    precio=aplicacion.fertilizante.configuracion.precio_maiz
     porc_nitrogeno=aplicacion.fertilizante.porc_nitrogeno
     peso=aplicacion.fertilizante.peso
+    unidadmedida=aplicacion.fertilizante.peso
     requerimiento=Requerimiento.objects.all()[0]
     nitrogeno=requerimiento.nitrogeno
-    cantidadon=cantidad_optima_nitro(nitrogeno, porc_nitrogeno,peso,area)
+    fosforo=requerimiento.fosforo
+    potasio=requerimiento.potasio
+    areah=conversion_distancia(area,unidad_long)
+    pesok=conversion_peso(peso,unidadmedida)
+    porc_fosforo=aplicacion.fertilizante.porc_fosforo
+    porc_potasio=aplicacion.fertilizante.porc_potasio
+    cantidadofp=cantidad_optima_nutriente(fosforo,porc_fosforo,float(pesok),areah)
+    cantidadonp=cantidad_optima_nutriente(nitrogeno,porc_nitrogeno,float(pesok),areah)
+    cantidadopp=cantidad_optima_nutriente(potasio,porc_potasio,float(pesok),areah)
+    cantidadotp=suma(cantidadonp,cantidadofp,cantidadopp)
+    cantidadots=suma2(cantidad_optima_nutriente(nitrogeno,porc_fosforo,float(pesok),areah),cantidad_optima_nutriente(fosforo,porc_fosforo,float(pesok),areah))
+    cantidadott=cantidad_optima_nutriente(nitrogeno,porc_nitrogeno,float(pesok),areah)
     context={
-        'cantidad':cantidadon,
+        'cantidad':cantidadotp,
         'simulacion':simulacion,
         'fecha':fecha,
         'fertilizante':fertilizante,
-        
-        
+        'fecha1':fecha1,
+        'fecha2':fecha2,
+        'fecha3':fecha3,
+        'cantidad2':cantidadots,
+        'cantidad3':cantidadott,
+        'precio':precio,
+        'peso':peso,
     }
     return render(request,'usuarios/generar_simulacion.html',context)
     
@@ -43,33 +70,46 @@ def generarSimulacion(request,id_sim):
 class LineChartJSONView(BaseLineChartView):
     def get_labels(self):
         """Return 7 labels for the x-axis."""
-        return ["Potasio", "Fosforo", "Magnesio"]
+        return ["Primera", "Segunda", "Tercera"]
 
     def get_providers(self):
         """Return names of datasets."""
-        return ["Fertilizante1", "Fertilizante2"]
+        
+        return ["Nitrogeno","Fosforo","Potasio"]
 
     def get_data(self):
         """Return 3 datasets to plot."""
+        requerimiento=Requerimiento.objects.all()[0]
+        nitrogeno=requerimiento.nitrogeno
+        fosforo=requerimiento.fosforo
+        potasio=requerimiento.potasio
 
-        return [[75, 44, 92],
-                [41, 92, 18],
+        return [
+                [nitrogeno,fosforo,potasio],
+                [nitrogeno,fosforo],
+                [nitrogeno]
                 ]
 class LineChartJSONView2(BaseLineChartView):
     def get_labels(self):
         """Return 7 labels for the x-axis."""
-        return ["Fertika", "Surco", "Pradera"]
+
+        return ["Primera", "Segunda", "Tercera"]
 
     def get_providers(self):
         """Return names of datasets."""
-        return ["Potasio", "Fosforo", "Magnesio"]
+        return ["Totales de nutrientes"]
 
     def get_data(self):
         """Return 3 datasets to plot."""
-
-        return [[75, 44, 92, 11, 44, 95, 35],
-                [41, 92, 18, 3, 73, 87, 92],
-                [87, 21, 94, 3, 90, 13, 65]]
+        requerimiento=Requerimiento.objects.all()[0]
+        nitrogeno=requerimiento.nitrogeno
+        fosforo=requerimiento.fosforo
+        potasio=requerimiento.potasio
+        total1=nitrogeno+fosforo+potasio
+        total2=nitrogeno+fosforo
+        total3=nitrogeno
+        return [[total1,total2,total3,40],
+                ]
 
 class LineChartJSONView3(BaseLineChartView):
     def get_labels(self):
@@ -78,14 +118,14 @@ class LineChartJSONView3(BaseLineChartView):
 
     def get_providers(self):
         """Return names of datasets."""
-        return ["LLuvioso", "Templado", "Despejado"]
+        return ["PRECIPITACION MEDIA ANUAL EN EL SALVADOR (mm)"]
 
     def get_data(self):
         """Return 3 datasets to plot."""
 
-        return [[75, 44, 92, 11, 44, 95, 35, 75, 44, 92, 11, 44, 95, 35],
-                [41, 92, 18, 3, 73, 87, 92, 41, 92, 18, 3, 73, 87, 92],
-                [87, 21, 94, 3, 90, 13, 65, 87, 21, 94, 3, 90, 13, 65,]]
+        return [
+                [5.38,4.15,16.42,57.66,203.28,329.27,239.81,296.48,354.35,211.88,48.77,11.08,0.00],
+                ]
 
 line_chart = TemplateView.as_view(template_name='line_chart.html')
 line_chart_json = LineChartJSONView.as_view()
