@@ -108,7 +108,7 @@ class LineChartJSONView2(BaseLineChartView):
         total1=nitrogeno+fosforo+potasio
         total2=nitrogeno+fosforo
         total3=nitrogeno
-        return [[total1,total2,total3,40],
+        return [[total1,total2,total3,0.0],
                 ]
 
 class LineChartJSONView3(BaseLineChartView):

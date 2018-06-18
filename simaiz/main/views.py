@@ -440,3 +440,4 @@ def analisis_de_suelo(nivel_k,nivel_p,nitrogeno,fosforo,potasio,porc_nitrogeno,p
         porc_potasio=15
         porc_fosforo=15
     return (nitrogeno,fosforo,potasio,porc_nitrogeno,porc_potasio,porc_fosforo)
+
