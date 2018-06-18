@@ -186,7 +186,15 @@ def mi_espacio(request, username,op='all'):
 def crear_simulacion(request, username):
     if username == request.user.username:
         mod=False
-        semillas=Planta.objects.all()
+        semi=list()
+        semillas=list()
+        semis=Planta.objects.all()
+        for sem in semis:
+            semi.append(sem)
+            semi.append(sem.dias_ciclo)
+            semillas.append(semi)
+            semi=[]
+
         unidades=UNIDAD_LONG
         departamentos=Departamento.objects.all()
         zonas=ZONA
@@ -250,7 +258,14 @@ def crear_simulacion(request, username):
 def mod_simulacion(request, username,id):
     if username == request.user.username:
         mod=True
-        semillas=Planta.objects.all()
+        semi=list()
+        semillas=list()
+        semis=Planta.objects.all()
+        for sem in semis:
+            semi.append(sem)
+            semi.append(sem.dias_ciclo)
+            semillas.append(semi)
+            semi=[]
         unidades=UNIDAD_LONG
         departamentos=Departamento.objects.all()
         zonas=ZONA
