@@ -15,7 +15,7 @@
             <a href="{% url 'crear_simu' request.user%}" class="btn btn-block btn-outline-primary p-3"><span class="font-weight-bold">Crear Simulacion</span></a>
         </div>
         <div class="col-lg-6 col-md-6 col-sm-12">
-            <a href="{% url 'configuracion' %}" class="btn btn-block btn-outline-success p-3"><span class="font-weight-bold">Configurar Simulaciones</span></a>
+            <a href="{% url 'configuracion' request.user %}" class="btn btn-block btn-outline-success p-3"><span class="font-weight-bold">Configurar Simulaciones</span></a>
         </div>
     </div>
     <hr>

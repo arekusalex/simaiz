@@ -1,5 +1,7 @@
 {% extends "base.html" %}
-
+{% block titulo %}
+    Configurar Simulación
+{% endblock titulo %}
 {% block contenido %}
     <h2 class="text-center">Configurar Parametros de Simulacion</h2>
     <hr style= "border: 1px solid #f00">  
@@ -29,7 +31,7 @@
                 <div class="row">
                     <div class="col-md-8">
                         <div class="Alert alert-warning">
-                            No puede ingresar un precio con valor negativo. Por favor ingrese un valor valido
+                            No puede ingresar un precio con valor negativo ni nulo. Por favor ingrese un valor valido
                         </div>
                     </div>
                     
@@ -55,7 +57,7 @@
         	{% csrf_token %}
         	<div class="container">
                 <div class="row">
-                    <div class="col-sm-4">
+                    <div class="col-sm-3">
                         <label for="{{contexto.fertilizantes.nombre_fertilizante.name}}">
                             {{contexto.fertilizantes.nombre_fertilizante.label}}
                         </label>
@@ -79,7 +81,7 @@
                         </label>
                         {{contexto.fertilizantes.porc_potasio}}
                     </div>
-                     <div class="col-sm-1">
+                     <div class="col-sm-2">
                         <label for="{{contexto.fertilizantes.peso.name}}">
                             {{contexto.fertilizantes.peso.label}}
                         </label>

@@ -21,7 +21,7 @@ class ConfiguracionForm(forms.ModelForm):
 		]
 
 		labels = {
-			'precio_maiz' : 'Precio de Venta',
+			'precio_maiz' : 'Precio de Venta ($)',
 			'unidadMedidaMaiz': 'Unidad de Medida',
 		}
 		
