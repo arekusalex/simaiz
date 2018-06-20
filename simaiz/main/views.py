@@ -186,7 +186,15 @@ def mi_espacio(request, username,op='all'):
 def crear_simulacion(request, username):
     if username == request.user.username:
         mod=False
-        semillas=Planta.objects.all()
+        semi=list()
+        semillas=list()
+        semis=Planta.objects.all()
+        for sem in semis:
+            semi.append(sem)
+            semi.append(sem.dias_ciclo)
+            semillas.append(semi)
+            semi=[]
+
         unidades=UNIDAD_LONG
         departamentos=Departamento.objects.all()
         zonas=ZONA
@@ -250,7 +258,14 @@ def crear_simulacion(request, username):
 def mod_simulacion(request, username,id):
     if username == request.user.username:
         mod=True
-        semillas=Planta.objects.all()
+        semi=list()
+        semillas=list()
+        semis=Planta.objects.all()
+        for sem in semis:
+            semi.append(sem)
+            semi.append(sem.dias_ciclo)
+            semillas.append(semi)
+            semi=[]
         unidades=UNIDAD_LONG
         departamentos=Departamento.objects.all()
         zonas=ZONA
@@ -381,27 +396,48 @@ class AplicacionView(CreateView):
         return self.render_to_response(self.get_context_data(aplicacion_form_set=aplicacion_form_set))
 
 
-def conversion_distancia(id):
-    sim_data = Simulacion.objects.filter(id=id)
-    unidad = sim_data.unidad_long
-    valor = sim_data.area
-    if unidad == "Metros cuadrados":
-        conversion = valor * 0.0001
-    if unidad == "Manzanas":
-        conversion = valor * 0.7050
+def conversion_distancia(area,unidad_long):
+    conversion = area
+    if unidad_long == "Metros cuadrados":
+        conversion = area * 0.0001
+    if unidad_long == "Manzanas":
+        conversion = area * 0.7050
     return conversion
 
-def conversion_peso(id):
-    fer_data = Fertilizante.objects.filter(id=id)
-    unidadFert = fer_data.unidadMedidaFert
-    valor = fer_data.peso
-    if unidadFert == "lb":
-        conversionpeso = valor / 2.20
+def conversion_peso(peso,unidad):
+    conversionpeso=peso
+    if unidad == "lb":
+        conversionpeso = peso / 2.20
     if unidad == "onz":
-        conversionpeso = valor / 35.274
+        conversionpeso = peso / 35.274
+    if unidad == "kg":
+        conversionpeso = peso
     return conversionpeso
 
-def cantidad_optima_nitro(nitrogeno,porc_nitrogeno,peso,area):
-     bolsa=nitrogeno/(0.5*porc_nitrogeno)
+def cantidad_optima_nutriente(nutriente,porc_nutriente,peso,area):
+     bolsa=nutriente/(0.5*porc_nutriente)
      cantidadoptiman=(bolsa*peso)/area
      return ' %.2f' %cantidadoptiman
+def suma(valor1,valor2,valor3):
+    total=float(valor1)+float(valor2)+float(valor3)
+    return '%.2f' %total
+def suma2(valor1,valor2):
+    total=float(valor1)+float(valor2)
+    return '%.2f' %total
+def analisis_de_suelo(nivel_k,nivel_p,nitrogeno,fosforo,potasio,porc_nitrogeno,porc_fosforo,porc_potasio):
+    if nivel_k == 'Alto' & nivel_p == 'Alto':
+        nitrogeno=40.53
+        fosforo=0.0
+        potasio=0.0
+        porc_nitrogeno=21
+        porc_potasio=0.0
+        porc_fosforo=0.0
+    if nivel_p == 'Deficiente' & nivel_k=='Deficiente':
+        nitrogeno=38.60
+        fosforo=38.60
+        potasio=38.60
+        porc_nitrogeno=15
+        porc_potasio=15
+        porc_fosforo=15
+    return (nitrogeno,fosforo,potasio,porc_nitrogeno,porc_potasio,porc_fosforo)
+
