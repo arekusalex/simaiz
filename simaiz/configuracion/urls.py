@@ -8,7 +8,7 @@ from .views import configuracionSim
 
 
 urlpatterns = [
-    path('<username>/config/',configuracionSim, name= "configuracion"),
+    path('<username>/',configuracionSim, name= "configuracion"),
     
     
 ]

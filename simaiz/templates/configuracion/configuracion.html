@@ -199,7 +199,8 @@
                     </tr>
                 {% endfor%}
             </tbody>
-            {% if contexto.fertInvalVentana %}
+        </table>
+        {% if contexto.fertInvalVentana %}
                     <div class="container-fluid">
                         <br>
                         <div class="row">
@@ -211,7 +212,6 @@
                         </div>  
                     </div> 
                 {% endif %}
-        </table>
     {% else %}
         <h3 class="text-center">No ha agregado fertilizantes</h3>
     {% endif %}
