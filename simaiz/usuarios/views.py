@@ -80,15 +80,27 @@ class LineChartJSONView(BaseLineChartView):
     def get_data(self):
         """Return 3 datasets to plot."""
         requerimiento=Requerimiento.objects.all()[0]
-        nitrogeno=requerimiento.nitrogeno
-        fosforo=requerimiento.fosforo
-        potasio=requerimiento.potasio
+        nitro=requerimiento.nitrogeno
+        fosfo=requerimiento.fosforo
+        potac=requerimiento.potasio
+
+        requerimiento2 = Requerimiento.objects.all()[1]
+        nitro2 = requerimiento2.nitrogeno
+        fosfo2 = requerimiento2.fosforo
+        potac2 = requerimiento2.potasio
+
+        requerimiento3 = Requerimiento.objects.all()[2]
+        nitro3 = requerimiento3.nitrogeno
+        fosfo3 = requerimiento3.fosforo
+        potac3 = requerimiento3.potasio
 
         return [
-                [nitrogeno,fosforo,potasio],
-                [nitrogeno,fosforo],
-                [nitrogeno]
+                [nitro, nitro2, nitro3],
+                [fosfo, fosfo2, fosfo3],
+                [potac, potac2, potac3],
                 ]
+
+
 class LineChartJSONView2(BaseLineChartView):
     def get_labels(self):
         """Return 7 labels for the x-axis."""
