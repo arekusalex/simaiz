@@ -13,5 +13,4 @@ urlpatterns = [
     path('<username>/', mi_espacio, name='mi_espacio'),
     path('<username>/<op>/', mi_espacio, name='mi_espacio_op'),
 
-
 ]

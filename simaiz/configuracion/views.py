@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.shortcuts import redirect 
 from django.http import HttpResponse
+from django.contrib.auth.decorators import login_required
 
 from main.models import Configuracion
 from main.models import Fertilizante
@@ -9,8 +10,8 @@ from configuracion.forms import FertilizanteForm
 
 # Create your views here.
 
-
-def configuracionSim(request):
+@login_required()
+def configuracionSim(request, username):
 	listaFert = list()
 	hayConfi = False
 	precioNeg = False
@@ -28,7 +29,7 @@ def configuracionSim(request):
 					configuracion = Configuracion.objects.get(usuario= request.user)
 					form1 = ConfiguracionForm(request.POST, instance = configuracion)
 					form1.save()
-					return redirect('configuracion')
+					return redirect('configuracion',username=request.user.username)
 			else:
 				precio = float(request.POST.get('precio_maiz'))
 				if precio <= 0:
@@ -37,7 +38,7 @@ def configuracionSim(request):
 					form1 = Configuracion(usuario=request.user, precio_maiz=precio, unidadMedidaMaiz = 10)
 					form1.save()
 					hayConfi = True
-					return redirect('configuracion')
+					return redirect('configuracion',username=request.user.username)
 			
 
 		if 'btnForm2' in request.POST:	
@@ -53,13 +54,13 @@ def configuracionSim(request):
 				fertInval = True
 			else:
 				form2.save()
-				return redirect('configuracion')
+				return redirect('configuracion',username=request.user.username)
 
 		if 'inputEliminar' in request.POST:
 			idEliminar = request.POST.get('inputEliminar')
 			fertilizante = Fertilizante.objects.get(id =idEliminar)
 			fertilizante.delete()
-			return redirect('configuracion')
+			return redirect('configuracion',username=request.user.username)
 
 		if 'btnEditarFert' in request.POST:
 			idEditar= request.POST.get('inputEditar')
@@ -77,7 +78,7 @@ def configuracionSim(request):
 				formFertEdit = FertilizanteForm(request.POST, instance= fertilizante)
 				if formFertEdit.is_valid():
 					formFertEdit.save()
-				return redirect('configuracion')
+				return redirect('configuracion',username=request.user.username)
 
 		configuracion = Configuracion.objects.filter(usuario= request.user).exists()
 		if configuracion:
