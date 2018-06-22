@@ -4,7 +4,6 @@
 {%load static%}
     <!-- Page Content -->
     <div class="container">
-
       <!-- Page Heading -->
       <h1 class="my-4">Pagina de Ayuda
         <small>Bienvenido</small>
@@ -20,7 +19,7 @@
             <img class="d-block w-100" src= "{% static 'img/carousel2.jpg' %}"alt="First slide">
             <div class="carousel-caption">
               <h2>Cultivo de Maiz en El Salvador</h2>
-              <p>
+              <p>                                                                                                       
                 El maíz es el rubro de mayor importancia dentro 
                 de  la  canasta  alimenticia  básica  de  la  población  
                 salvadoreña. 
@@ -84,12 +83,16 @@
       <div class="row">
         <div class="col-md-7">
           <a href="#">
-            <img class="img-fluid rounded mb-3 mb-md-0" src="{% static 'img/fertiliza.jpg' %}"  class="img-responsive" alt="">
+            <img class="img-fluid rounded mb-3 mb-md-0" src="{% static 'img/menu.png' %}"  class="img-responsive" alt="">
           </a>
         </div>
         <div class="col-md-5">
-          <h3>Project Two</h3>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, odit velit cumque vero doloremque repellendus distinctio maiores rem expedita a nam vitae modi quidem similique ducimus! Velit, esse totam tempore.</p>
+          <h3>Menu para administracion de simulaciones</h3>
+          <p align="justify">
+            Al ingresar podra acceder al menú principal donde podrá: administrar todas sus simulaciones creadas, crear una nueva simulacion y además configurar sus simulaciones para una mayor personalización.
+            Además SIMAIZ le ofrece una cómoda interfaz donde el usuario podrá tener filtradas sus simulaciones.
+
+          </p>
         </div>
       </div>
       <!-- /.row -->
@@ -100,12 +103,14 @@
       <div class="row">
         <div class="col-md-7">
           <a href="#">
-            <img class="img-fluid rounded mb-3 mb-md-0" src="http://placehold.it/700x300" alt="">
+            <img class="img-fluid rounded mb-3 mb-md-0" src="{% static 'img/config.png' %}" alt="">
           </a>
         </div>
         <div class="col-md-5">
-          <h3>Project Three</h3>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis, temporibus, dolores, at, praesentium ut unde repudiandae voluptatum sit ab debitis suscipit fugiat natus velit excepturi amet commodi deleniti alias possimus!</p>
+          <h3>Configuracion de simulaciones</h3>
+          <p align="justify">
+            Podrá configurar su simulación, agregando fertilizantes que el desee utilizar, además de los que SIMAIZ ya le ofrece de opciones, además de crearlos podrá modificarlos o eliminarlos según el usuario lo desee.
+          </p>
         </div>
       </div>
       <!-- /.row -->
@@ -117,17 +122,43 @@
 
         <div class="col-md-7">
           <a href="#">
-            <img class="img-fluid rounded mb-3 mb-md-0" src="http://placehold.it/700x300" alt="">
+            <img class="img-fluid rounded mb-3 mb-md-0" src= "{% static 'img/crear.png' %}" alt="">
           </a>
         </div>
         <div class="col-md-5">
-          <h3>Project Four</h3>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Explicabo, quidem, consectetur, officia rem officiis illum aliquam perspiciatis aspernatur quod modi hic nemo qui soluta aut eius fugit quam in suscipit?</p>
+          <h3>Crear Simulaciones</h3>
+          <p align="justify">
+            Al momento de crear una simulación, el usuario deberá ingresar los datos de todas las variables que intervienen, sin excepción alguna en los campos pertinentes. SIMAIZ ofrece la simulación de diferentes híbridos del maíz entre ellos: Oro Blanco, Platino y otras variedades CENTA.
+          </p>
         </div>
       </div>
       <!-- /.row -->
 
       <hr>
+
+      <!-- Project Five -->
+      <div class="row">
+
+        <div class="col-md-7">
+          <a href="#">
+            <img class="img-fluid rounded mb-3 mb-md-0" src= "{% static 'img/opcion.png' %}" alt="">
+          </a>
+        </div>
+        <div class="col-md-5">
+          <h3>Registro de simulaciones</h3>
+          <p align="justify">
+            Una vez creada la simulación, el usuario podrá acceder a esta cuando el desee, podrá modificarla, eliminarla y visualizar la simulación.
+          </p>
+        </div>
+      </div>
+      <!-- /.row -->
+
+      <hr>
+
+      <!--
+        En los resultados de la simulación el usuario podrá ver: las recomendaciones de fechas de aplicación según  la fecha de siembra ingresada, la cantidad adecuada de fertilizante a aplicar en cada una delas aplicaciones, los rendimientos esperados a obtener y los diferentes gráficos que representan de manera visual la información obtenida.
+      -->
+
 
     </div>
     <!-- /.container -->

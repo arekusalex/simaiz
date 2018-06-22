@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 COLORS = [
-    (202, 201, 197),  # Light gray
-    (171, 9, 0),      # Red
+      # Light gray
+    (171, 9, 0), 
+    (202, 201, 197),     # Red
     (166, 78, 46),    # Light orange
     (255, 190, 67),   # Yellow
     (163, 191, 63),   # Light green
