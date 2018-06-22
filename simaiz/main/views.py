@@ -394,20 +394,20 @@ class AplicacionView(CreateView):
 
 
 def conversion_distancia(area,unidad_long):
-    conversion = area
-    if unidad_long == "Metros cuadrados":
-        conversion = area * 0.0001
-    if unidad_long == "Manzanas":
+    if unidad_long == "m²":
+        conversion = area / 10000
+    if unidad_long == "mz":
         conversion = area * 0.7050
+    if unidad_long == "ha":
+        conversion = area
     return conversion
 
 def conversion_peso(peso,unidad):
-    conversionpeso=peso
-    if unidad == "lb":
+    if unidad == "Lb" or unidad == "lb":
         conversionpeso = peso / 2.20
-    if unidad == "onz":
+    if unidad == "qq" or unidad == "qq":
         conversionpeso = peso / 35.274
-    if unidad == "kg":
+    if unidad == "Kg" or unidad == "kg":
         conversionpeso = peso
     return conversionpeso
 
@@ -422,6 +422,7 @@ def suma(valor1,valor2,valor3):
 def suma2(valor1,valor2):
     total=float(valor1)+float(valor2)
     return '%.2f' %total
+
 def analisis_de_suelo(nivel_k,nivel_p,nitrogeno,fosforo,potasio,porc_nitrogeno,porc_fosforo,porc_potasio):
     if nivel_k == 'Alto' & nivel_p == 'Alto':
         nitrogeno=40.53
@@ -439,4 +440,95 @@ def analisis_de_suelo(nivel_k,nivel_p,nitrogeno,fosforo,potasio,porc_nitrogeno,p
         porc_fosforo=15
     return (nitrogeno,fosforo,potasio,porc_nitrogeno,porc_potasio,porc_fosforo)
 
+
+def obtener_requerimientos(analisis,semilla,nivel_k,nivel_p):
+    if analisis == 0: 
+        if semilla == 'Oro Blanco':
+            fer1=0
+            fer2=1
+            fer3=2
+        if semilla == 'Platino':
+            fer1=3
+            fer2=4
+            fer3=5
+        if semilla == 'ASG':
+            fer1=6
+            fer2=7
+            fer3=8
+        if semilla == 'Centa':
+            fer1=9
+            fer2=10
+            fer3=11
+    else:
+        if nivel_p == 'Alto' and nivel_k == 'Alto':
+            if semilla == 'Oro Blanco': 
+                fer1=0
+                fer2=10
+                fer3=2
+            if semilla == 'Platino':
+                fer1=3
+                fer2=10
+                fer3=5
+            if semilla == 'ASG':
+                fer1=6
+                fer2=10
+                fer3=8
+            if semilla == 'Centa':
+                fer1=9
+                fer2=10
+                fer3=11
+        else:
+            if nivel_p == 'Medio' and nivel_k == 'Alto':
+                if semilla == 'Oro Blanco': 
+                    fer1=6
+                    fer2=10
+                    fer3=2
+                if semilla == 'Platino':
+                    fer1=6
+                    fer2=10
+                    fer3=5
+                if semilla == 'ASG':
+                    fer1=6
+                    fer2=10
+                    fer3=8
+                if semilla == 'Centa':
+                    fer1=6
+                    fer2=10
+                    fer3=11
+            else:
+                if nivel_p == 'Deficiente' and nivel_k == 'Deficiente':
+                    if semilla == 'Oro Blanco': 
+                        fer1=6
+                        fer2=10
+                        fer3=2
+                    if semilla == 'Platino':
+                        fer1=6
+                        fer2=10
+                        fer3=5
+                    if semilla == 'ASG':
+                        fer1=6
+                        fer2=10
+                        fer3=8
+                    if semilla == 'Centa':
+                        fer1=6
+                        fer2=10
+                        fer3=11
+                else:
+                    if semilla == 'Oro Blanco':
+                        fer1=0
+                        fer2=1
+                        fer3=2
+                    if semilla == 'Platino':
+                        fer1=3
+                        fer2=4
+                        fer3=5
+                    if semilla == 'ASG':
+                        fer1=6
+                        fer2=7
+                        fer3=8
+                    if semilla == 'Centa':
+                        fer1=9
+                        fer2=10
+                        fer3=11
+    return (fer1,fer2,fer3)
 
