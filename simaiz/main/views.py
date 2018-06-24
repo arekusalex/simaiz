@@ -20,6 +20,7 @@ import datetime
 # Create your views here.
 
 def inicio(request):
+    tiempo_pagina(0)
     hay_busqueda = False
     simulaciones = list()
     haySimu = Simulacion.objects.filter().exists()
@@ -54,6 +55,7 @@ def inicio(request):
         'simu': haySimu,
         'busqueda': hay_busqueda,
         'simulaciones': simulaciones,
+        'tiempo':tiempo_pagina(1),
     }
     return render(request, "main/index.html", contexto)
 
@@ -72,6 +74,7 @@ def direccionar(request):
 def mi_espacio(request, username,op='all'):
     agregarDeptosDB() ## metodo para agregar los 14 departamentos
     if username == request.user.username:
+        tiempo_pagina(0)
         hay_busqueda=False
         if op=='all' or op=='shared' or op=='private':
             simulaciones=list()
@@ -177,6 +180,7 @@ def mi_espacio(request, username,op='all'):
             'simulaciones':simulaciones,
             'busqueda':hay_busqueda,
             'activo':activo,
+            'tiempo':tiempo_pagina(1),
         }
         return render(request, "main/mi_espacio.html", contexto)
     else:
@@ -185,6 +189,7 @@ def mi_espacio(request, username,op='all'):
 @login_required()
 def crear_simulacion(request, username):
     if username == request.user.username:
+        tiempo_pagina(0)
         mod=False
         semi=list()
         semillas=list()
@@ -248,6 +253,7 @@ def crear_simulacion(request, username):
             'suelos':suelos,
             'nutrientes':nutrientes,
             'fertilizantes':fertilizantes,
+            'tiempo':tiempo_pagina(1),
         }
         return render(request, 'main/crear_simu.html', contexto)
     else:
@@ -257,6 +263,7 @@ def crear_simulacion(request, username):
 @login_required()
 def mod_simulacion(request, username,id):
     if username == request.user.username:
+        tiempo_pagina(0)
         mod=True
         semi=list()
         semillas=list()
@@ -320,6 +327,7 @@ def mod_simulacion(request, username,id):
                 'fertis':fertis,
                 'fecha_siembra':str(sim.fecha_siembra),
                 'alerta':alerta,
+                'tiempo':tiempo_pagina(1),
             }
             return render(request, 'main/crear_simu.html', contexto)
         else:

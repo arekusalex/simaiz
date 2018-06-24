@@ -135,7 +135,6 @@ def configuracionSim(request, username):
 			#Para recuperar form de cada objeto
 		else:
 			fertUsuarios = ''
-		
 	contexto = {
 	'configuraciones':form1,
 	'fertilizantes':form2,
@@ -145,6 +144,7 @@ def configuracionSim(request, username):
 	'precioNeg':precioNeg,
 	'fertInval' : fertInval,
 	'fertInvalVentana' : fertInvalVentana,
+	
 	}
 	return render (request, 'configuracion/configuracion.html', {'contexto':contexto})
 
