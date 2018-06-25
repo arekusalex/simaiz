@@ -8,10 +8,13 @@ from main.models import Fertilizante
 from configuracion.forms import ConfiguracionForm
 from configuracion.forms import FertilizanteForm
 
+from main.utilidades import *
+
 # Create your views here.
 
 @login_required()
 def configuracionSim(request, username):
+	tiempo_pagina(0)
 	listaFert = list()
 	hayConfi = False
 	precioNeg = False
@@ -36,9 +39,10 @@ def configuracionSim(request, username):
 					precioNeg = True
 				else:
 					form1 = Configuracion(usuario=request.user, precio_maiz=precio, unidadMedidaMaiz = 10)
-					form1.save()
-					hayConfi = True
-					return redirect('configuracion',username=request.user.username)
+					if form1.is_valid:
+						form1.save()
+						hayConfi = True
+						return redirect('configuracion',username=request.user.username)
 			
 
 		if 'btnForm2' in request.POST:	
@@ -50,7 +54,7 @@ def configuracionSim(request, username):
 			peso = float(request.POST.get('peso'))
 			uMed = request.POST.get('unidadMedidaFert')
 			form2 = Fertilizante(configuracion= configuracion, nombre_fertilizante= nombreFer, porc_nitrogeno= porcN, porc_potasio= porcK,porc_fosforo= porcP,peso = peso,unidadMedidaFert=uMed)
-			if (porcN < 0 or porcK <0 or porcP < 0 or peso <= 0):
+			if (porcN < 0 or porcN > 100 or porcK <0 or porcK > 100 or porcP < 0 or porcP> 100 or peso <= 0):
 				fertInval = True
 			else:
 				form2.save()
@@ -71,7 +75,7 @@ def configuracionSim(request, username):
 			peso = float(request.POST.get('peso'))
 			uMed = request.POST.get('unidadMedidaFert')
 
-			if (porcN < 0 or porcK <0 or porcP < 0 or peso <= 0):
+			if (porcN < 0 or porcN > 100 or porcK <0 or porcK > 100 or porcP < 0 or porcP> 100 or peso <= 0):
 				fertInvalVentana = True
 			else:
 				fertilizante = Fertilizante.objects.get(id =idEditar)
@@ -135,7 +139,6 @@ def configuracionSim(request, username):
 			#Para recuperar form de cada objeto
 		else:
 			fertUsuarios = ''
-		
 	contexto = {
 	'configuraciones':form1,
 	'fertilizantes':form2,
@@ -145,8 +148,10 @@ def configuracionSim(request, username):
 	'precioNeg':precioNeg,
 	'fertInval' : fertInval,
 	'fertInvalVentana' : fertInvalVentana,
+	'tiempo':tiempo_pagina(1),
+	
 	}
-	return render (request, 'configuracion/configuracion.html', {'contexto':contexto})
+	return render (request, 'configuracion/configuracion.html', contexto)
 
 
 

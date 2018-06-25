@@ -10,6 +10,9 @@
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
     <link rel="stylesheet" href="{% static 'css/steps.css' %}">
     {% block css %}{% endblock css %}
+    {% block JavaScript %}
+        <script src="{% static "js/Chart.js" %}"></script>
+    {% endblock JavaScript %}
     <script src="{%static 'js/jquery-3.3.1.min.js'%}"></script>
     {% block js %}{% endblock js %}
 </head>
@@ -48,6 +51,9 @@
         <div class="row p-3">
             <div class="col-12">
                 <p class="text-center m-0">Grupo 18 - HDP115</p>
+            </div>
+            <div class="col-12">
+                <p class="text-center m-0">Tiempo Carga: {{tiempo}} seg</p>
             </div>
         </div>
     </div>
