@@ -39,10 +39,9 @@ def configuracionSim(request, username):
 					precioNeg = True
 				else:
 					form1 = Configuracion(usuario=request.user, precio_maiz=precio, unidadMedidaMaiz = 10)
-					if form1.is_valid:
-						form1.save()
-						hayConfi = True
-						return redirect('configuracion',username=request.user.username)
+					form1.save()
+					hayConfi = True
+					return redirect('configuracion',username=request.user.username)
 			
 
 		if 'btnForm2' in request.POST:	
