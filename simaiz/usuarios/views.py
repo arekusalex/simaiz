@@ -47,6 +47,7 @@ def generarSimulacion(request,id_sim):
         i=1
     else: 
         i=0
+
     (p,s,t)=obtener_requerimientos(i,semilla,nivel_k,nivel_p)
     requerimientop=Requerimiento.objects.all()[p]
     requerimientos=Requerimiento.objects.all()[s]
@@ -76,6 +77,7 @@ def generarSimulacion(request,id_sim):
     cantidadotp=suma(cantidadonp,cantidadofp,cantidadopp)
     cantidadots=suma(cantidadons,cantidadofs,cantidadops)
     cantidadott=suma(cantidadont,cantidadoft,cantidadopt)
+
     zona = simulacion.zona
     humedad = Humedad.objects.all()[0:12]
     regadio = list()
@@ -152,6 +154,7 @@ def generarSimulacion(request,id_sim):
         for j in range(len(lluvias)):
             y = [lluvias[j], regadio[j]]
             datos.append(y)
+
     context={
         'datos':datos,
         'cantidad':cantidadotp,
@@ -175,13 +178,12 @@ def generarSimulacion(request,id_sim):
         'fosforot':fosforot,
         'potasiot':potasiot,
     }
-    return render(request,'usuarios/generar_simulacion.html',context)
+
+    return render(request,'usuarios/generar_simulacion.html', context)
     
     
 
 class LineChartJSONView(BaseLineChartView):
-    def get_id(id_sim):
-        return 
     def get_labels(self):
         """Return 7 labels for the x-axis."""
         return ["Primera", "Segunda", "Tercera"]
@@ -194,14 +196,14 @@ class LineChartJSONView(BaseLineChartView):
     def get_data(self):
         """Return 3 datasets to plot."""
 
-        requerimientop=Requerimiento.objects.all()[9]
-        requerimientos=Requerimiento.objects.all()[10]
-        requerimientot=Requerimiento.objects.all()[11]
+
         return [
-                [requerimientop.nitrogeno,requerimientop.fosforo,requerimientop.potasio],
-                [requerimientos.nitrogeno,requerimientos.fosforo,requerimientos.potasio],
-                [requerimientot.nitrogeno,requerimientot.fosforo,requerimientot.potasio]
+                [],
+                [],
+                [],
                 ]
+
+
 class LineChartJSONView2(BaseLineChartView):
     def get_labels(self):
         """Return 7 labels for the x-axis."""

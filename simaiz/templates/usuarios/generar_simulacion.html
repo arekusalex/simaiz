@@ -6,9 +6,7 @@
  <link rel="stylesheet" href="{% static 'js/Chart.bundle.js' %}">
     {% endblock css %}
     {% block js %}{% endblock js %}
-    {% block Titulo %}
-    grafica
-{% endblock Titulo %}
+    
 
 {% block contenido %}
 <body>
@@ -17,6 +15,7 @@
 <div class="row">
     <div class="col-6"><h2 class="text-center">{{simulacion.nombre_sim}}</h2></div>
     <div class="col-6"><h2 class="text-center">{{simulacion.usuario}}</h2></div>
+    <a href="{% url 'inicio' %}" class="navbar-brand"><img class="logo" src="{% static 'img/icono_w.png' %}" alt=""></a>
 </div>
 <div class="row">
     <div class="col-12">
@@ -61,15 +60,15 @@
         </p>
         </p>
     </div>
-    <div class="one-columns">
-         <p><canvas id="myChart3" width="200" height="100"></canvas>
+    <p>  Grafico informativo de humedad de El Salvador<canvas id="myChart3" width="200" height="100"></canvas>
 
         <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.0.min.js"></script>
         <script type="text/javascript" src="{% static 'js/Chart.min.js' %}"></script>
         <script type="text/javascript">
         </script>  
         </p>
-        <div class="row">
+
+    <div class="row">
     <div class="container col-md-3" style="width: 500px; height: 700px; margin: 0 auto">
     <table id="data_table" class="table table-bordered" >
     <thead>
@@ -99,10 +98,11 @@
 
 
 
-    </div>
- <script src="https://code.highcharts.com/highcharts.src.js"></script>
+
+
+<script src="https://code.highcharts.com/highcharts.src.js"></script>
 <script type="text/javascript">
-    Highcharts.chart('container_chart1', {
+   	Highcharts.chart('container_chart1', {
        chart: {
         type: 'column'
     },
@@ -152,7 +152,8 @@
         {% endfor %}
     ]
    });
-</script>   
+</script>
+    
 </body>
 <script>
 var div_line_chart = document.getElementById("line_chart");
