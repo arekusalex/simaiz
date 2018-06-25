@@ -1,7 +1,11 @@
 {% extends "base.html" %}
+{% load static %}
 {% block titulo %}
     Configurar Simulación
 {% endblock titulo %}
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static "css/main/index.css" %}">
+{% endblock css %}
 {% block contenido %}
     <h2 class="text-center">Configurar Parametros de Simulacion</h2>
     <hr style= "border: 1px solid #f00">  
@@ -9,23 +13,25 @@
     <!-- Formulario para modificar precio-->
     <form method = "post">
     	{% csrf_token %}
+        <fieldset>
+        <legend class="text-center">Configuracion Precio</legend>
         <div class="container">
         	<div class="row">
                 <div class="col-sm-6">
-                    <label for="{{contexto.configuraciones.precio_maiz.name}}">
-                        {{contexto.configuraciones.precio_maiz.label}}
+                    <label for="{{configuraciones.precio_maiz.name}}">
+                        {{configuraciones.precio_maiz.label}}
                     </label>
-                    {{contexto.configuraciones.precio_maiz}}
+                    {{configuraciones.precio_maiz}}
                 </div>
                 <div class="col-sm-6">
-                    <label for="{{contexto.configuraciones.unidadMedidaMaiz.name}}">
-                         {{contexto.configuraciones.unidadMedidaMaiz.label}}
+                    <label for="{{configuraciones.unidadMedidaMaiz.name}}">
+                         {{configuraciones.unidadMedidaMaiz.label}}
                     </label>
-                    {{contexto.configuraciones.unidadMedidaMaiz}}
+                    {{configuraciones.unidadMedidaMaiz}}
                 </div>
             </div>
         </div>
-        {% if contexto.precioNeg %}
+        {% if precioNeg %}
             <div class="container-fluid">
                 <br>
                 <div class="row">
@@ -46,6 +52,7 @@
                 </div>
             </div>     
         </div>
+        </fieldset>
     </form>
    
 
@@ -55,53 +62,55 @@
         <!-- Formulario para Crear Fertilizante-->
         <form method = "post">
         	{% csrf_token %}
+            <fieldset>
+            <legend class="text-center">Crear Fertilizante</legend>
         	<div class="container">
                 <div class="row">
                     <div class="col-sm-3">
-                        <label for="{{contexto.fertilizantes.nombre_fertilizante.name}}">
-                            {{contexto.fertilizantes.nombre_fertilizante.label}}
+                        <label for="{{fertilizantes.nombre_fertilizante.name}}">
+                            {{fertilizantes.nombre_fertilizante.label}}
                         </label>
-                        {{contexto.fertilizantes.nombre_fertilizante}}
+                        {{fertilizantes.nombre_fertilizante}}
                     </div>
                     <div class="col-sm-2">
-                        <label for="{{contexto.fertilizantes.porc_nitrogeno.name}}">
-                            {{contexto.fertilizantes.porc_nitrogeno.label}}
+                        <label for="{{fertilizantes.porc_nitrogeno.name}}">
+                            {{fertilizantes.porc_nitrogeno.label}}
                         </label>
-                        {{contexto.fertilizantes.porc_nitrogeno}}
+                        {{fertilizantes.porc_nitrogeno}}
                     </div>
                     <div class="col-sm-2">
-                        <label for="{{contexto.fertilizantes.porc_fosforo.name}}">
-                            {{contexto.fertilizantes.porc_fosforo.label}}
+                        <label for="{{fertilizantes.porc_fosforo.name}}">
+                            {{fertilizantes.porc_fosforo.label}}
                         </label>
-                        {{contexto.fertilizantes.porc_fosforo}}
+                        {{fertilizantes.porc_fosforo}}
                     </div>
                      <div class="col-sm-2">
-                        <label for="{{contexto.fertilizantes.porc_potasio.name}}">
-                            {{contexto.fertilizantes.porc_potasio.label}}
+                        <label for="{{fertilizantes.porc_potasio.name}}">
+                            {{fertilizantes.porc_potasio.label}}
                         </label>
-                        {{contexto.fertilizantes.porc_potasio}}
+                        {{fertilizantes.porc_potasio}}
                     </div>
                      <div class="col-sm-2">
-                        <label for="{{contexto.fertilizantes.peso.name}}">
-                            {{contexto.fertilizantes.peso.label}}
+                        <label for="{{fertilizantes.peso.name}}">
+                            {{fertilizantes.peso.label}}
                         </label>
-                        {{contexto.fertilizantes.peso}}
+                        {{fertilizantes.peso}}
                     </div>
                     <div class="col-sm-1.5">
-                        <label for="{{contexto.fertilizantes.unidadMedidaFert.name}}">
-                             {{contexto.fertilizantes.unidadMedidaFert.label}}
+                        <label for="{{fertilizantes.unidadMedidaFert.name}}">
+                             {{fertilizantes.unidadMedidaFert.label}}
                         </label>
-                        {{contexto.fertilizantes.unidadMedidaFert}}
+                        {{fertilizantes.unidadMedidaFert}}
                     </div>
                 </div>
             </div>
-             {% if contexto.fertInval %}
+             {% if fertInval %}
                 <div class="container-fluid">
                     <br>
                     <div class="row">
                         <div class="col-md-8">
                             <div class="Alert alert-warning">
-                                No se permite valores negativos. Por favor ingrese un valor valido
+                                Entrada no valida. Por favor ingrese un valor valido
                             </div>
                         </div>
                         
@@ -112,7 +121,7 @@
             <div class="container">
                 <div class= "row">
                     <div class="col-sm-12">
-                        {%if contexto.hayConfi  %}
+                        {%if hayConfi  %}
                        <button type="submit" class="btn btn-success btn-block" name="btnForm2" > Guardar Nuevo Fertilizante</button>
                        {% else %}
                        <button type="submit" class="btn btn-success btn-block" name="btnForm2" disabled=""> Guardar Nuevo Fertilizante</button>
@@ -120,13 +129,15 @@
                     </div>
                 </div>     
             </div>
+        </fieldset>
     </form>
 
     
     <hr style= "border: 1px solid #f00">
-    <h2>{{contexto.prueba}}</h2>
     <!-- Se muestran fertilizantes y se ofrece las opciones editar y eliminar-->
-    {% if contexto.fertUsuarios %}
+    <fieldset>
+        <legend class="text-center">Modifica tus fertilizantes</legend>
+    {% if fertUsuarios %}
         <table class="table table-bordered">
             <thead>
                 <tr>
@@ -140,7 +151,7 @@
                 </tr>
             </thead>
             <tbody>
-                {% for fer in contexto.listaFert %}
+                {% for fer in listaFert %}
                     <tr>
                     <td>{{fer.0.nombre_fertilizante}}</td>
                     <td>{{fer.0.porc_nitrogeno}}</td>
@@ -163,9 +174,12 @@
                                 </div>
                                 <!-- Contenido de la ventana -->
                                 <div class="modal-body">
+                                        <h3 class="text-center">¿Desea eliminar el registro {{fer.0.nombre_fertilizante}}?</h3> 
+                                </div>
+                                <!--Footer-->
+                                <div class="modal-footer">
                                     <form method="POST">
                                         {% csrf_token %}
-                                        <h3>¿Desea eliminar el registro?</h3>                                       
                                         <input type="hidden" name="inputEliminar" value= "{{fer.0.id}}">
                                         <button type="submit" class="btn btn-danger " name="btnForm4">Eliminar</button>
                                         <button type="button" class="btn btn-primary" data-dismiss= "modal" name="btnForm4">Cancelar</button>
@@ -190,7 +204,14 @@
                                         {{fer.1.as_p}}
                                         <input type="hidden" name="inputEditar" value= "{{fer.0.id}}">
                                         <button type="submit" class="btn btn-success btn-block" name="btnEditarFert">Guardar Cambios</button>
+                                        
                                     </form>
+                                </div>
+
+                                <!-- Footer-->
+                                <div class="modal-footer">
+                                    
+                                    
                                 </div>
                             </div>
                         </div>
@@ -200,7 +221,7 @@
                 {% endfor%}
             </tbody>
         </table>
-        {% if contexto.fertInvalVentana %}
+        {% if fertInvalVentana %}
                     <div class="container-fluid">
                         <br>
                         <div class="row">
@@ -215,11 +236,7 @@
     {% else %}
         <h3 class="text-center">No ha agregado fertilizantes</h3>
     {% endif %}
-
-    <!-- Ventanas emergentes -->
-    
-
-
+</fieldset>
 {% endblock contenido %}
 
 
