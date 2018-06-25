@@ -60,11 +60,7 @@ def inicio(request):
     return render(request, "main/index.html", contexto)
 
 def ayuda(request):
-    tiempo_pagina(0)
-    contexto = {
-        'tiempo':tiempo_pagina(1),
-    }
-    return render(request, 'index.html', contexto)
+    return render(request, 'index.html', {})
 
 
 @login_required()
@@ -340,6 +336,9 @@ def mod_simulacion(request, username,id):
         return redirect('mod_simu', username=request.user.username, id=id)
 
 
+
+
+
 class SimFormView(CreateView):
     model = Simulacion
     template_name = "main/simform.html"
@@ -407,7 +406,7 @@ class AplicacionView(CreateView):
 
 def conversion_distancia(area,unidad_long):
     if unidad_long == "m²":
-        conversion =  10000/area
+        conversion = area / 10000
     if unidad_long == "mz":
         conversion = area * 0.7050
     if unidad_long == "ha":
@@ -427,37 +426,13 @@ def cantidad_optima_nutriente(nutriente,porc_nutriente,peso,area):
      bolsa=nutriente/(0.5*porc_nutriente)
      cantidadoptiman=(bolsa*peso)/area
      return ' %.2f' %cantidadoptiman
-
 def suma(valor1,valor2,valor3):
     total=float(valor1)+float(valor2)+float(valor3)
     return '%.2f' %total
 def suma2(valor1,valor2):
     total=float(valor1)+float(valor2)
     return '%.2f' %total
-
-
-def sin_analisis_suelo(planta):
-    semilla = planta
-
-
-def analisis_de_suelo(nivel_k,nivel_p):
-    if nivel_k == 'Alto' & nivel_p == 'Alto':
-        nitrogeno=40.53
-        fosforo=0.0
-        potasio=0.0
-        porc_nitrogeno=21
-        porc_potasio=0.0
-        porc_fosforo=0.0
-    if nivel_p == 'Deficiente' & nivel_k=='Deficiente':
-        nitrogeno=38.60
-        fosforo=38.60
-        potasio=38.60
-        porc_nitrogeno=15
-        porc_potasio=15
-        porc_fosforo=15
-    return (nitrogeno,fosforo,potasio,porc_nitrogeno,porc_potasio,porc_fosforo)
-
-
+   
 def obtener_requerimientos(analisis,semilla,nivel_k,nivel_p):
     if analisis == 0: 
         if semilla == 'Oro Blanco':
@@ -548,4 +523,3 @@ def obtener_requerimientos(analisis,semilla,nivel_k,nivel_p):
                         fer2=10
                         fer3=11
     return (fer1,fer2,fer3)
-
