@@ -406,7 +406,7 @@ class AplicacionView(CreateView):
 
 def conversion_distancia(area,unidad_long):
     if unidad_long == "m²":
-        conversion = area / 10000
+        conversion =  10000/area
     if unidad_long == "mz":
         conversion = area * 0.7050
     if unidad_long == "ha":

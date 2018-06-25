@@ -6,9 +6,7 @@
  <link rel="stylesheet" href="{% static 'js/Chart.bundle.js' %}">
     {% endblock css %}
     {% block js %}{% endblock js %}
-    {% block Titulo %}
-    grafica
-{% endblock Titulo %}
+    
 
 {% block contenido %}
 <body>
@@ -17,6 +15,7 @@
 <div class="row">
     <div class="col-6"><h2 class="text-center">{{simulacion.nombre_sim}}</h2></div>
     <div class="col-6"><h2 class="text-center">{{simulacion.usuario}}</h2></div>
+    <a href="{% url 'inicio' %}" class="navbar-brand"><img class="logo" src="{% static 'img/icono_w.png' %}" alt=""></a>
 </div>
 <div class="row">
     <div class="col-12">
