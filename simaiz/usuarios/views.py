@@ -1,3 +1,4 @@
+from django.shortcuts import render_to_response
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.views.generic import CreateView
@@ -10,7 +11,9 @@ from main.views import *
 from django.views.generic import TemplateView
 from chartjs.views.lines import BaseLineChartView
 from django.shortcuts import render
-from datetime import datetime,timedelta
+from datetime import datetime,timedelta,time,date
+import json as simplejson
+import random
 
 class RegistrarUsuario(CreateView):
     model = User
@@ -86,6 +89,15 @@ def generarSimulacion(request,id_sim):
         'cantidad3':cantidadott,
         'precio':precio,
         'peso':peso,
+        'nitrogenop':nitrogenop,
+        'fosforop':fosforop,
+        'potasiop':potasiop,
+        'nitrogenos':nitrogenos,
+        'fosforos':fosforos,
+        'potasios':potasios,
+        'nitrogenot':nitrogenot,
+        'fosforot':fosforot,
+        'potasiot':potasiot,
     }
     return render(request,'usuarios/generar_simulacion.html',context)
     
@@ -153,9 +165,5 @@ class LineChartJSONView3(BaseLineChartView):
                 [5.38,4.15,16.42,57.66,203.28,329.27,239.81,296.48,354.35,211.88,48.77,11.08,0.00],
                 ]
 
-line_chart = TemplateView.as_view(template_name='line_chart.html')
-line_chart_json = LineChartJSONView.as_view()
-line_chart2 = TemplateView.as_view(template_name='line_chart2.html')
-line_chart_json2 = LineChartJSONView2.as_view()
 line_chart3 = TemplateView.as_view(template_name='line_chart3.html')
 line_chart_json3 = LineChartJSONView3.as_view()

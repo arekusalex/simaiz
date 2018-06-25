@@ -3,13 +3,19 @@
     {% block css %}
 <link rel="stylesheet" href="{% static 'js/Chart.min.js' %}">
  <link rel="stylesheet" href="{% static 'css/base.css' %}">
+ <link rel="stylesheet" href="{% static 'js/Chart.bundle.js' %}">
     {% endblock css %}
     {% block js %}{% endblock js %}
+    
+
 {% block contenido %}
+<body>
+    
 
 <div class="row">
     <div class="col-6"><h2 class="text-center">{{simulacion.nombre_sim}}</h2></div>
     <div class="col-6"><h2 class="text-center">{{simulacion.usuario}}</h2></div>
+    <a href="{% url 'inicio' %}" class="navbar-brand"><img class="logo" src="{% static 'img/icono_w.png' %}" alt=""></a>
 </div>
 <div class="row">
     <div class="col-12">
@@ -45,34 +51,13 @@
   <div class="three-columns">
         <p>
          Grafico de cantidad de nutrientes de cada aplicacion
-        <canvas id="myChart" width="200" height="100"></canvas>
-
-        <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.0.min.js"></script>
-        <script type="text/javascript" src="{% static 'js/Chart.min.js' %}"></script>
-        <script type="text/javascript">
-            $.get('{% url "line_chart_json" %}', function(data) {
-                var ctx = $("#myChart").get(0).getContext("2d");
-                new Chart(ctx, {
-                    type: 'bar', data: data
-                });
-            });
-        </script>
+        <canvas id="line_chart"></canvas>
         </p>
         
      <p>
          Grafico total de nutrientes aplicados durante el proceso
-        <canvas id="myChart2" width="200" height="100"></canvas>
-
-        <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.0.min.js"></script>
-        <script type="text/javascript" src="{% static 'js/Chart.min.js' %}"></script>
-        <script type="text/javascript">
-            $.get('{% url "line_chart_json2" %}', function(data) {
-                var ctx2 = $("#myChart2").get(0).getContext("2d");
-                new Chart(ctx2, {
-                    type: 'bar', data: data
-                });
-            });
-        </script>
+        <canvas id="line_chart2"></canvas>
+        </p>
         </p>
     </div>
     <div class="one-columns">
@@ -90,5 +75,118 @@
         </script>  
         </p>
     </div>
-    </form>
+    
+</body>
+<script>
+var div_line_chart = document.getElementById("line_chart");
+var myLineChart = new Chart(div_line_chart, {
+    type: 'bar',
+    data: {
+        labels: ["Primera aplicacion", "Segunda aplicacion", "Tercera aplicacion"],
+        datasets: [
+            {
+                label: "Nitrogeno",
+                fill: false,
+                lineTension: 0.1,
+                backgroundColor: "#01A9DB",
+                borderColor: "#01A9DB",
+                borderCapStyle: 'butt', 
+                borderDash: [],
+                borderDashOffset: 0.0,
+                borderJoinStyle: 'miter',
+                pointBorderColor: "#01A9DB",
+                pointBackgroundColor: "#01A9DB",
+                pointBorderWidth: 1,
+                pointHoverRadius: 5,
+                pointHoverBackgroundColor: "#01A9DB",
+                pointHoverBorderColor: "#01A9DB",
+                pointHoverBorderWidth: 2,
+                pointRadius: 1,
+                pointHitRadius: 10,
+                data: [{{nitrogenop}},{{nitrogenos}},{{nitrogenot}}],
+            },
+            {
+                label: "Fosforo",
+                fill: false,
+                lineTension: 0.1,
+                backgroundColor: "#FF0000",
+                borderColor: "#FF0000",
+                borderCapStyle: 'butt',
+                borderDash: [],
+                borderDashOffset: 0.0,
+                borderJoinStyle: 'miter',
+                pointBorderColor: "#FF0000",
+                pointBackgroundColor: "#FF0000",
+                pointBorderWidth: 1,
+                pointHoverRadius: 5,
+                pointHoverBackgroundColor: "#FF0000",
+                pointHoverBorderColor: "#FF0000",
+                pointHoverBorderWidth: 2,
+                pointRadius: 1,
+                pointHitRadius: 10,
+                data: [{{fosforop}},{{fosforos}},{{fosforot}}],
+            },
+            {
+                label: "Potasio",
+                fill: false,
+                lineTension: 0.1,
+                backgroundColor: "#0000FF",
+                borderColor: "#0000FF",
+                borderCapStyle: 'butt',
+                borderDash: [],
+                borderDashOffset: 0.0,
+                borderJoinStyle: 'miter',
+                pointBorderColor: "#0000FF",
+                pointBackgroundColor: "#0000FF",
+                pointBorderWidth: 1,
+                pointHoverRadius: 5,
+                pointHoverBackgroundColor: "#0000FF",
+                pointHoverBorderColor: "#0000FF",
+                pointHoverBorderWidth: 2,
+                pointRadius: 1,
+                pointHitRadius: 10,
+                data: [{{potasiop}},{{potasios}},{{potasiot}}],
+            }
+        ]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: true,
+    }
+});
+var div_line_chart = document.getElementById("line_chart2");
+var myLineChart = new Chart(div_line_chart, {
+    type: 'bar',
+    data: {
+        labels: ["Primera aplicacion", "Segunda aplicacion", "Tercera aplicacion"],
+        datasets: [
+            {
+                label: "Cantidad Optima de Fertilizante",
+                fill: false,
+                lineTension: 0.1,
+                backgroundColor: "#FF0000",
+                borderColor: "#FF0000",
+                borderCapStyle: 'butt',
+                borderDash: [],
+                borderDashOffset: 0.0,
+                borderJoinStyle: 'miter',
+                pointBorderColor: "#FF0000",
+                pointBackgroundColor: "#FF0000",
+                pointBorderWidth: 1,
+                pointHoverRadius: 5,
+                pointHoverBackgroundColor: "#FF0000",
+                pointHoverBorderColor: "#FF0000",
+                pointHoverBorderWidth: 2,
+                pointRadius: 1,
+                pointHitRadius: 10,
+                data: [ {{cantidad}},{{cantidad2}},{{cantidad3}}],
+            }
+        ]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: true,
+    }
+});
+</script>
 {% endblock contenido %}

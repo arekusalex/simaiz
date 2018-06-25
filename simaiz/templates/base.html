@@ -10,6 +10,9 @@
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
     <link rel="stylesheet" href="{% static 'css/steps.css' %}">
     {% block css %}{% endblock css %}
+    {% block JavaScript %}
+        <script src="{% static "js/Chart.js" %}"></script>
+    {% endblock JavaScript %}
     <script src="{%static 'js/jquery-3.3.1.min.js'%}"></script>
     {% block js %}{% endblock js %}
 </head>
