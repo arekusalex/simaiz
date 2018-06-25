@@ -423,7 +423,12 @@ def suma2(valor1,valor2):
     total=float(valor1)+float(valor2)
     return '%.2f' %total
 
-def analisis_de_suelo(nivel_k,nivel_p,nitrogeno,fosforo,potasio,porc_nitrogeno,porc_fosforo,porc_potasio):
+
+def sin_analisis_suelo(planta):
+    semilla = planta
+
+
+def analisis_de_suelo(nivel_k,nivel_p):
     if nivel_k == 'Alto' & nivel_p == 'Alto':
         nitrogeno=40.53
         fosforo=0.0

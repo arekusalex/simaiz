@@ -1,0 +1,135 @@
+{% extends "base.html" %}
+
+{% load staticfiles %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'js/Chart.min.js' %}">
+<link rel="stylesheet" href="{% static 'css/base.css' %}">
+{% endblock css %}
+
+{% block js %}
+
+{% endblock js %}
+
+
+{% block contenido %}
+
+<div class="row">
+    <div class="col-6"><h2 class="text-center">{{simulacion.nombre_sim}}</h2></div>
+    <div class="col-6"><h2 class="text-center">{{simulacion.usuario}}</h2></div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <h3 class="text-center">{{simulacion.planta}}</h3>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12"><h4 class="text-center">Extension terreno: {{simulacion.area}} {{simulacion.unidad_long}}</h4></div>
+</div>
+<div class="row">
+    <div class="col-12"><h8 class="text-left">Dia de siembra: {{simulacion.fecha_siembra}}</h8></div>
+</div>
+<div class="row">
+    <div class="col-12"><h8 class="text-left">Cantidad Optima primera aplicacion: {{cantidad}} Kg. de Fertilizante: {{fertilizante}}  {{fecha1}}</h8></div>
+</div> 
+<div class="row">
+    <div class="col-12"><h8 class="text-left">Cantidad Optima segunda aplicacion: {{cantidad2}} Kg. de Fertilizante: {{fertilizante}}  {{fecha2}}</h8></div>
+</div>
+<div class="row">
+    <div class="col-12"><h8 class="text-left">Cantidad Optima tercera aplicacion: {{cantidad3}}  Kg. de Fertilizante: {{fertilizante}}  {{fecha3}}</h8></div>
+</div>
+<div class="row">
+    <div class="col-12"><h7 class="text-left">Recomendaciones: utilizar regadio </h7>en los meses de Enero, Febrero, Marzo, Abril, Noviembre y Diciembre segun promedio de lluvias</div>
+</div>
+<div class="row">
+    <div class="col-12"><h7 class="text-left">Rendimiento de maiz: {{peso}}</h7> KG</div>
+</div>
+<div class="row">
+    <div class="col-12"><h7 class="text-left">Ingreso Bruto:$ {{precio}}  </h7></div>
+</div>
+<div class="row">
+    <div class="container col-md-3" style="width: 500px; height: 700px; margin: 0 auto">
+    <table id="data_table" class="table table-bordered" >
+    <thead>
+        <tr>
+
+            <th>Lluvia Promedio (mm)</th>
+            <th>Regadío Necesario (mm)</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for d in datos %}
+        <tr>
+
+            <td>{{d.0}}</td>
+            <td>{{d.1}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+    </table>
+</div>
+<div id="container_chart1" class="container col-md-9" style="width: 800px; height: 400px; margin: 0 auto">
+
+
+
+</div>
+</div>
+
+
+
+
+
+<script src="https://code.highcharts.com/highcharts.src.js"></script>
+<script type="text/javascript">
+   	Highcharts.chart('container_chart1', {
+       chart: {
+        type: 'column'
+    },
+    title: {
+        text: 'Lluvia Mensual y Uso de Regadío'
+    },
+    subtitle: {
+        text: 'SIMAIZ: Promedio 2017'
+    },
+    xAxis: {
+        categories: [
+            'Meses',
+        ],
+        crosshair: true
+    },
+    yAxis: {
+        min: 0,
+        title: {
+            text: 'Lluvia (mm)'
+        }
+    },
+    tooltip: {
+        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+        pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+            '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
+        footerFormat: '</table>',
+        shared: true,
+        useHTML: true
+    },
+    plotOptions: {
+        column: {
+            pointPadding: 0.2,
+            borderWidth: 0
+        }
+    },
+    series: [
+        {% for d in datos %}
+            {
+                name: 'L',
+                data: [{{d.0}}]
+            },
+            {
+                name: 'R',
+                data: [{{d.1}}]
+            },
+        {% endfor %}
+    ]
+   });
+</script>
+
+{% endblock contenido %}
