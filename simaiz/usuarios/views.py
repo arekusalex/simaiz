@@ -47,7 +47,7 @@ def generarSimulacion(request,id_sim):
         i=1
     else: 
         i=0
-    '''
+
     (p,s,t)=obtener_requerimientos(i,semilla,nivel_k,nivel_p)
     requerimientop=Requerimiento.objects.all()[p]
     requerimientos=Requerimiento.objects.all()[s]
@@ -76,7 +76,7 @@ def generarSimulacion(request,id_sim):
     cantidadopt=cantidad_optima_nutriente(potasiot,porc_potasio,float(pesok),areah)
     cantidadotp=suma(cantidadonp,cantidadofp,cantidadopp)
     cantidadots=suma(cantidadons,cantidadofs,cantidadops)
-    cantidadott=suma(cantidadont,cantidadoft,cantidadopt)'''
+    cantidadott=suma(cantidadont,cantidadoft,cantidadopt)
 
     zona = simulacion.zona
     humedad = Humedad.objects.all()[0:12]
@@ -103,12 +103,57 @@ def generarSimulacion(request,id_sim):
         y = [lluvias[j], regadio[j]]
         datos.append(y)
 
-    print(datos)
-
-
     if zona == "Valle":
         humedad = Humedad.objects.values()[0:12]
-
+        i = 0
+        for h in humedad:
+            average = h.promedio
+            lluvias.append(average)
+            if average < 200:
+                x = 200 - average
+                regadio.append(x)
+            else:
+                x = 0
+                regadio.append(x)
+            i += 1
+        j = 0
+        for j in range(len(lluvias)):
+            y = [lluvias[j], regadio[j]]
+            datos.append(y)
+    if zona == "Costa":
+        humedad = Humedad.objects.values()[13:25]
+        i = 0
+        for h in humedad:
+            average = h.promedio
+            lluvias.append(average)
+            if average < 200:
+                x = 200 - average
+                regadio.append(x)
+            else:
+                x = 0
+                regadio.append(x)
+            i += 1
+        j = 0
+        for j in range(len(lluvias)):
+            y = [lluvias[j], regadio[j]]
+            datos.append(y)
+    if zona == "Montaña":
+        humedad = Humedad.objects.values()[26:34]
+        i = 0
+        for h in humedad:
+            average = h.promedio
+            lluvias.append(average)
+            if average < 200:
+                x = 200 - average
+                regadio.append(x)
+            else:
+                x = 0
+                regadio.append(x)
+            i += 1
+        j = 0
+        for j in range(len(lluvias)):
+            y = [lluvias[j], regadio[j]]
+            datos.append(y)
 
     context={
         'datos':datos,
@@ -133,7 +178,8 @@ def generarSimulacion(request,id_sim):
         'fosforot':fosforot,
         'potasiot':potasiot,
     }
-    return render(request,'usuarios/prueba_simulacion.html', context)
+
+    return render(request,'usuarios/generar_simulacion.html', context)
     
     
 

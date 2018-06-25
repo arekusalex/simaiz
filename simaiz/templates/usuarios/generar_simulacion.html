@@ -60,21 +60,93 @@
         </p>
         </p>
     </div>
-    <div class="one-columns">
-         <p>  Grafico informativo de humedad de El Salvador<canvas id="myChart3" width="200" height="100"></canvas>
 
-        <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.0.min.js"></script>
-        <script type="text/javascript" src="{% static 'js/Chart.min.js' %}"></script>
-        <script type="text/javascript">
-            $.get('{% url "line_chart_json3" %}', function(data) {
-                var ctx3 = $("#myChart3").get(0).getContext("2d");
-                new Chart(ctx3, {
-                    type: 'bar', data: data
-                });
-            });
-        </script>  
-        </p>
-    </div>
+
+    <div class="row">
+    <div class="container col-md-3" style="width: 500px; height: 700px; margin: 0 auto">
+    <table id="data_table" class="table table-bordered" >
+    <thead>
+        <tr>
+
+            <th>Lluvia Promedio (mm)</th>
+            <th>Regadío Necesario (mm)</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for d in datos %}
+        <tr>
+
+            <td>{{d.0}}</td>
+            <td>{{d.1}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+    </table>
+</div>
+<div id="container_chart1" class="container col-md-9" style="width: 800px; height: 400px; margin: 0 auto">
+
+
+
+</div>
+</div>
+
+
+
+
+
+<script src="https://code.highcharts.com/highcharts.src.js"></script>
+<script type="text/javascript">
+   	Highcharts.chart('container_chart1', {
+       chart: {
+        type: 'column'
+    },
+    colors: ['#1C1D42', '#2F86FF'],
+    title: {
+        text: 'Lluvia Mensual y Uso de Regadío'
+    },
+    subtitle: {
+        text: 'SIMAIZ: Promedio 2017'
+    },
+    xAxis: {
+        categories: [
+            'Meses',
+        ],
+        crosshair: true
+    },
+    yAxis: {
+        min: 0,
+        title: {
+            text: 'Humedad (mm)'
+        }
+    },
+    tooltip: {
+        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+        pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+            '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
+        footerFormat: '</table>',
+        shared: true,
+        useHTML: true
+    },
+    plotOptions: {
+        column: {
+            pointPadding: 0.2,
+            borderWidth: 0
+        }
+    },
+    series: [
+        {% for d in datos %}
+            {
+                name: 'L',
+                data: [{{d.0}}]
+            },
+            {
+                name: 'R',
+                data: [{{d.1}}]
+            },
+        {% endfor %}
+    ]
+   });
+</script>
     
 </body>
 <script>
