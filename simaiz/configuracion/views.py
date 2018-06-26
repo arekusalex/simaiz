@@ -38,7 +38,8 @@ def configuracionSim(request, username):
 				if precio <= 0:
 					precioNeg = True
 				else:
-					form1 = Configuracion(usuario=request.user, precio_maiz=precio, unidadMedidaMaiz = 10)
+					uMed=request.POST.get('unidadMedidaMaiz')
+					form1 = Configuracion(usuario=request.user, precio_maiz=precio, unidadMedidaMaiz = uMed)
 					form1.save()
 					hayConfi = True
 					return redirect('configuracion',username=request.user.username)

@@ -20,6 +20,8 @@ import datetime
 # Create your views here.
 
 def inicio(request):
+    global bloqueo
+    bloqueo=False #variable que domina el bloqueo del tiempo
     tiempo_pagina(0)
     hay_busqueda = False
     simulaciones = list()
@@ -209,7 +211,26 @@ def crear_simulacion(request, username):
         zonas=ZONA
         suelos=TIPO_SUELO
         nutrientes=NIVEL
-        fertilizantes=Fertilizante.objects.all()
+
+        try:
+            ferPublicos=User.objects.get(id=2)
+            configPub=Configuracion.objects.get(usuario=ferPublicos)
+        except:
+            redirect('mi_espacio',username=request.user.username)
+        try:
+            configUser=Configuracion.objects.get(usuario=request.user)
+        except:
+            redirect('configuracion', username=request.user.username)
+
+        ferPub=Fertilizante.objects.filter(configuracion=configPub)
+        ferUser=Fertilizante.objects.filter(configuracion=configUser)
+
+        fertilizantes=list()
+        for f in ferPub:
+            fertilizantes.append(f)
+        for f in ferUser:
+            fertilizantes.append(f)
+
         if request.method=='POST': #guardar y direccionar
             if 'f_crear_simu' in request.POST:
                 name=request.POST.get('name_simu')
@@ -282,7 +303,27 @@ def mod_simulacion(request, username,id):
         zonas=ZONA
         suelos=TIPO_SUELO
         nutrientes=NIVEL
-        fertilizantes=Fertilizante.objects.all()
+
+        try:
+            ferPublicos=User.objects.get(id=2)
+            configPub=Configuracion.objects.get(usuario=ferPublicos)
+        except:
+            redirect('mi_espacio',username=request.user.username)
+        try:
+            configUser=Configuracion.objects.get(usuario=request.user)
+        except:
+            redirect('configuracion', username=request.user.username)
+
+        ferPub=Fertilizante.objects.filter(configuracion=configPub)
+        ferUser=Fertilizante.objects.filter(configuracion=configUser)
+
+        fertilizantes=list()
+        for f in ferPub:
+            fertilizantes.append(f)
+        for f in ferUser:
+            fertilizantes.append(f)
+
+        #fertilizantes=Fertilizante.objects.all()
         analisis=False
         fertis=list()
         fecha=''
@@ -293,6 +334,7 @@ def mod_simulacion(request, username,id):
                 sim=Simulacion.objects.get(id=id)
                 sim.nombre_sim=request.POST.get('name_simu')
                 sim.semilla=Planta.objects.get(id=request.POST.get('semilla')).nombre_planta
+                planta=Planta.objects.get(id=request.POST.get('semilla'))
                 sim.fecha_siembra=request.POST.get('fecha_siembra')
                 sim.area=request.POST.get('area')
                 sim.unidad_long=request.POST.get('unidad_long')
@@ -309,14 +351,32 @@ def mod_simulacion(request, username,id):
                     sim.nivel_k=''
                 sim.compartir=True if request.POST.get('compartir') else False
                 sim.save()
+
+
+                fer1=Fertilizante.objects.get(id=request.POST.get('apply_1'))
+                fer2=Fertilizante.objects.get(id=request.POST.get('apply_2'))
+                fer3=Fertilizante.objects.get(id=request.POST.get('apply_3'))
+
+                fers=list()
+                fers.append(fer1)
+                fers.append(fer2)
+                fers.append(fer3)
+
+                applies=Aplicacion.objects.filter(simulacion=sim).order_by('fecha_app')
+
+                for num,ap in enumerate(applies):
+                    ap.fertilizante=fers[num]
+                    ap.fecha_app=datetime.datetime.strptime(sim.fecha_siembra,'%Y-%m-%d')+datetime.timedelta(days=planta.dias_ciclo*num)
+                    ap.save()
+
                 alerta='La Simulacion se modifico con exito'
-            else:
-                sim=Simulacion.objects.get(id=id)
-                if sim.tipo_suelo =='':
-                    analisis=True
-                applies=Aplicacion.objects.filter(simulacion=sim)
-                for ap in applies:
-                    fertis.append(ap.fertilizante)
+            #else: 
+            sim=Simulacion.objects.get(id=id)
+            if sim.tipo_suelo =='':
+                analisis=True
+            applies=Aplicacion.objects.filter(simulacion=sim)
+            for ap in applies:
+                fertis.append(ap.fertilizante)
             contexto={
                 'mod':mod,
                 'semillas':semillas,
@@ -335,7 +395,7 @@ def mod_simulacion(request, username,id):
             }
             return render(request, 'main/crear_simu.html', contexto)
         else:
-            return HttpResponse('LA simulacion a modificar no existe')
+            return HttpResponse('La simulacion a modificar no existe')
     else:
         return redirect('mod_simu', username=request.user.username, id=id)
 
@@ -424,9 +484,12 @@ def conversion_peso(peso,unidad):
     return conversionpeso
 
 def cantidad_optima_nutriente(nutriente,porc_nutriente,peso,area):
-     bolsa=nutriente/(0.5*porc_nutriente)
-     cantidadoptiman=(bolsa*peso)/area
-     return ' %.2f' %cantidadoptiman
+    try:
+        bolsa=nutriente/(0.5*porc_nutriente)
+        cantidadoptiman=(bolsa*peso)/area
+        return ' %.2f' %cantidadoptiman
+    except:
+        return 0
 
 def suma(valor1,valor2,valor3):
     total=float(valor1)+float(valor2)+float(valor3)

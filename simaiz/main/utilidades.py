@@ -35,7 +35,8 @@ def tiempo_pagina(op):
 		return
 	elif op==1: #si es uno detiene y devuelve el conteo
 		sec=time.time()-t_inicio
-		return round(sec,4)		
+		return round(sec,4)
+		bloqueo=False	
 	else:
 		print ('Parametro incorrecto')
 		return
