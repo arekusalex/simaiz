@@ -1,4 +1,4 @@
-Django==2.0.5
+django>=2.0.10
 psycopg2==2.7.4
 pytz==2018.4
 django-chartjs==1.3
